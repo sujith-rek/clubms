@@ -37,11 +37,38 @@ model Student {
 }
 
 model Event {
-  id          Int      @id @default(autoincrement())
-  name        String
-  description String
-  date        DateTime
-  venue       String
-  club        Club     @relation(fields: [clubId], references: [id])
-  clubId      Int
+  id            Int             @id @default(autoincrement())
+  name          String
+  description   String
+  date          DateTime
+  venue         String
+  club          Club            @relation(fields: [clubId], references: [id])
+  clubId        Int
+  status        EventStatus
+  Eventapproval Eventapproval[]
+}
+
+model Eventapproval {
+  id      Int         @id @default(autoincrement())
+  event   Event       @relation(fields: [eventId], references: [id])
+  eventId Int
+  status  EventStatus
+}
+
+enum Role {
+  ADMIN
+  STUDENT
+  CLUB
+}
+
+enum EventStatus {
+  APPROVED
+  PENDING
+  REJECTED
+}
+
+enum RoomBookingStatus {
+  APPROVED
+  PENDING
+  REJECTED
 }
