@@ -12,26 +12,28 @@ datasource db {
 }
 
 model Admin {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
-  password String
-  name     String
-  role     String
+  id            Int             @id @default(autoincrement())
+  email         String          @unique
+  password      String
+  name          String
+  role          String
+  RoomBookApproval RoomBookApproval[]
+  Eventapproval Eventapproval[]
 }
 
 model Club {
-  id          Int     @id @default(autoincrement())
+  id          Int               @id @default(autoincrement())
   name        String
-  email       String  @unique
+  email       String            @unique
   password    String
   description String
   events      Event[]
 }
 
 model Student {
-  id       Int    @id @default(autoincrement())
+  id       Int                  @id @default(autoincrement())
   name     String
-  email    String @unique
+  email    String               @unique
   password String
   rollNo   String
 }
@@ -44,15 +46,46 @@ model Event {
   venue         String
   club          Club            @relation(fields: [clubId], references: [id])
   clubId        Int
-  status        EventStatus
   Eventapproval Eventapproval[]
 }
 
 model Eventapproval {
-  id      Int         @id @default(autoincrement())
-  event   Event       @relation(fields: [eventId], references: [id])
-  eventId Int
-  status  EventStatus
+  id          Int               @id @default(autoincrement())
+  eventId     Int
+  adminId     Int
+  ccId        Int
+  adminStatus Status            @default(PENDING)
+  ccStatus    Status            @default(PENDING)
+  event       Event             @relation(fields: [eventId], references: [id])
+  admin       Admin             @relation(fields: [adminId], references: [id])
+  cc          CC                @relation(fields: [ccId], references: [id])
+}
+
+model RoomBookApproval {
+  id          Int               @id @default(autoincrement())
+  roomId      Int
+  adminId     Int
+  from        DateTime
+  to          DateTime
+  adminStatus Status            @default(PENDING)
+  room        Room              @relation(fields: [roomId], references: [id])
+  admin       Admin             @relation(fields: [adminId], references: [id])
+}
+
+model Room {
+  id               Int          @id @default(autoincrement())
+  roonNumber       Int
+  capacity         Int
+  roomBlock        String
+  roomBookApproval RoomBookApproval[]
+}
+
+model CC {
+  id            Int             @id @default(autoincrement())
+  name          String
+  email         String          @unique
+  password      String
+  Eventapproval Eventapproval[]
 }
 
 enum Role {
@@ -61,13 +94,7 @@ enum Role {
   CLUB
 }
 
-enum EventStatus {
-  APPROVED
-  PENDING
-  REJECTED
-}
-
-enum RoomBookingStatus {
+enum Status {
   APPROVED
   PENDING
   REJECTED
