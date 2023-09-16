@@ -12,6 +12,13 @@ export async function eventApprovalCreate(data){
     })
 }
 
+export async function getEventApprovalByEventId(eventId){
+    return await db.event.findUnique({
+        where: {id: eventId},
+        select: { Eventapproval: true }
+    })
+}
+
 
 export async function eventUpdate(id, data){
     return await db.event.update({
