@@ -52,8 +52,8 @@ model Event {
 model Eventapproval {
   id          Int               @id @default(autoincrement())
   eventId     Int
-  adminId     Int
-  ccId        Int
+  adminId     Int               @default(1)
+  ccId        Int               @default(1)
   adminStatus Status            @default(PENDING)
   ccStatus    Status            @default(PENDING)
   event       Event             @relation(fields: [eventId], references: [id])

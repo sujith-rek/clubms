@@ -6,6 +6,13 @@ export async function eventCreate(data){
     })
 }
 
+export async function eventApprovalCreate(data){
+    return await db.eventapproval.create({
+        data
+    })
+}
+
+
 export async function eventUpdate(id, data){
     return await db.event.update({
         where: { id },
