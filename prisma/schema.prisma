@@ -60,11 +60,12 @@ model Eventapproval {
 
 model RoomBookApproval {
   id          Int      @id @default(autoincrement())
-  roomId      Int
-  adminId     Int
+  roomId      Int      @default(1)
+  adminId     Int      @default(1)
   from        DateTime
   to          DateTime
   adminStatus Status   @default(PENDING)
+  date        DateTime @default(now())
   admin       Admin    @relation(fields: [adminId], references: [id])
   room        Room     @relation(fields: [roomId], references: [id])
 }

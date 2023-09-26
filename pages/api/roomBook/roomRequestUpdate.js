@@ -1,5 +1,5 @@
 
-export default async function requestupdate(req, res) {
+export default async function bookRequestUpdate(req, res) {
     res.json({ message: 'Request updated.' })
 }
 
