@@ -71,9 +71,9 @@ model RoomBookApproval {
 
 model Room {
   id               Int                @id @default(autoincrement())
-  roonNumber       Int
   capacity         Int
-  roomBlock        String
+  roomNumber       Int
+  roomBlock        Block
   roomBookApproval RoomBookApproval[]
 }
 
@@ -95,4 +95,11 @@ enum Status {
   APPROVED
   PENDING
   REJECTED
+}
+
+enum Block {
+  A_BLOCK
+  B_BLOCK
+  C_BLOCK
+  D_BLOCK
 }
