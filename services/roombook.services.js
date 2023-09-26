@@ -2,14 +2,13 @@ import db from "@/lib/prisma";
 
 
 export async function roombookCreate(data){
-    return await db.roombookapproval.create({
+    return await db.roomBookApproval.create({
         data
     })
 }
 
-
 export async function roombookUpdate(roombookId, data){
-    return await db.roombookapproval.update({
+    return await db.roomBookApproval.update({
         where: { id: roombookId },
         data
     })
@@ -17,14 +16,14 @@ export async function roombookUpdate(roombookId, data){
 
 
 export async function roombookDelete(roombookId){
-    return await db.roombookapproval.delete({
+    return await db.roomBookApproval.delete({
         where: { id: roombookId }
     })
 }
 
 
 export async function approveRoomBook(roombookId, data){
-    return await db.roombookapproval.update({
+    return await db.roomBookApproval.update({
         where: { id: roombookId },
         data
     })
