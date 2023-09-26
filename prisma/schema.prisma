@@ -19,12 +19,13 @@ model Admin {
 }
 
 model Club {
-  id          Int     @id @default(autoincrement())
-  name        String
-  email       String  @unique
-  password    String
-  description String
-  events      Event[]
+  id               Int                @id @default(autoincrement())
+  name             String
+  email            String             @unique
+  password         String
+  description      String
+  events           Event[]
+  RoomBookApproval RoomBookApproval[]
 }
 
 model Student {
@@ -66,7 +67,10 @@ model RoomBookApproval {
   to          DateTime
   adminStatus Status   @default(PENDING)
   date        DateTime @default(now())
+  clubId      Int      @default(1)
+  description String
   admin       Admin    @relation(fields: [adminId], references: [id])
+  club        Club     @relation(fields: [clubId], references: [id])
   room        Room     @relation(fields: [roomId], references: [id])
 }
 
