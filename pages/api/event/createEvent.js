@@ -21,3 +21,17 @@ export default async function createEvent(req, res) {
     res.json({ message: e.message })
   }
 }
+
+
+
+
+// {
+//   "name": "Conference",
+//   "description": "Biggg event",
+//   "date": "2023-09-24",
+//   "venue": "G-Block",
+//   "clubId": 2,
+//   "eventId": 2,
+//   "adminStatus": "APPROVED",
+//   "adminId": 2
+// }

@@ -36,19 +36,19 @@ model Student {
 }
 
 model Event {
-  id            Int             @id @default(autoincrement())
+  id            Int            @id @default(autoincrement())
   name          String
   description   String
   date          DateTime
   venue         String
   clubId        Int
-  club          Club            @relation(fields: [clubId], references: [id])
-  Eventapproval Eventapproval[]
+  club          Club           @relation(fields: [clubId], references: [id])
+  Eventapproval Eventapproval?
 }
 
 model Eventapproval {
   id          Int    @id @default(autoincrement())
-  eventId     Int
+  eventId     Int    @unique
   adminId     Int    @default(1)
   adminStatus Status @default(PENDING)
   ccId        Int    @default(1)

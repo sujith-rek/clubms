@@ -2,6 +2,7 @@ import { loginAdmin } from "@/services/users.services"
 
 export default function login(req,res){
     const {email,password} = req.body
+    
     if(!email || !password){
         return res.status(400).json({error:"Please fill all fields"})
     }
@@ -14,7 +15,4 @@ export default function login(req,res){
     }catch(err){
         return res.status(400).json({error:err.message})
     }
-
-    res.status(200).json({message:"Admin logged in successfully"})
-
 }

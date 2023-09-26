@@ -19,6 +19,20 @@ export async function getEventApprovalByEventId(eventId){
     })
 }
 
+export async function eventApprovalDelete(eventId, clubId){
+    const eventApproval = await db.eventapproval.findUnique({
+        where: {
+            eventId: eventId,
+            event: {
+                id: eventId,
+            }
+        }
+    })
+    return await db.eventapproval.delete({
+        where: { id: eventApproval.id }
+    })
+}
+
 
 export async function eventUpdate(id, data){
     return await db.event.update({
@@ -27,9 +41,10 @@ export async function eventUpdate(id, data){
     })
 }
 
-export async function eventDelete(id){
+export async function eventDelete(id,clubId){
+
     return await db.event.delete({
-        where: { id }
+        where: { id: id, clubId: clubId }
     })
 }
 

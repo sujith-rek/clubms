@@ -17,9 +17,8 @@ export async function loginAdmin(data){
         throw new Error("No admin found")
     }
 
-    console.log(admin,data.password)
-
-    const valid = await compareSync(data.password,admin.password)
+    const valid = compareSync(data.password,admin.password)
+    
     if(!valid){
         throw new Error("Invalid password")
     }
