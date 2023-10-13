@@ -8,33 +8,46 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model Admin {
+model User {
   id               Int                @id @default(autoincrement())
   email            String             @unique
   password         String
   name             String
-  role             String
+  description      String             @default("")
+  rollNo           String             @default("")
+  role             Role               @default(STUDENT)
   Eventapproval    Eventapproval[]
   RoomBookApproval RoomBookApproval[]
-}
-
-model Club {
-  id               Int                @id @default(autoincrement())
-  name             String
-  email            String             @unique
-  password         String
-  description      String             @default("")
   events           Event[]
-  RoomBookApproval RoomBookApproval[]
 }
 
-model Student {
-  id       Int    @id @default(autoincrement())
-  name     String
-  email    String @unique
-  password String
-  rollNo   String
-}
+// model Admin {
+//   id               Int                @id @default(autoincrement())
+//   email            String             @unique
+//   password         String
+//   name             String
+//   role             String
+//   Eventapproval    Eventapproval[]
+//   RoomBookApproval RoomBookApproval[]
+// }
+
+// model Club {
+//   id               Int                @id @default(autoincrement())
+//   name             String
+//   email            String             @unique
+//   password         String
+//   description      String             @default("")
+//   events           Event[]
+//   RoomBookApproval RoomBookApproval[]
+// }
+
+// model Student {
+//   id       Int    @id @default(autoincrement())
+//   name     String
+//   email    String @unique
+//   password String
+//   rollNo   String
+// }
 
 model Event {
   id            Int            @id @default(autoincrement())
@@ -43,8 +56,9 @@ model Event {
   date          DateTime
   venue         String
   clubId        Int
-  club          Club           @relation(fields: [clubId], references: [id])
   Eventapproval Eventapproval?
+  User          User?          @relation(fields: [userId], references: [id])
+  userId        Int?
 }
 
 model Eventapproval {
@@ -54,9 +68,9 @@ model Eventapproval {
   adminStatus Status @default(PENDING)
   ccId        Int    @default(1)
   ccStatus    Status @default(PENDING)
-  admin       Admin  @relation(fields: [adminId], references: [id])
-  cc          CC     @relation(fields: [ccId], references: [id])
   event       Event  @relation(fields: [eventId], references: [id])
+  User        User?  @relation(fields: [userId], references: [id])
+  userId      Int?
 }
 
 model RoomBookApproval {
@@ -69,9 +83,9 @@ model RoomBookApproval {
   date        DateTime @default(now())
   clubId      Int      @default(1)
   description String
-  admin       Admin    @relation(fields: [adminId], references: [id])
-  club        Club     @relation(fields: [clubId], references: [id])
   room        Room     @relation(fields: [roomId], references: [id])
+  User        User?    @relation(fields: [userId], references: [id])
+  userId      Int?
 }
 
 model Room {
@@ -82,18 +96,19 @@ model Room {
   roomBookApproval RoomBookApproval[]
 }
 
-model CC {
-  id            Int             @id @default(autoincrement())
-  name          String
-  email         String          @unique
-  password      String
-  Eventapproval Eventapproval[]
-}
+// model CC {
+//   id            Int             @id @default(autoincrement())
+//   name          String
+//   email         String          @unique
+//   password      String
+//   Eventapproval Eventapproval[]
+// }
 
 enum Role {
   ADMIN
   STUDENT
   CLUB
+  CC
 }
 
 enum Status {
