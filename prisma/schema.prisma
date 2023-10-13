@@ -23,7 +23,7 @@ model Club {
   name             String
   email            String             @unique
   password         String
-  description      String
+  description      String             @default("")
   events           Event[]
   RoomBookApproval RoomBookApproval[]
 }
