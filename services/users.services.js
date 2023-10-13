@@ -14,21 +14,11 @@ export async function registerClub(data) {
 }
 
 export async function loginAdmin(data) {
-    const admin = await db.admin.findUnique({
+    return db.admin.findUnique({
         where: {
             email: data.email
         }
     })
-    if (!admin) {
-        throw new Error("No admin found")
-    }
-
-    const valid = compareSync(data.password, admin.password)
-
-    if (!valid) {
-        throw new Error("Invalid password")
-    }
-    return admin
 }
 
 export async function loginClub(data) {
