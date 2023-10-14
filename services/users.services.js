@@ -13,6 +13,12 @@ export async function registerClub(data) {
     })
 }
 
+export async function registerStudent(data) {
+    return await db.user.create({
+        data
+    })
+}
+
 export async function loginAdmin(data) {
     return db.user.findUnique({
         where: {
@@ -22,6 +28,14 @@ export async function loginAdmin(data) {
 }
 
 export async function loginClub(data) {
+    return db.user.findUnique({
+        where: {
+            email: data.email,
+        }
+    })
+}
+
+export async function loginStudent(data) {
     return db.user.findUnique({
         where: {
             email: data.email,
