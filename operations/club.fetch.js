@@ -70,3 +70,20 @@ export async function roomBook(data){
     });
 }
 
+export async function fetchEvent(data){
+    return await fetch(
+        "/api/event/fetchEvent",{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data),
+            credentials: "include"
+        }
+    ).then((res) => {
+        return res.json()
+    }
+    ).catch((err) => {
+        console.log(err)
+    });
+}
