@@ -19,7 +19,7 @@ export default async function login(req, res) {
 
         const valid = compareSync(password, club.password);
         if (valid) {
-            return res.status(200).json({ message: "Club logged in successfully" })
+            return res.status(200).json({ message: "Club logged in successfully", club: club })
         } else {
             return res.status(400).json({ error: "Invalid credentials" })
         }

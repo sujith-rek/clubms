@@ -8,32 +8,17 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model Admin {
+model User {
   id               Int                @id @default(autoincrement())
   email            String             @unique
   password         String
   name             String
-  role             String
+  description      String             @default("")
+  rollNo           String             @default("")
+  role             Role               @default(STUDENT)
+  events           Event[]
   Eventapproval    Eventapproval[]
   RoomBookApproval RoomBookApproval[]
-}
-
-model Club {
-  id               Int                @id @default(autoincrement())
-  name             String
-  email            String             @unique
-  password         String
-  description      String             @default("")
-  events           Event[]
-  RoomBookApproval RoomBookApproval[]
-}
-
-model Student {
-  id       Int    @id @default(autoincrement())
-  name     String
-  email    String @unique
-  password String
-  rollNo   String
 }
 
 model Event {
@@ -43,7 +28,8 @@ model Event {
   date          DateTime
   venue         String
   clubId        Int
-  club          Club           @relation(fields: [clubId], references: [id])
+  userId        Int?
+  User          User?          @relation(fields: [userId], references: [id])
   Eventapproval Eventapproval?
 }
 
@@ -54,9 +40,9 @@ model Eventapproval {
   adminStatus Status @default(PENDING)
   ccId        Int    @default(1)
   ccStatus    Status @default(PENDING)
-  admin       Admin  @relation(fields: [adminId], references: [id])
-  cc          CC     @relation(fields: [ccId], references: [id])
+  userId      Int?
   event       Event  @relation(fields: [eventId], references: [id])
+  User        User?  @relation(fields: [userId], references: [id])
 }
 
 model RoomBookApproval {
@@ -69,9 +55,9 @@ model RoomBookApproval {
   date        DateTime @default(now())
   clubId      Int      @default(1)
   description String
-  admin       Admin    @relation(fields: [adminId], references: [id])
-  club        Club     @relation(fields: [clubId], references: [id])
+  userId      Int?
   room        Room     @relation(fields: [roomId], references: [id])
+  User        User?    @relation(fields: [userId], references: [id])
 }
 
 model Room {
@@ -82,18 +68,11 @@ model Room {
   roomBookApproval RoomBookApproval[]
 }
 
-model CC {
-  id            Int             @id @default(autoincrement())
-  name          String
-  email         String          @unique
-  password      String
-  Eventapproval Eventapproval[]
-}
-
 enum Role {
   ADMIN
   STUDENT
   CLUB
+  CC
 }
 
 enum Status {
