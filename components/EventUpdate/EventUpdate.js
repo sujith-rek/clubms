@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import { updateEvent } from '@/operations/club.fetch'
 import "./EventUpdate.scss"
 
-function EventUpdate(event) {
+function EventUpdate({event}) {
 
     const [name, setName] = useState(event.name)
     const [description, setDescription] = useState(event.description)
@@ -11,6 +11,16 @@ function EventUpdate(event) {
     const [clubId, setClubId] = useState(event.clubId)
     const [eventId, setEventId] = useState(event.eventId)
     const [update, setUpdate] = useState(false)
+
+    useEffect(() => {
+        setName(event.name)
+        setDescription(event.description)
+        setDate(event.date.slice(0, 10))
+        setVenue(event.venue)
+        setClubId(event.clubId)
+        setEventId(event.id)
+    }
+    , [event])
 
 
     const handleSubmit = async (e) => {
@@ -25,6 +35,7 @@ function EventUpdate(event) {
         }
         const res = await updateEvent(data)
         console.log(res)
+        alert(res.message)
     }
 
 
