@@ -1,4 +1,4 @@
-import { loginStudent } from "@/services/users.services";
+import { getStudent } from "@/services/users.services";
 import { compareSync } from "bcrypt";
 
 export default async function login(req, res) {
@@ -9,13 +9,15 @@ export default async function login(req, res) {
     }
 
     try {
-        const student = await loginStudent({
+        const student = await getStudent({
             email,
             password,
         })
+
         if (student === null) {
             return res.status(400).json({ error: "Student not found" })
         }
+
         const valid = compareSync(password, student.password);
         if (valid) {
             return res.status(200).json({ message: "Student logged in successfully", student: student })

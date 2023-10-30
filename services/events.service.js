@@ -1,25 +1,25 @@
 import db from "@/lib/prisma";
 
-export async function eventCreate(data){
+export async function eventCreate(data) {
     return await db.event.create({
         data
     })
 }
 
-export async function eventApprovalCreate(data){
+export async function eventApprovalCreate(data) {
     return await db.eventapproval.create({
         data
     })
 }
 
-export async function getEventApprovalByEventId(eventId){
+export async function getEventApprovalByEventId(eventId) {
     return await db.event.findUnique({
-        where: {id: eventId},
+        where: { id: eventId },
         select: { Eventapproval: true }
     })
 }
 
-export async function eventApprovalDelete(eventId, clubId){
+export async function eventApprovalDelete(eventId, clubId) {
     const eventApproval = await db.eventapproval.findUnique({
         where: {
             eventId: eventId,
@@ -34,31 +34,31 @@ export async function eventApprovalDelete(eventId, clubId){
 }
 
 
-export async function eventUpdate(id, data){
+export async function eventUpdate(id, data) {
     return await db.event.update({
         where: { id },
         data
     })
 }
 
-export async function eventDelete(id,clubId){
+export async function eventDelete(id, clubId) {
 
     return await db.event.delete({
         where: { id: id, clubId: clubId }
     })
 }
 
-export async function eventFindUnique(id){
+export async function eventFindUnique(id) {
     return await db.event.findUnique({
         where: { id }
     })
 }
 
-export async function eventFindMany(){
+export async function eventFindMany() {
     return await db.event.findMany()
 }
 
-export async function eventFindManyByClubId(clubId){
+export async function eventFindManyByClubId(clubId) {
     return await db.event.findMany({
         where: { clubId }
     })
