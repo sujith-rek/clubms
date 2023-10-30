@@ -1,5 +1,4 @@
 import EventUpdate from "@/components/EventUpdate/EventUpdate";
-import { fetchEvent } from "@/operations/club.fetch";
 import { eventFindUnique } from "@/services/events.service";
 
 
