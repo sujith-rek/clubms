@@ -3,6 +3,7 @@ import { hashSync } from "bcrypt";
 
 export default async function signupClub(req, res) {
     const { email, password, name, description } = req.body;
+    console.log(email,password)
     if(!email || !password || !name) {
         return res.status(400).json({error : "Please fill all the fields"})
     }

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import bcrypt from "bcryptjs";
 
 export default function ClubRegister() {
     const [user, setUser] = useState({ name: "", email: "", desc: "" });
@@ -10,48 +9,44 @@ export default function ClubRegister() {
     function handleSubmit(e) {
         e.preventDefault();
 
-        // Hash the password
-        bcrypt.hash(password, 10, (err, hashedPassword) => {
-            if (err) {
-                console.error("Error hashing password:", err);
-                return;
-            }
+        const newUser = { ...user, password: password };
+        setUser({ name: "", email: "", desc: "" });
+        setPassword("");
 
-            const newUser = { ...user, password: hashedPassword };
-            setUser({ name: "", email: "", desc: "" });
-            setPassword("");
-
-            fetch('/api/clubs/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    email: user.email,
-                    password: hashedPassword, // Send the hashed password
-                    name: user.name,
-                    description: user.desc
-                })
+        fetch('/api/clubs/clubRegister', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: user.email,
+                password: password, // Send the hashed password
+                name: user.name,
+                description: user.desc
             })
-                .then(response => {
-                    if (response.ok) {
-                        return response.json();
-                    } else {
-                        throw new Error('Failed to create club');
-                    }
-                })
-                .then(data => {
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to create club');
+                }
+            })
+            .then(data => {
+                // Assuming the response data contains a success message
+                if (data.success) {
                     router.push({
                         pathname: "/profile",
                         query: { user: JSON.stringify(newUser) },
                     });
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-        });
-    }
-
+                } else {
+                    console.error('Failed to register club:', data.message);
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    };
 
     function handleChange(e) {
         const { name, value } = e.target;
