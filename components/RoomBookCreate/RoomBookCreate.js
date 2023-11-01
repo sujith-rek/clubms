@@ -11,7 +11,13 @@ function RoomBookCreate() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const data = { date, from, to, clubId: 1, description }
+        const data = {
+            date,
+            from,
+            to,
+            clubId: 1,
+            description
+        }
         const res = await roomBook(data)
         console.log(res)
         alert(res.message)
