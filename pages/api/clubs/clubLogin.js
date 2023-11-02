@@ -1,4 +1,4 @@
-import { loginClub } from "@/services/users.services";
+import { getClub } from "@/services/users.services";
 import { compareSync } from "bcrypt";
 
 export default async function login(req, res) {
@@ -8,7 +8,7 @@ export default async function login(req, res) {
         return res.status(400).json({ error: "Please fill all the fields" })
     }
     try {
-        const club = await loginClub({
+        const club = await getClub({
             email,
             password,
         })

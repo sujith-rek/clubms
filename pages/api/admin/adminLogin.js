@@ -1,5 +1,6 @@
-import { loginAdmin } from "@/services/users.services"
+import { getAdmin } from "@/services/users.services"
 import { compareSync } from "bcrypt"
+
 export default async function login(req, res) {
     const { email, password } = req.body
 
@@ -7,9 +8,8 @@ export default async function login(req, res) {
         return res.status(400).json({ error: "Please fill all fields" })
     }
     try {
-        const admin = await loginAdmin({
+        const admin = await getAdmin({
             email: email,
-            password: password,
         })
 
         if (admin === null) {

@@ -1,6 +1,5 @@
 import { eventUpdateAdmin } from "@/services/admin.services";
 
-
 export default async function updateEvent(req, res) {
 
     const { eventId, adminStatus, adminId } = req.body
@@ -11,7 +10,6 @@ export default async function updateEvent(req, res) {
         res.status(400)
         res.json({ message: e.message })
     }
-
 
 }
 
