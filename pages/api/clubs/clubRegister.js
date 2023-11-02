@@ -6,6 +6,7 @@ export default async function signupClub(req, res) {
 
     if (!email || !password || !name) {
         return res.status(400).json({ error: "Please fill all the fields" })
+
     }
     
     try {
@@ -16,7 +17,13 @@ export default async function signupClub(req, res) {
             description: description,
             role: "CLUB"
         })
-        return res.status(200).json({ message: "Club created successfully", club: club })
+
+        const clubWithoutPassword = {
+            ...club,
+            password: undefined
+        }
+
+        return res.status(200).json({ message: "Club created successfully", club: clubWithoutPassword })
     } catch (err) {
         return res.status(400).json({ error: err.message })
     }
