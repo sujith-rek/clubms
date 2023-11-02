@@ -23,6 +23,7 @@ export default function ClubLogin() {
                 localStorage.setItem('user', JSON.stringify(res.club));
                 setUser(res.club);
                 setIsLoggedIn(true);
+                router.push("/profile");
             } else {
                 setErrorMessage(res.error);
                 alert(res.error)
