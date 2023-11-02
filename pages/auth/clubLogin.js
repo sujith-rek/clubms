@@ -1,47 +1,44 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { clubLogin } from "@/operations/club.fetch";
 
 export default function ClubLogin() {
+
     const [credentials, setCredentials] = useState({ email: "", password: "" });
     const [errorMessage, setErrorMessage] = useState("");
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState(null);
     const router = useRouter();
 
-    function handleSubmit(e) {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(credentials)
 
-        fetch('/api/clubs/clubLogin', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email: credentials.email,
-                password: credentials.password
-            })
-        })
-        .then(response => {
-            if (response.ok) {
-                setIsLoggedIn(true); // Set isLoggedIn to true when login is successful
+        const loginData = {
+            email: credentials.email,
+            password: credentials.password,
+        };
+
+        await clubLogin(loginData).then((res) => {
+            console.log(res.club)
+            if (res.club) {
+                localStorage.setItem('user', JSON.stringify(res.club));
+                setUser(res.club);
+                setIsLoggedIn(true);
             } else {
-                throw new Error('Failed to log in');
+                setErrorMessage(res.error);
+                alert(res.error)
             }
-        })
-        .catch(error => {
-            console.error(error);
-            setErrorMessage('Failed to log in');
         });
+
     }
+
     useEffect(() => {
-        // Get user data from local storage
         const userData = localStorage.getItem('user');
         if (userData) {
             setUser(JSON.parse(userData));
+            setIsLoggedIn(true);
         } else {
-            // Redirect to login page if no user data
-            router.push('/clubLogin');
+            router.push('/auth/clubLogin');
         }
     }, []);
 
@@ -68,7 +65,7 @@ export default function ClubLogin() {
                 </label>
                 <button type="submit">Login</button>
             </form>
-            {isLoggedIn && <p>You are logged in!</p>} {/* Display a message when the user is logged in */}
+            {isLoggedIn && <p>You are logged in!</p>}
         </div>
     );
 }
