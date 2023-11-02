@@ -1,51 +1,30 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { clubRegister } from "@/operations/club.fetch";
 
 export default function ClubRegister() {
     const [user, setUser] = useState({ name: "", email: "", desc: "" });
     const [password, setPassword] = useState("");
     const router = useRouter();
 
-    function handleSubmit(e) {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const newUser = { ...user, password: password };
-        setUser({ name: "", email: "", desc: "" });
-        setPassword("");
+        const newUser = {
+            name: user.name,
+            email: user.email,
+            password: password,
+            desc: user.desc,
+        };
 
-        fetch('/api/clubs/clubRegister', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email: user.email,
-                password: password, // Send the hashed password
-                name: user.name,
-                description: user.desc
-            })
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('Failed to create club');
-                }
-            })
-            .then(data => {
-                // Assuming the response data contains a success message
-                if (data.success) {
-                    router.push({
-                        pathname: "/profile",
-                        query: { user: JSON.stringify(newUser) },
-                    });
-                } else {
-                    console.error('Failed to register club:', data.message);
-                }
-            })
-            .catch(error => {
-                console.error(error);
-            });
+        await clubRegister(newUser).then((res) => {
+            if (res.club) {
+                alert(res.message)
+                router.push("/auth/clubLogin");
+            } else {
+                alert(res.error)
+            }
+        });
     };
 
     function handleChange(e) {

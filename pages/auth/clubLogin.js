@@ -19,7 +19,6 @@ export default function ClubLogin() {
         };
 
         await clubLogin(loginData).then((res) => {
-            console.log(res.club)
             if (res.club) {
                 localStorage.setItem('user', JSON.stringify(res.club));
                 setUser(res.club);
