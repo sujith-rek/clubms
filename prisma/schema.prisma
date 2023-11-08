@@ -52,7 +52,6 @@ model RoomBookApproval {
   from        DateTime
   to          DateTime
   adminStatus Status   @default(PENDING)
-  date        DateTime @default(now())
   clubId      Int      @default(1)
   description String
   userId      Int?
