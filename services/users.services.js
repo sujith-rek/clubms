@@ -2,29 +2,43 @@ import db from "@/lib/prisma";
 import { compareSync } from "bcrypt";
 
 export async function registerAdmin(data) {
-    return await db.admin.create({
+    return await db.user.create({
         data
     })
 }
 
 export async function registerClub(data) {
-    return await db.club.create({
+    return await db.user.create({
         data
     })
 }
 
-export async function loginAdmin(data) {
-    return db.admin.findUnique({
+export async function registerStudent(data) {
+    return await db.user.create({
+        data
+    })
+}
+
+export async function getAdmin(data) {
+    return db.user.findUnique({
         where: {
             email: data.email
         }
     })
 }
 
-export async function loginClub(data) {
-    return db.club.findUnique({
+export async function getClub(email) {
+    return db.user.findUnique({
         where: {
-            email: data.email,
+            email: email,
+        }
+    })
+}
+
+export async function getUser(email) {
+    return db.user.findUnique({
+        where: {
+            email: email,
         }
     })
 }

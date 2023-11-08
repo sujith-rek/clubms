@@ -4,6 +4,7 @@ import { eventCreate, eventApprovalCreate } from "@/services/events.service"
 
 export default async function createEvent(req, res) {
   const { name, description, date, venue, clubId } = req.body
+
   const eventData = {
     name,
     description,
@@ -11,11 +12,15 @@ export default async function createEvent(req, res) {
     venue,
     clubId
   }
+
   try {
+
     EventSchema.parse(eventData)
     const event = await eventCreate(eventData)
+    console.log(event, 'event',eventData, 'eventData')
     await eventApprovalCreate({ eventId: event.id })
     res.json({ message: 'Event created successfully', event })
+
   } catch (e) {
     res.status(400)
     res.json({ message: e.message })
