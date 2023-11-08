@@ -1,28 +1,34 @@
-import { getAdmin } from "@/services/users.services"
+import { ironOptions } from "@/lib/ironOptions";
+import { getAdmin, getUser } from "@/services/users.services"
 import { compareSync } from "bcrypt"
+import { withIronSessionApiRoute } from "iron-session/next";
 
-export default async function login(req, res) {
+export default withIronSessionApiRoute(async function login(req, res) {
     const { email, password } = req.body
 
     if (!email || !password) {
-        return res.status(400).json({ error: "Please fill all fields" })
+        return res.json({ status: 400, message: "Please fill all fields" })
     }
     try {
-        const admin = await getAdmin({
-            email: email,
-        })
+        const admin = await getUser(email)
 
         if (admin === null) {
-            return res.status(400).json({ error: "Admin not found" })
+            return res.json({ status: 400, message: "Admin not found" })
         }
 
         const valid = compareSync(password, admin.password);
         if (valid) {
-            return res.status(200).json({ message: "Admin logged in successfully", admin: admin })
+            const adminWithoutPassword = {
+                ...admin,
+                password: undefined,
+            }
+            req.session.user = adminWithoutPassword;
+            await req.session.save();
+            return res.json({ status: 200, message: "Admin logged in successfully", admin: admin })
         } else {
-            return res.status(400).json({ error: "Invalid credentials" })
+            return res.json({ status: 400, message: "Invalid credentials" })
         }
     } catch (err) {
-        return res.status(400).json({ error: err.message })
+        return res.json({ status: 400, message: err.message })
     }
-}
+}, ironOptions);

@@ -1,21 +1,33 @@
-import { registerAdmin } from "@/services/users.services";
+import { withSessionRoute } from "@/lib/ironOptions";
+import { getUser, registerAdmin } from "@/services/users.services";
 import { hashSync } from "bcrypt";
 
-export default async function register(req, res) {
+export default withSessionRoute(async function register(req, res) {
 
     const { email, password, name } = req.body
     if (!email || !password || !name) {
-        return res.status(400).json({ error: "Please fill all fields" })
+        return res.json({ status: 400, message: "Please fill all fields" })
     }
     try {
-        const admin = await registerAdmin({
-            email: email,
-            password: hashSync(password, 10),
-            name: name,
-            role: "ADMIN"
-        })
-        return res.status(200).json({ message: "Admin created successfully", admin: admin })
+        const user = await getUser(email);
+        if (user) {
+            return res.json({ status: 400, message: "Admin already exists" });
+        } else {
+            const admin = await registerAdmin({
+                email: email,
+                password: hashSync(password, 10),
+                name: name,
+                role: "ADMIN"
+            })
+            const adminWithoutPassword = {
+                ...admin,
+                password: undefined
+            }
+            req.session.user = adminWithoutPassword;
+            await req.session.save();
+            return res.json({ status: 200, admin: adminWithoutPassword })
+        }
     } catch (err) {
-        return res.status(400).json({ error: err.message })
+        return res.json({ status: 400, message: err.message })
     }
-}
+});

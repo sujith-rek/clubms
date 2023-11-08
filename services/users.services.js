@@ -27,18 +27,18 @@ export async function getAdmin(data) {
     })
 }
 
-export async function getClub(data) {
+export async function getClub(email) {
     return db.user.findUnique({
         where: {
-            email: data.email,
+            email: email,
         }
     })
 }
 
-export async function getStudent(data) {
+export async function getUser(email) {
     return db.user.findUnique({
         where: {
-            email: data.email,
+            email: email,
         }
     })
 }
