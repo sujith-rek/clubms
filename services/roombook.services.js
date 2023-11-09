@@ -68,4 +68,16 @@ export async function checkRoomAvailabilty(data) {
     });
 }
 
+export async function fetchBookedRooms(clubId) {
+    return await db.roomBookApproval.findMany({
+        where : {
+            clubId : clubId,
+        }
+    })
+}
+
+export async function fetchAllRooms () {
+    return await db.room.findMany();
+}
+
 

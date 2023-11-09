@@ -6,7 +6,6 @@ export default function AvailableRooms({room,clubId}) {
     const {toTime, fromTime} = useRoom();
     const [desc, setDesc] = useState('')
     const handleClick = async () => {
-        console.log(fromTime, toTime);
         if(desc === '') {
             alert('Please fill all the fields');
             return;

@@ -17,7 +17,6 @@ export async function getServerSideProps(context) {
     let eventId = 3
     let clubId = 1
     const res = await eventFindUnique(eventId)
-    console.log(res)
     const event = JSON.parse(JSON.stringify(res))
     return {
         props: {
