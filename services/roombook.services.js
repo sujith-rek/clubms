@@ -49,4 +49,35 @@ export async function deleteRoom(roomId) {
     })
 }
 
+export async function checkRoomAvailabilty(data) {
+    return await prisma.room.findMany({
+        where: {
+            roomBookApproval: {
+                none: {
+                    OR: [
+                        {
+                            from: { lt: data.endDate }, // Booking starts after the selected end date and time
+                        },
+                        {
+                            to: { gt: data.startDate }, // Booking ends before the selected start date and time
+                        },
+                    ],
+                }
+            },
+        },
+    });
+}
+
+export async function fetchBookedRooms(clubId) {
+    return await db.roomBookApproval.findMany({
+        where : {
+            clubId : clubId,
+        }
+    })
+}
+
+export async function fetchAllRooms () {
+    return await db.room.findMany();
+}
+
 

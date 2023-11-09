@@ -3,13 +3,16 @@ import '@/styles/root/globals.scss'
 import { ChakraProvider } from '@chakra-ui/react'
 import App from 'next/app'
 import { getUserFromSession } from '@/context/authContext';
+import { RoomProvider } from '@/context/roomContext';
 function MyApp({ Component, pageProps, user }) {
   return (
-    <AuthProvider ssrUser={user}>
-      <ChakraProvider>
-        <Component {...pageProps} />
-      </ChakraProvider>
-    </AuthProvider>
+    <RoomProvider>
+      <AuthProvider ssrUser={user}>
+        <ChakraProvider>
+          <Component {...pageProps} />
+        </ChakraProvider>
+      </AuthProvider>
+    </RoomProvider>
   )
 }
 

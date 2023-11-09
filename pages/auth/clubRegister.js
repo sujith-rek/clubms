@@ -30,7 +30,6 @@ export default function ClubRegister() {
                 "role": "CLUB"
             }
             const response = await clubRegister(data);
-            console.log(response);
             if (response.status === 200) {
                 alert('Club created successully');
                 router.push('/clubs/clubHomePage')

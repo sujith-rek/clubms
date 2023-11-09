@@ -27,7 +27,6 @@ async function signupClub(req, res) {
             }
             req.session.user = clubWithoutPassword;
             await req.session.save();
-            console.log(req.session.user);
             return res.json({ status: 200, club: clubWithoutPassword })
         }
     } catch (err) {

@@ -19,9 +19,7 @@ export default function ClubLogin() {
     const router = useRouter();
 
     const handleSubmit = async (e) => {
-        console.log(email, password)
         if (email === '' || password === '') {
-            console.log(email, password)
             alert('Please fill in all the fields')
             return;
         }
@@ -30,9 +28,7 @@ export default function ClubLogin() {
                 "email": email,
                 "password" : password
             }
-            console.log(data);
             const response = await clubLogin(data);
-            console.log(response);
             if (response.status === 200) {
                 alert('Club logged in successfully')
                 router.push('/clubs/clubHomePage')
