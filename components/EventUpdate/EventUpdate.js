@@ -8,8 +8,6 @@ function EventUpdate({event}) {
     const [description, setDescription] = useState(event.description)
     const [date, setDate] = useState(event.date)
     const [venue, setVenue] = useState(event.venue)
-    const [clubId, setClubId] = useState(event.clubId)
-    const [eventId, setEventId] = useState(event.eventId)
     const [update, setUpdate] = useState(false)
 
     useEffect(() => {
@@ -17,10 +15,7 @@ function EventUpdate({event}) {
         setDescription(event.description)
         setDate(event.date.slice(0, 10))
         setVenue(event.venue)
-        setClubId(event.clubId)
-        setEventId(event.id)
-    }
-    , [event])
+    },[event])
 
 
     const handleSubmit = async (e) => {
@@ -30,8 +25,8 @@ function EventUpdate({event}) {
             description,
             date,
             venue,
-            clubId,
-            eventId
+            clubId: event.clubId,
+            eventId: event.id
         }
         const res = await updateEvent(data)
         console.log(res)
@@ -48,11 +43,8 @@ function EventUpdate({event}) {
                 <input type="text" placeholder="Description" onChange={(e) => setDescription(e.target.value)} value={description} disabled={!update} />
                 <input type="date" placeholder="Date" onChange={(e) => setDate(e.target.value)} value={date} disabled={!update} />
                 <input type="text" placeholder="Venue" onChange={(e) => setVenue(e.target.value)} value={venue} disabled={!update} />
-                <input type="text" placeholder="Club Id" onChange={(e) => setClubId(e.target.value)} value={clubId} disabled={!update} />
-                <input type="text" placeholder="Event Id" onChange={(e) => setEventId(e.target.value)} value={eventId} disabled={!update} />
                 <button type="submit" disabled={!update}>Update</button>
             </form>
-
         </>
     )
 
