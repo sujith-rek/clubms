@@ -16,6 +16,14 @@ import {
     TabPanel,
     TabPanels,
     Tabs,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 
@@ -124,9 +132,6 @@ export default function ClubHomePage({ user, bookedRooms, events }) {
         }
     }
 
-
-
-
     return (
         <div>
             <div>
@@ -136,8 +141,20 @@ export default function ClubHomePage({ user, bookedRooms, events }) {
             </div>
 
             <br />
+            {/* 
+            {updateModal ? <EventUpdate event={events.find(event => event.id === updateEventId)} setEvent={showUpdateModal} /> : null} */}
 
-            {updateModal ? <EventUpdate event={events.find(event => event.id === updateEventId)} /> : null}
+            <Modal isOpen={updateModal} onClose={() => showUpdateModal(!updateModal)} size='xl'>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Update Event</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <EventUpdate event={events.find(event => event.id === updateEventId)} />
+                    </ModalBody>
+                </ModalContent>
+            </Modal>
+
 
             <Tabs>
                 <TabList>
