@@ -1,6 +1,6 @@
 export async function loginAdmin(data) {
     return await fetch(
-        "/api/login",{
+        "/api/admin/adminLogin",{
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -17,7 +17,7 @@ export async function loginAdmin(data) {
 
 export async function registerAdmin(data) {
     return await fetch(
-        "/api/register",{
+        "/api/admin/adminRegister",{
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
