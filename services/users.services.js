@@ -35,10 +35,10 @@ export async function getClub(email) {
     })
 }
 
-export async function getUser(email) {
+export async function getUser(mail) {
     return db.user.findUnique({
         where: {
-            email: email,
+            email: mail,
         }
     })
 }
