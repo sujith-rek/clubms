@@ -1,6 +1,7 @@
-import { approveRoom, rejectRoom } from "@/operations/admin.fetch";
+import { addRoom, approveRoom, rejectRoom } from "@/operations/admin.fetch";
 import { Button, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
-
+import { FormControl, FormLabel, Input, Select } from "@chakra-ui/react";
+import { useState } from "react";
 export default function AdminRoomBooking({ pendingRooms, approvedRooms, rejectedRooms }) {
     const handleApprove = async (id) => {
         const data = {
@@ -35,14 +36,64 @@ export default function AdminRoomBooking({ pendingRooms, approvedRooms, rejected
             alert("INTERNAL SERVER ERROR");
         }
     }
+
+    const handleAddRoom = async () => {
+        if (capacity === null || roomNumber === null || roomBlock === '') {
+            alert('Please fill in all the fields');
+            return;
+        }
+        const data = {
+            "capacity": capacity,
+            "roomNumber": roomNumber,
+            "roomBlock": roomBlock
+        }
+        try {
+            const res = await addRoom(data);
+            if(res.status === 200) {
+                alert('Room Added successfully');
+                window.location.reload();
+            } else {
+                alert(res.message);
+            }
+        } catch (e) {
+            alert(e.message);
+        }
+    }
+
+    const [roomNumber, setRoomNumber] = useState(null);
+    const [capacity, setCapacity] = useState(null);
+    const [roomBlock, setRoomBlock] = useState('');
     return (
         <Tabs>
             <TabList>
+                <Tab>Add Room</Tab>
                 <Tab>Pending Room Approvals</Tab>
                 <Tab>Approved Room Approvals</Tab>
                 <Tab>Rejected Room Approvals</Tab>
             </TabList>
             <TabPanels>
+                <TabPanel>
+                    <div>
+                        <FormControl>
+                            <FormLabel>Block</FormLabel>
+                            <Select onChange={(e) => setRoomBlock(e.target.value)} placeholder='Select Block Name'>
+                                <option value='A_BLOCK'>A BLOCK</option>
+                                <option value='B_BLOCK'>B BLOCK</option>
+                                <option value='C_BLOCK'>C BLOCK</option>
+                                <option value='D_BLOCK'>D BLOCK</option>
+                            </Select>
+                        </FormControl>
+                        <FormControl>
+                            <FormLabel>Room Number</FormLabel>
+                            <Input onChange={(e) => setRoomNumber(e.target.value)} type="number" />
+                        </FormControl>
+                        <FormControl>
+                            <FormLabel>Capacity</FormLabel>
+                            <Input onChange={(e) => setCapacity(e.target.value)} type="number" />
+                        </FormControl>
+                        <Button onClick={handleAddRoom} marginTop={"20px"} colorScheme="blue">Add Room</Button>
+                    </div>
+                </TabPanel>
                 <TabPanel>
                     {pendingRooms.map((room, index) => {
                         return (
@@ -78,7 +129,7 @@ export default function AdminRoomBooking({ pendingRooms, approvedRooms, rejected
                     })}
                 </TabPanel>
                 <TabPanel>
-                {rejectedRooms.map((room, index) => {
+                    {rejectedRooms.map((room, index) => {
                         return (
                             <div key={index}>
                                 <p>Room Number = {room.roomNumber}</p>
