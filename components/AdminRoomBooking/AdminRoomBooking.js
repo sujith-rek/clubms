@@ -1,8 +1,8 @@
-import { addRoom, approveRoom, rejectRoom } from "@/operations/admin.fetch";
+import { addRoom, approveRoom, rejectRoom, removeRoom } from "@/operations/admin.fetch";
 import { Button, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import { FormControl, FormLabel, Input, Select } from "@chakra-ui/react";
 import { useState } from "react";
-export default function AdminRoomBooking({ pendingRooms, approvedRooms, rejectedRooms }) {
+export default function AdminRoomBooking({ pendingRooms, approvedRooms, rejectedRooms, allRooms }) {
     const handleApprove = async (id) => {
         const data = {
             "roomBookId": id,
@@ -49,7 +49,7 @@ export default function AdminRoomBooking({ pendingRooms, approvedRooms, rejected
         }
         try {
             const res = await addRoom(data);
-            if(res.status === 200) {
+            if (res.status === 200) {
                 alert('Room Added successfully');
                 window.location.reload();
             } else {
@@ -59,7 +59,18 @@ export default function AdminRoomBooking({ pendingRooms, approvedRooms, rejected
             alert(e.message);
         }
     }
-
+    const handleRemoveRoom = async (id) => {
+        const data = {
+            "roomId": id,
+        }
+        const res = await removeRoom(data);
+        if(res.status === 200) {
+            alert(res.message);
+            window.location.reload();
+        } else {
+            alert(e.message);
+        }
+    }
     const [roomNumber, setRoomNumber] = useState(null);
     const [capacity, setCapacity] = useState(null);
     const [roomBlock, setRoomBlock] = useState('');
@@ -67,6 +78,7 @@ export default function AdminRoomBooking({ pendingRooms, approvedRooms, rejected
         <Tabs>
             <TabList>
                 <Tab>Add Room</Tab>
+                <Tab>Remove Room</Tab>
                 <Tab>Pending Room Approvals</Tab>
                 <Tab>Approved Room Approvals</Tab>
                 <Tab>Rejected Room Approvals</Tab>
@@ -93,6 +105,20 @@ export default function AdminRoomBooking({ pendingRooms, approvedRooms, rejected
                         </FormControl>
                         <Button onClick={handleAddRoom} marginTop={"20px"} colorScheme="blue">Add Room</Button>
                     </div>
+                </TabPanel>
+                <TabPanel>
+                    {allRooms.map((room, index) => {
+                        return (
+                            <div key={index}>
+                                <p>Block = {room.roomBlock}</p>
+                                <p>Room Number = {room.roomNumber}</p>
+                                <p>Room Capacity = {room.capacity}</p>
+                                <Button onClick={() => handleRemoveRoom(room.id)} colorScheme="purple" marginTop={"10px"}>Remove Room</Button>
+                                <br />
+                                <br />
+                            </div>
+                        )
+                    })}
                 </TabPanel>
                 <TabPanel>
                     {pendingRooms.map((room, index) => {

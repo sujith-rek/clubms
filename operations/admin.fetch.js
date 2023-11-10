@@ -79,5 +79,21 @@ export async function addRoom(data) {
     })
 }
 
+export async function removeRoom(data) {
+    return await fetch(
+        "/api/roomBook/removeRoom",{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data),
+            credentials: "include"
+    }).then((res) => {
+        return res.json()
+    }).catch((err) => {
+        console.log(err)
+    })
+}
+
 
 

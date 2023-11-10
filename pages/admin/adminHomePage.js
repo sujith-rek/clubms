@@ -94,12 +94,12 @@ export async function getServerSideProps(context) {
             return room;
         })
         return {
-            props: { user: user, pendingRooms: pendingRooms, approvedRooms: approvedRooms, rejectedRooms: rejectedRooms }
+            props: { user: user, pendingRooms: pendingRooms, approvedRooms: approvedRooms, rejectedRooms: rejectedRooms, allRooms: allRooms }
         }
     }
 }
 
-export default function AdminHomePage({ user, pendingRooms, approvedRooms, rejectedRooms }) {
+export default function AdminHomePage({ user, pendingRooms, approvedRooms, rejectedRooms, allRooms }) {
 
     const handleLogOut = async () => {
         try {
@@ -131,7 +131,7 @@ export default function AdminHomePage({ user, pendingRooms, approvedRooms, rejec
                 </TabList>
                 <TabPanels>
                     <TabPanel>
-                        <AdminRoomBooking pendingRooms={pendingRooms} approvedRooms={approvedRooms} rejectedRooms={rejectedRooms} />
+                        <AdminRoomBooking pendingRooms={pendingRooms} approvedRooms={approvedRooms} rejectedRooms={rejectedRooms} allRooms={allRooms} />
                     </TabPanel>
                     <TabPanel></TabPanel>
                     <TabPanel>
