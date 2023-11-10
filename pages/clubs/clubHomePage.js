@@ -7,9 +7,6 @@ import EventCreate from '@/components/EventCreate/EventCreate'
 import EventUpdate from '@/components/EventUpdate/EventUpdate'
 
 import {
-    FormControl,
-    FormLabel,
-    Input,
     Button,
     Tab,
     TabList,
@@ -26,6 +23,8 @@ import {
 
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
+import ClubRoomBooking from '@/components/ClubRoomBooking/ClubRoomBooking'
+import { logout } from '@/operations/users.fetch'
 
 
 export async function getServerSideProps(context) {
@@ -33,7 +32,7 @@ export async function getServerSideProps(context) {
         return {
             redirect: {
                 permanent: false,
-                destination: '/auth/clubLogin'
+                destination: '/auth/club/clubLogin'
             }
         }
     }
@@ -41,21 +40,21 @@ export async function getServerSideProps(context) {
         return {
             redirect: {
                 permanent: false,
-                destination: '/auth/clubLogin'
+                destination: '/auth/admin/adminLogin'
             }
         }
     } else if (context.req.session.user.role === 'CC') {
         return {
             redirect: {
                 permanent: false,
-                destination: '/auth/clubLogin'
+                destination: '/auth/club/clubLogin'
             }
         }
     } else if (context.req.session.user.role === 'STUDENT') {
         return {
             redirect: {
                 permanent: false,
-                destination: '/auth/clubLogin'
+                destination: '/auth/student/studentLogin'
             }
         }
     } else {
@@ -107,37 +106,26 @@ export default function ClubHomePage({ user, bookedRooms, events }) {
     const [isFetching, setIsFetching] = useState(false);
     const [updateEventId, setUpdateEventId] = useState(0);
     const { rooms, setRooms, setToTime, setFromTime } = useRoom();
-
-    const seeAvailRooms = async () => {
-        if (from === '' || to === '') {
-            alert('Please fil all the fields');
-            return;
-        }
+    const handleLogOut = async () => {
         try {
-            setIsFetching(false)
-            const response = await fetchRooms({
-                startDate: new Date(from).toISOString(),
-                endDate: new Date(to).toISOString,
-            });
-            if (response.status === 200) {
-                setRooms(response.rooms);
-                setToTime(to);
-                setFromTime(from);
-                setIsFetching(true)
+            const res = await logout();
+            if(res.status === 200) {
+                alert('You have been loged out successfully');
+                window.location.reload();
             } else {
-                console.log(response.message)
+                alert('Internal Server Error')
             }
         } catch (e) {
             alert(e.message);
         }
     }
-
     return (
         <div>
             <div>
                 <div className="flex flex-col items-center justify-center">
                     <h1 className="text-4xl font-bold">Welcome {user.name}</h1>
                 </div>
+                <Button onClick={() => handleLogOut()} colorScheme='red' marginTop={"10px"}>Logout</Button>
             </div>
 
             <br />
@@ -216,75 +204,7 @@ export default function ClubHomePage({ user, bookedRooms, events }) {
 
                     </TabPanel>
                     <TabPanel>
-
-                        <Button colorScheme='yellow' marginRight={"10px"} color={"black"} onClick={() => bookRoom(!room)}>{room ? 'Cancel room Book' : 'Book Room'}</Button>
-                        <Button colorScheme='yellow' marginRight={"10px"} color={"black"} onClick={() => showApprovedRooms(!approvedRooms)}>{approvedRooms ? 'Close Approved Rooms' : 'Show Approved Rooms'}</Button>
-                        <Button colorScheme='yellow' marginRight={"10px"} color={"black"} onClick={() => showPendingRooms(!pendingRooms)}>{pendingRooms ? 'Close Pending Rooms' : 'Show Pending Rooms'}</Button>
-
-                        {room ?
-                            <div>
-                                <div>
-                                    <FormControl>
-                                        <FormLabel>From</FormLabel>
-                                        <Input onChange={(e) => setFrom(e.target.value)} type='datetime-local' />
-                                    </FormControl>
-                                </div>
-                                <div>
-                                    <FormControl>
-                                        <FormLabel>To</FormLabel>
-                                        <Input onChange={(e) => setTo(e.target.value)} type='datetime-local' />
-                                    </FormControl>
-                                </div>
-                                <Button colorScheme='yellow' marginRight={"10px"} color={"black"} onClick={seeAvailRooms}>Fetch Rooms</Button>
-                            </div>
-                            : null
-                        }
-
-                        {isFetching ?
-                            <div>{rooms.map((room, index) => {
-                                return (
-                                    <AvailableRooms key={index} room={room} clubId={user.id} />
-                                )
-                            })}</div> : null
-                        }
-                        <br />
-
-                        {approvedRooms ?
-                            <div>
-                                {bookedRooms.map((bookedRoom, index) => {
-                                    if (bookedRoom.adminStatus === 'APPROVED') {
-                                        return (
-                                            <div key={index}>
-                                                <p>Room Number : {bookedRoom.roomNumber}</p>
-                                                <p>Room Block : {bookedRoom.roomBlock}</p>
-                                                <p>From : {bookedRoom.from}</p>
-                                                <p>To : {bookedRoom.to}</p>
-                                                <p>Status : {bookedRoom.status}</p>
-                                            </div>
-                                        )
-                                    }
-                                })}
-                            </div> : null
-                        }
-
-                        {pendingRooms ?
-                            <div>
-                                {bookedRooms.map((bookedRoom, index) => {
-                                    if (bookedRoom.adminStatus === 'PENDING') {
-                                        return (
-                                            <div key={index}>
-                                                <p>Room Number : {bookedRoom.roomNumber}</p>
-                                                <p>Room Block : {bookedRoom.roomBlock}</p>
-                                                <p>From : {bookedRoom.from}</p>
-                                                <p>To : {bookedRoom.to}</p>
-                                                <p>Status : {bookedRoom.status}</p>
-                                            </div>
-                                        )
-                                    }
-                                })}
-                            </div> : null
-                        }
-
+                        <ClubRoomBooking user={user} bookedRooms={bookedRooms} />
                     </TabPanel>
                     <TabPanel>
                         <p>Club Name : {user.name}</p>

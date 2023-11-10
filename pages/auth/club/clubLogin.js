@@ -65,7 +65,6 @@ export default function ClubLogin() {
                 </label>
                 <button type="submit">Login</button>
             </form>
-            {isLoggedIn && <p>You are logged in!</p>}
         </div>
     );
 }
