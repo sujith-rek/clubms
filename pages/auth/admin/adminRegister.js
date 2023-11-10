@@ -22,11 +22,11 @@ export default function AdminRegister() {
         };
 
         await registerAdmin(newAdmin).then((res) => {
-            if (res.admin) {
+            if (res.status === 200) {
                 alert("Admin Created successfully")
                 router.push("/admin/adminHomePage");
             } else {
-                alert(res.error)
+                alert(res.message)
             }
         });
     };
