@@ -1,6 +1,3 @@
-import AvailableRooms from '@/components/AvailableRooms/AvailableRooms'
-import useRoom from '@/hooks/useRoom'
-import { fetchRooms } from '@/operations/club.fetch'
 import { fetchAllRooms, fetchBookedRooms } from '@/services/roombook.services'
 import { eventFindManyByClubId } from '@/services/events.service'
 import EventCreate from '@/components/EventCreate/EventCreate'
@@ -17,7 +14,6 @@ import {
     ModalOverlay,
     ModalContent,
     ModalHeader,
-    ModalFooter,
     ModalBody,
     ModalCloseButton,
 
@@ -93,23 +89,16 @@ export async function getServerSideProps(context) {
 }
 
 export default function ClubHomePage({ user, bookedRooms, events }) {
-    const [from, setFrom] = useState('')
-    const [to, setTo] = useState('')
     const [updateModal, showUpdateModal] = useState(false)
     const [event, showEvent] = useState(false)
-    const [eventUpdate, showEventUpdate] = useState(false)
     const [pendingEvents, showPendingEvents] = useState(false)
     const [approvedEvents, showApprovedEvents] = useState(false)
-    const [room, bookRoom] = useState(false)
-    const [approvedRooms, showApprovedRooms] = useState(false)
-    const [pendingRooms, showPendingRooms] = useState(false)
-    const [isFetching, setIsFetching] = useState(false);
     const [updateEventId, setUpdateEventId] = useState(0);
-    const { rooms, setRooms, setToTime, setFromTime } = useRoom();
+
     const handleLogOut = async () => {
         try {
             const res = await logout();
-            if(res.status === 200) {
+            if (res.status === 200) {
                 alert('You have been loged out successfully');
                 window.location.reload();
             } else {
@@ -119,6 +108,7 @@ export default function ClubHomePage({ user, bookedRooms, events }) {
             alert(e.message);
         }
     }
+
     return (
         <div>
             <div>
@@ -129,8 +119,6 @@ export default function ClubHomePage({ user, bookedRooms, events }) {
             </div>
 
             <br />
-            {/* 
-            {updateModal ? <EventUpdate event={events.find(event => event.id === updateEventId)} setEvent={showUpdateModal} /> : null} */}
 
             <Modal isOpen={updateModal} onClose={() => showUpdateModal(!updateModal)} size='xl'>
                 <ModalOverlay />

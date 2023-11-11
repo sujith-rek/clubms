@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { registerStudent } from "@/operations/student.fetch";
-import { Button, ButtonGroup } from '@chakra-ui/react'
+import { Button } from '@chakra-ui/react'
 import {
     FormControl,
     FormLabel,
-    FormErrorMessage,
     FormHelperText,
     Input,
 } from '@chakra-ui/react'
+
 export default function ClubRegister() {
+
     const [password, setPassword] = useState("");
     const router = useRouter();
     const [name, setName] = useState("");
@@ -28,9 +29,7 @@ export default function ClubRegister() {
                 "rollNo": rollno,
                 "password": password,
             }
-            console.log(data);
             const response = await registerStudent(data);
-            console.log(response);
             if (response.status === 200) {
                 alert('Student account created successully');
                 router.push('/student/studentHomePage')
@@ -78,7 +77,7 @@ export default function ClubRegister() {
                             </FormControl>
                         </div>
 
-                 
+
                         <div>
                             <Button onClick={handleSubmit} colorScheme='blue'>Register</Button>
                         </div>

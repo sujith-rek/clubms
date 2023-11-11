@@ -1,16 +1,15 @@
 import { fetchAvailableEvents } from "@/operations/student.fetch"
-import { useEffect,useState } from "react"
+import { useEffect, useState } from "react"
 
 export default function StudentHomePage() {
 
-    const [events,setEvents] = useState([])
+    const [events, setEvents] = useState([])
 
     useEffect(() => {
         fetchAvailableEvents().then((res) => {
-            console.log(res)
             setEvents(res.events)
         })
-    },[])
+    }, [])
 
     return (
         <div>

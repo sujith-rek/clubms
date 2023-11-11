@@ -1,18 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { loginStudent } from "@/operations/student.fetch";
 import {
     FormControl,
     FormLabel,
-    FormErrorMessage,
     FormHelperText,
     Input,
 } from '@chakra-ui/react'
-import { Button, ButtonGroup } from '@chakra-ui/react'
+import { Button } from '@chakra-ui/react'
 
 export default function StudentLogin() {
 
-    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const router = useRouter();
@@ -27,11 +25,11 @@ export default function StudentLogin() {
         else {
             const data = {
                 "email": email,
-                "password" : password
+                "password": password
             }
-            console.log(data);
+
             const response = await loginStudent(data);
-            console.log(response);
+
             if (response.status === 200) {
                 alert('Student logged in successfully')
                 router.push('/clubs/studentHomePage')
@@ -64,7 +62,7 @@ export default function StudentLogin() {
                         </FormControl>
                     </div>
                     <div>
-                        <Button onClick={handleSubmit} colorScheme='blue'>Login Student</Button>
+                        <Button ofnClick={handleSubmit} colorScheme='blue'>Login Student</Button>
                     </div>
                 </form>
             </div>

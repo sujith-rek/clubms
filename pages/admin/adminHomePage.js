@@ -2,22 +2,12 @@ import AdminRoomBooking from '@/components/AdminRoomBooking/AdminRoomBooking'
 import { logout } from '@/operations/users.fetch'
 import { fetchAllRooms, fetchApprovedRooms, fetchPendingRooms, fetchRejectedRooms } from '@/services/roombook.services'
 import {
-    FormControl,
-    FormLabel,
-    Input,
     Button,
     Tab,
     TabList,
     TabPanel,
     TabPanels,
     Tabs,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
 
 } from '@chakra-ui/react'
 
@@ -104,7 +94,7 @@ export default function AdminHomePage({ user, pendingRooms, approvedRooms, rejec
     const handleLogOut = async () => {
         try {
             const res = await logout();
-            if(res.status === 200) {
+            if (res.status === 200) {
                 alert('You have been loged out successfully');
                 window.location.reload();
             } else {
@@ -114,6 +104,7 @@ export default function AdminHomePage({ user, pendingRooms, approvedRooms, rejec
             alert(e.message);
         }
     }
+
     return (
         <div>
             <div>
