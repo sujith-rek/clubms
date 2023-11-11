@@ -4,22 +4,12 @@ import { logout } from '@/operations/users.fetch'
 import { fetchAllRooms, fetchApprovedRooms, fetchPendingRooms, fetchRejectedRooms } from '@/services/roombook.services'
 import { eventFindMany, eventFindManyByClubId, getEventApprovalByEventId } from '@/services/events.service'
 import {
-    FormControl,
-    FormLabel,
-    Input,
     Button,
     Tab,
     TabList,
     TabPanel,
     TabPanels,
     Tabs,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
 
 } from '@chakra-ui/react'
 
@@ -28,7 +18,7 @@ export async function getServerSideProps(context) {
         return {
             redirect: {
                 permanent: false,
-                destination: '/auth/club/clubLogin'
+                destination: '/auth/admin/adminLogin'
             }
         }
     }
@@ -122,6 +112,7 @@ export default function AdminHomePage({ user, pendingRooms, approvedRooms, rejec
             alert(e.message);
         }
     }
+
     return (
         <div>
             <div>

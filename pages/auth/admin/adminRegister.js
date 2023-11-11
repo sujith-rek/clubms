@@ -9,7 +9,7 @@ export default function AdminRegister() {
 
     const handleSubmit = async (e) => {
 
-        if(admin.name === '' || admin.email === '' || password === '') {
+        if (admin.name === '' || admin.email === '' || password === '') {
             alert('Please fill in all the fields');
             return;
         }

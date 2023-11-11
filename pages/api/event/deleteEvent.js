@@ -6,7 +6,7 @@ export default async function deleteEvent(req, res) {
 
     try {
         await eventApprovalDelete(eventId, clubId)
-        const event = await eventDelete(eventId, clubId)
+        // const event = await eventDelete(eventId, clubId)
         res.json({ message: 'Event deleted successfully', event })
         
     } catch (e) {

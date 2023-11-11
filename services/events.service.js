@@ -64,3 +64,18 @@ export async function eventFindManyByClubId(id) {
         include: { Eventapproval: true }
     })
 }
+
+
+export async function eventsApprovedFindMany() {
+    return await db.event.findMany({
+        where: { 
+            Eventapproval: { 
+                AND: [
+                    { adminStatus: 'APPROVED'},
+                    { ccStatus: 'APPROVED'}
+                ]
+            }
+        }
+    })
+}
+

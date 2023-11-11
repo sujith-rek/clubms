@@ -10,9 +10,6 @@ export default function Home() {
         Available routes for now
         <div className="flex flex-col">
           <div className="flex flex-col">
-            <a href="/profile">Profile</a>
-          </div>
-          <div className="flex flex-col">
             <a href="/auth/clubLogin">Club Login</a>
           </div>
           <div className="flex flex-col">
