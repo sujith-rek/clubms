@@ -26,7 +26,7 @@ export async function getServerSideProps(context) {
         return {
             redirect: {
                 permanent: false,
-                destination: '/auth/clubLogin'
+                destination: '/auth/admin/adminLogin'
             }
         }
     }
