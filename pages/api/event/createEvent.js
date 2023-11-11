@@ -17,7 +17,7 @@ export default async function createEvent(req, res) {
 
     EventSchema.parse(eventData)
     const event = await eventCreate(eventData)
-    await eventApprovalCreate({ eventId: event.id })
+    // await eventApprovalCreate({ eventId: event.id })
     res.json({ message: 'Event created successfully', event })
 
   } catch (e) {
