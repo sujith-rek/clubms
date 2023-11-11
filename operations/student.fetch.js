@@ -31,6 +31,19 @@ export async function registerStudent(data) {
     })
 }
 
-
+export async function fetchAvailableEvents() {
+    return await fetch(
+        "/api/event/fetchAvailable",{
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "include"
+    }).then((res) => {
+        return res.json()
+    }).catch((err) => {
+        console.log(err)
+    })
+}
 
 
