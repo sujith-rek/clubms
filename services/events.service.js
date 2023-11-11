@@ -64,4 +64,3 @@ export async function eventFindManyByClubId(id) {
         include: { Eventapproval: true }
     })
 }
-

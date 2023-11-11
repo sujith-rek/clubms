@@ -1,6 +1,8 @@
 import AdminRoomBooking from '@/components/AdminRoomBooking/AdminRoomBooking'
+import AdminEventApproval from '@/components/AdminEventApproval/AdminEventApproval'
 import { logout } from '@/operations/users.fetch'
 import { fetchAllRooms, fetchApprovedRooms, fetchPendingRooms, fetchRejectedRooms } from '@/services/roombook.services'
+import { eventFindMany, eventFindManyByClubId, getEventApprovalByEventId } from '@/services/events.service'
 import {
     FormControl,
     FormLabel,
@@ -54,6 +56,12 @@ export async function getServerSideProps(context) {
     } else {
         const user = context.req.session.user;
         const allRooms = await fetchAllRooms();
+        const allEvents = (await eventFindMany()).map(event => {
+            return {
+                ...event,
+                date: event.date.toISOString(),
+            };
+        });
         let pendingRooms = await fetchPendingRooms();
         let approvedRooms = await fetchApprovedRooms();
         let rejectedRooms = await fetchRejectedRooms();
@@ -94,17 +102,17 @@ export async function getServerSideProps(context) {
             return room;
         })
         return {
-            props: { user: user, pendingRooms: pendingRooms, approvedRooms: approvedRooms, rejectedRooms: rejectedRooms, allRooms: allRooms }
+            props: { user: user, pendingRooms: pendingRooms, approvedRooms: approvedRooms, rejectedRooms: rejectedRooms, allRooms: allRooms, allEvents: allEvents }
         }
     }
 }
 
-export default function AdminHomePage({ user, pendingRooms, approvedRooms, rejectedRooms, allRooms }) {
+export default function AdminHomePage({ user, pendingRooms, approvedRooms, rejectedRooms, allRooms, allEvents }) {
 
     const handleLogOut = async () => {
         try {
             const res = await logout();
-            if(res.status === 200) {
+            if (res.status === 200) {
                 alert('You have been loged out successfully');
                 window.location.reload();
             } else {
@@ -133,7 +141,9 @@ export default function AdminHomePage({ user, pendingRooms, approvedRooms, rejec
                     <TabPanel>
                         <AdminRoomBooking pendingRooms={pendingRooms} approvedRooms={approvedRooms} rejectedRooms={rejectedRooms} allRooms={allRooms} />
                     </TabPanel>
-                    <TabPanel></TabPanel>
+                    <TabPanel>
+                        <AdminEventApproval allEvents={allEvents} />
+                    </TabPanel>
                     <TabPanel>
                         <p>Admin Name : {user.name}</p>
                         <p>Admin Email : {user.email}</p>

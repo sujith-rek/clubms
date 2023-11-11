@@ -95,5 +95,24 @@ export async function removeRoom(data) {
     })
 }
 
+export async function approveEvent(eventId) {
+    const token = localStorage.getItem('admin'); // assuming the token is stored under 'admin' key
+
+    return await fetch(
+        "/api/event/approveEvent",{
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ eventId }),
+            credentials: "include"
+    }).then((res) => {
+        return res.json()
+    }).catch((err) => {
+        console.log(err)
+    })
+}
+
 
 
