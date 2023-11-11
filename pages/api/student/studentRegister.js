@@ -4,12 +4,12 @@ import { hashSync } from "bcrypt";
 
 export default withSessionRoute(async function signupStudent(req, res) {
     const { name, email, password, rollNo } = req.body;
-
     if (!email || !password || !name || !rollNo) {
         return res.json({ status: 400, message: "Please fill all the fields" })
     }
 
     try {
+        console.log(email);
         const user = await getUser(email);
         if (user) {
             return res.json({ status: 400, message: "User already exists" });
@@ -30,6 +30,7 @@ export default withSessionRoute(async function signupStudent(req, res) {
             return res.json({ status: 200, student: studentWithoutPassword })
         }
     } catch (err) {
+        console.log(err);
         return res.json({ status: 400, message: err.message })
     }
 })

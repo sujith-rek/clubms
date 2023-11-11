@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { clubLogin } from "@/operations/club.fetch";
+import { loginStudent } from "@/operations/student.fetch";
 import {
     FormControl,
     FormLabel,
@@ -10,16 +10,17 @@ import {
 } from '@chakra-ui/react'
 import { Button, ButtonGroup } from '@chakra-ui/react'
 
-export default function ClubLogin() {
+export default function StudentLogin() {
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
-    const [description, setDescription] = useState("");
     const [password, setPassword] = useState("");
     const router = useRouter();
 
     const handleSubmit = async (e) => {
+        console.log(email, password)
         if (email === '' || password === '') {
+            console.log(email, password)
             alert('Please fill in all the fields')
             return;
         }
@@ -28,10 +29,12 @@ export default function ClubLogin() {
                 "email": email,
                 "password" : password
             }
-            const response = await clubLogin(data);
+            console.log(data);
+            const response = await loginStudent(data);
+            console.log(response);
             if (response.status === 200) {
-                alert('Club logged in successfully')
-                router.push('/clubs/clubHomePage')
+                alert('Student logged in successfully')
+                router.push('/clubs/studentHomePage')
             } else {
                 alert(response.message);
                 return;
@@ -42,13 +45,13 @@ export default function ClubLogin() {
     return (
         <div>
             <h2 className="RegisterMainSection__header">
-                Login Your Club
+                Login as Student
             </h2>
             <div className="RegisterMainSection__form">
                 <form className="space-y-6">
                     <div>
                         <FormControl>
-                            <FormLabel>Club Email</FormLabel>
+                            <FormLabel>Email Id</FormLabel>
                             <Input onChange={(e) => setEmail(e.target.value)} type='email' />
                             <FormHelperText>We'll never share your email.</FormHelperText>
                         </FormControl>
@@ -61,7 +64,7 @@ export default function ClubLogin() {
                         </FormControl>
                     </div>
                     <div>
-                        <Button onClick={handleSubmit} colorScheme='blue'>Login Club</Button>
+                        <Button onClick={handleSubmit} colorScheme='blue'>Login Student</Button>
                     </div>
                 </form>
             </div>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { clubRegister } from "@/operations/club.fetch";
+import { registerStudent } from "@/operations/student.fetch";
 import { Button, ButtonGroup } from '@chakra-ui/react'
 import {
     FormControl,
@@ -14,10 +14,10 @@ export default function ClubRegister() {
     const router = useRouter();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
-    const [description, setDescription] = useState("");
+    const [rollno, setRollno] = useState("");
 
     const handleSubmit = async (e) => {
-        if (name === '' || email === '' || password === '' || description === '') {
+        if (name === '' || email === '' || password === '' || rollno === '') {
             alert('Please fill in all the fields');
             return;
         }
@@ -25,14 +25,15 @@ export default function ClubRegister() {
             const data = {
                 "name": name,
                 "email": email,
+                "rollNo": rollno,
                 "password": password,
-                "description": description,
-                "role": "CLUB"
             }
-            const response = await clubRegister(data);
+            console.log(data);
+            const response = await registerStudent(data);
+            console.log(response);
             if (response.status === 200) {
-                alert('Club created successully');
-                router.push('/clubs/clubHomePage')
+                alert('Student account created successully');
+                router.push('/student/studentHomePage')
                 return;
             } else {
                 alert(response.message);
@@ -45,21 +46,28 @@ export default function ClubRegister() {
         <>
             <div className="RegisterMainSection">
                 <h2 className="RegisterMainSection__header">
-                    Register Your Club
+                    Register as a Student
                 </h2>
                 <div className="RegisterMainSection__form">
                     <form className="space-y-6">
                         <div>
                             <FormControl>
-                                <FormLabel>Club Name</FormLabel>
+                                <FormLabel>Your Name</FormLabel>
                                 <Input onChange={(e) => setName(e.target.value)} type='text' />
                             </FormControl>
                         </div>
                         <div>
                             <FormControl>
-                                <FormLabel>Club Email</FormLabel>
+                                <FormLabel>Your Email</FormLabel>
                                 <Input onChange={(e) => setEmail(e.target.value)} type='email' />
                                 <FormHelperText>We'll never share your email.</FormHelperText>
+                            </FormControl>
+                        </div>
+
+                        <div>
+                            <FormControl>
+                                <FormLabel>Roll No</FormLabel>
+                                <Input onChange={(e) => setRollno(e.target.value)} type='number' />
                             </FormControl>
                         </div>
 
@@ -70,15 +78,9 @@ export default function ClubRegister() {
                             </FormControl>
                         </div>
 
+                 
                         <div>
-                            <FormControl>
-                                <FormLabel>Club Description</FormLabel>
-                                <Input onChange={(e) => setDescription(e.target.value)} type='text' />
-                                <FormHelperText>A small description about your club.</FormHelperText>
-                            </FormControl>
-                        </div>
-                        <div>
-                            <Button onClick={handleSubmit} colorScheme='blue'>Register Club</Button>
+                            <Button onClick={handleSubmit} colorScheme='blue'>Register</Button>
                         </div>
                     </form>
                 </div>

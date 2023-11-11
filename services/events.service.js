@@ -58,9 +58,10 @@ export async function eventFindMany() {
     return await db.event.findMany()
 }
 
-export async function eventFindManyByClubId(clubId) {
+export async function eventFindManyByClubId(id) {
     return await db.event.findMany({
-        where: { clubId }
+        where: { clubId: id },
+        include: { Eventapproval: true }
     })
 }
 

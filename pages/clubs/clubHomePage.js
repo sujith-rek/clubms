@@ -2,21 +2,37 @@ import AvailableRooms from '@/components/AvailableRooms/AvailableRooms'
 import useRoom from '@/hooks/useRoom'
 import { fetchRooms } from '@/operations/club.fetch'
 import { fetchAllRooms, fetchBookedRooms } from '@/services/roombook.services'
-import { Button, ButtonGroup } from '@chakra-ui/react'
+import { eventFindManyByClubId } from '@/services/events.service'
+import EventCreate from '@/components/EventCreate/EventCreate'
+import EventUpdate from '@/components/EventUpdate/EventUpdate'
+
 import {
-    FormControl,
-    FormLabel,
-    FormErrorMessage,
-    FormHelperText,
-    Input,
+    Button,
+    Tab,
+    TabList,
+    TabPanel,
+    TabPanels,
+    Tabs,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+
 } from '@chakra-ui/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import ClubRoomBooking from '@/components/ClubRoomBooking/ClubRoomBooking'
+import { logout } from '@/operations/users.fetch'
+
+
 export async function getServerSideProps(context) {
     if (context.req.session.user === undefined) {
         return {
             redirect: {
                 permanent: false,
-                destination: '/auth/clubLogin'
+                destination: '/auth/club/clubLogin'
             }
         }
     }
@@ -24,26 +40,27 @@ export async function getServerSideProps(context) {
         return {
             redirect: {
                 permanent: false,
-                destination: '/auth/clubLogin'
+                destination: '/auth/admin/adminLogin'
             }
         }
     } else if (context.req.session.user.role === 'CC') {
         return {
             redirect: {
                 permanent: false,
-                destination: '/auth/clubLogin'
+                destination: '/auth/club/clubLogin'
             }
         }
     } else if (context.req.session.user.role === 'STUDENT') {
         return {
             redirect: {
                 permanent: false,
-                destination: '/auth/clubLogin'
+                destination: '/auth/student/studentLogin'
             }
         }
     } else {
         const user = context.req.session.user;
         let bookedRooms = await fetchBookedRooms(context.req.session.user.id);
+        let events = await eventFindManyByClubId(user.id);
         const allRooms = await fetchAllRooms();
         const indianOptions = {
             timeZone: 'Asia/Kolkata',
@@ -62,92 +79,142 @@ export async function getServerSideProps(context) {
 
             return bookedRoom;
         });
+
+        events = events.map(event => {
+            event.date = event.date.toLocaleString('en-IN', indianOptions);
+            return event;
+        });
+
+
         return {
-            props: { user: user, bookedRooms }
+            props: { user: user, bookedRooms, events }
         }
     }
 }
 
-export default function ClubHomePage({ user, bookedRooms }) {
-    const [date, setDate] = useState('')
+export default function ClubHomePage({ user, bookedRooms, events }) {
     const [from, setFrom] = useState('')
     const [to, setTo] = useState('')
-    const { rooms, setRooms, setToTime, setFromTime } = useRoom();
+    const [updateModal, showUpdateModal] = useState(false)
+    const [event, showEvent] = useState(false)
+    const [eventUpdate, showEventUpdate] = useState(false)
+    const [pendingEvents, showPendingEvents] = useState(false)
+    const [approvedEvents, showApprovedEvents] = useState(false)
+    const [room, bookRoom] = useState(false)
+    const [approvedRooms, showApprovedRooms] = useState(false)
+    const [pendingRooms, showPendingRooms] = useState(false)
     const [isFetching, setIsFetching] = useState(false);
-    const seeAvailRooms = async () => {
-        if (from === '' || to === '') {
-            alert('Please fil all the fields');
-            return;
-        }
+    const [updateEventId, setUpdateEventId] = useState(0);
+    const { rooms, setRooms, setToTime, setFromTime } = useRoom();
+    const handleLogOut = async () => {
         try {
-            setIsFetching(false)
-            const response = await fetchRooms({
-                startDate: new Date(from).toISOString(),
-                endDate: new Date(to).toISOString,
-            });
-            if (response.status === 200) {
-                setRooms(response.rooms);
-                setToTime(to);
-                setFromTime(from);
-                setIsFetching(true)
+            const res = await logout();
+            if(res.status === 200) {
+                alert('You have been loged out successfully');
+                window.location.reload();
             } else {
-                console.log(response.message)
+                alert('Internal Server Error')
             }
         } catch (e) {
             alert(e.message);
         }
     }
-
-
     return (
         <div>
-            <p>{user.id}</p>
-            <p>{user.name}</p>
-            <p>{user.email}</p>
-            <p>{user.description}</p>
             <div>
-                <div>
-                    <FormControl>
-                        <FormLabel>From</FormLabel>
-                        <Input onChange={(e) => setFrom(e.target.value)} type='datetime-local' />
-                    </FormControl>
+                <div className="flex flex-col items-center justify-center">
+                    <h1 className="text-4xl font-bold">Welcome {user.name}</h1>
                 </div>
-                <div>
-                    <FormControl>
-                        <FormLabel>To</FormLabel>
-                        <Input onChange={(e) => setTo(e.target.value)} type='datetime-local' />
-                    </FormControl>
-                </div>
-                <Button colorScheme='yellow' marginRight={"10px"} color={"black"} onClick={seeAvailRooms}>Fetch Rooms</Button>
+                <Button onClick={() => handleLogOut()} colorScheme='red' marginTop={"10px"}>Logout</Button>
             </div>
-            {isFetching ?
-                <div>{rooms.map((room, index) => {
-                    return (
-                        <AvailableRooms key={index} room={room} clubId={user.id} />
-                    )
-                })}</div> : null
-            }
+
             <br />
-            <hr />
-            <br />
-            <p>Booked Rooms</p>
-            <br />
-            {
-                bookedRooms.map((room) => {
-                    return (
-                        <div>
-                            <p>ID = {room.id}</p>
-                            <p>STATUS = {room.adminStatus}</p>
-                            <p>ROOM NUMBER = {room.roomNumber}</p>
-                            <p>BLOCK = {room.roomBlock}</p>
-                            <p>FROM = {room.from}</p>
-                            <p>TO = {room.to}</p>
-                            <p>REASON = {room.description}</p>
-                            <br />
-                        </div>
-                    )
-                })
-            }
+            {/* 
+            {updateModal ? <EventUpdate event={events.find(event => event.id === updateEventId)} setEvent={showUpdateModal} /> : null} */}
+
+            <Modal isOpen={updateModal} onClose={() => showUpdateModal(!updateModal)} size='xl'>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Update Event</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <EventUpdate event={events.find(event => event.id === updateEventId)} />
+                    </ModalBody>
+                </ModalContent>
+            </Modal>
+
+
+            <Tabs>
+                <TabList>
+                    <Tab>Event</Tab>
+                    <Tab>Room</Tab>
+                    <Tab>Club Details</Tab>
+                </TabList>
+
+                <TabPanels>
+                    <TabPanel>
+                        <Button colorScheme='yellow' marginRight={"10px"} color={"black"} onClick={() => showEvent(!event)}>{event ? 'Close Create Event' : 'Create Event'}</Button>
+                        <Button colorScheme='yellow' marginRight={"10px"} color={"black"} onClick={() => showApprovedEvents(!approvedEvents)}>{approvedEvents ? 'Close Approved Events' : 'Show Approved Events'}</Button>
+                        <Button colorScheme='yellow' marginRight={"10px"} color={"black"} onClick={() => showPendingEvents(!pendingEvents)}>{pendingEvents ? 'Close Pending Events' : 'Show Pending Events'}</Button>
+
+                        {event ? <EventCreate clubIdFromProps={user.id} /> : null}
+                        {approvedEvents ?
+                            <div>
+                                {events.map((event, index) => {
+                                    if (event.Eventapproval.adminStatus === 'APPROVED' && event.Eventapproval.ccStatus === 'APPROVED') {
+                                        return (
+                                            <div key={index}>
+                                                <p>Name : {event.name}</p>
+                                                <p>Description : {event.description}</p>
+                                                <p>Date : {event.date}</p>
+                                                <p>Venue : {event.venue}</p>
+                                                <Button colorScheme='yellow' marginRight={"10px"} color={"black"} onClick={() => {
+                                                    setUpdateEventId(event.id);
+                                                    showUpdateModal(!updateModal)
+                                                }}>Update Event</Button>
+                                                <hr />
+                                            </div>
+                                        )
+                                    }
+                                })}
+                            </div> : null
+                        }
+                        {pendingEvents ?
+                            <div>
+                                {events.map((event, index) => {
+                                    if (event.Eventapproval.adminStatus === 'PENDING' || event.Eventapproval.ccStatus === 'PENDING') {
+                                        return (
+                                            <div key={index}>
+                                                <p>Name : {event.name}</p>
+                                                <p>Description : {event.description}</p>
+                                                <p>Date : {event.date}</p>
+                                                <p>Venue : {event.venue}</p>
+                                                <Button colorScheme='yellow' marginRight={"10px"} color={"black"} onClick={() => {
+                                                    setUpdateEventId(event.id);
+                                                    showUpdateModal(!updateModal)
+                                                }}>Update Event</Button>
+                                                <hr />
+                                            </div>
+                                        )
+                                    }
+                                })}
+                            </div> : null
+                        }
+
+
+                    </TabPanel>
+                    <TabPanel>
+                        <ClubRoomBooking user={user} bookedRooms={bookedRooms} />
+                    </TabPanel>
+                    <TabPanel>
+                        <p>Club Name : {user.name}</p>
+                        <p>Club Email : {user.email}</p>
+                        <p>Club ID : {user.id}</p>
+                    </TabPanel>
+                </TabPanels>
+
+            </Tabs>
+
         </div>
     )
 }
