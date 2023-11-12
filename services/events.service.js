@@ -68,15 +68,48 @@ export async function eventFindManyByClubId(id) {
 
 export async function eventsApprovedFindMany() {
     return await db.event.findMany({
-        where: { 
-            Eventapproval: { 
+        where: {
+            Eventapproval: {
                 AND: [
-                    { adminStatus: 'APPROVED'},
-                    { ccStatus: 'APPROVED'}
+                    { adminStatus: 'APPROVED' },
+                    { ccStatus: 'APPROVED' }
                 ]
             }
-        }
+        },
+        include: { Eventapproval: true }
     })
 }
 
+export async function eventsAdminPending() {
+    return await db.event.findMany({
+        where: {
+            Eventapproval: {
+                adminStatus: 'PENDING'
+            }
+        },
+        include: { Eventapproval: true }
+    })
+}
+
+export async function eventsAdminApproved() {
+    return await db.event.findMany({
+        where: {
+            Eventapproval: {
+                adminStatus: 'APPROVED'
+            }
+        },
+        include: { Eventapproval: true }
+    })
+}
+
+export async function eventsAdminRejected() {
+    return await db.event.findMany({
+        where: {
+            Eventapproval: {
+                adminStatus: 'REJECTED'
+            }
+        },
+        include: { Eventapproval: true }
+    })
+}
 

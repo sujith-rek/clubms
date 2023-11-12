@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { loginAdmin } from "@/operations/admin.fetch";
+import { useRouter } from "next/router";
 
 export default function AdminLogin() {
-
+    const router = useRouter();
     const [credentials, setCredentials] = useState({ email: "", password: "" });
 
     const handleSubmit = async (e) => {
@@ -38,7 +39,6 @@ export default function AdminLogin() {
     return (
         <div>
             <h2>Login as Admin</h2>
-            {errorMessage && <p>{errorMessage}</p>}
             <form onSubmit={handleSubmit}>
                 <label>
                     Email:
@@ -50,7 +50,6 @@ export default function AdminLogin() {
                 </label>
                 <button type="submit">Login</button>
             </form>
-            {isLoggedIn && <p>You are logged in!</p>}
         </div>
     );
 }
