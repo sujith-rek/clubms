@@ -54,7 +54,7 @@ export default function ccLoginPage() {
             </div>
             <br />
             <Button marginBottom={"10px"} colorScheme='yellow' marginRight={"10px"} color={"black"} onClick={() => handleLogin()}>Login</Button>
-            <p>Don't have an accout? <span style={{"cursor" : "pointer"}} onClick={() => {router.push('/auth/cc/ccRegister')}}>SignUp for CC Member</span></p>
+            <p>Don't have an account? <span style={{"cursor" : "pointer"}} onClick={() => {router.push('/auth/cc/ccRegister')}}>SignUp as CC Member</span></p>
         </div>
     )
 }

@@ -1,55 +1,59 @@
-import { useState } from "react";
 import { loginAdmin } from "@/operations/admin.fetch";
+import {
+    FormControl,
+    FormLabel,
+    Input,
+    Button,
+    Heading,
+} from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
-export default function AdminLogin() {
+export default function adminLogin() {
     const router = useRouter();
-    const [credentials, setCredentials] = useState({ email: "", password: "" });
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (credentials.email === '' || credentials.password === '') {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const handleLogin = async () => {
+        if (email === '' || password === '') {
             alert('Please fill in all the fields');
             return;
         }
-        const loginData = {
-            email: credentials.email,
-            password: credentials.password,
-        };
-
-        await loginAdmin(loginData).then((res) => {
-            if (res.error) {
-                alert(res.error);
+        const data = {
+            "email": email,
+            "password": password
+        }
+        try {
+            const response = await loginAdmin(data);
+            if (response.status === 200) {
+                alert('Admin Logged in sucessfully');
+                router.push('/admin/adminHomePage');
             } else {
-                alert("Login Successful");
-                router.push("/admin/adminHomePage");
+                alert(response.message);
             }
-        });
-
-    }
-
-    function handleChange(e) {
-        const { name, value } = e.target;
-        setCredentials((prevCredentials) => ({
-            ...prevCredentials,
-            [name]: value,
-        }));
+        } catch (err) {
+            console.log(err.message);
+        }
     }
 
     return (
-        <div>
-            <h2>Login as Admin</h2>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Email:
-                    <input type="email" name="email" value={credentials.email} onChange={handleChange} required style={{ color: 'black' }} />
-                </label>
-                <label>
-                    Password:
-                    <input type="password" name="password" value={credentials.password} onChange={handleChange} required style={{ color: 'black' }} />
-                </label>
-                <button type="submit">Login</button>
-            </form>
+        <div style={{ "padding": "3rem" }}>
+            <Heading>Login with your Admin credentials</Heading>
+            <br />
+            <div >
+                <FormControl>
+                    <FormLabel>Email</FormLabel>
+                    <Input onChange={(e) => setEmail(e.target.value)} type='email' />
+                </FormControl>
+            </div>
+            <br />
+            <div>
+                <FormControl>
+                    <FormLabel>Password</FormLabel>
+                    <Input onChange={(e) => setPassword(e.target.value)} type='password' />
+                </FormControl>
+            </div>
+            <br />
+            <Button marginBottom={"10px"} colorScheme='yellow' marginRight={"10px"} color={"black"} onClick={() => handleLogin()}>Login</Button>
         </div>
-    );
+    )
 }
