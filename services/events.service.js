@@ -55,7 +55,9 @@ export async function eventFindUnique(id) {
 }
 
 export async function eventFindMany() {
-    return await db.event.findMany()
+    return await db.event.findMany({
+        include: { Eventapproval: true }
+    })
 }
 
 export async function eventFindManyByClubId(id) {
