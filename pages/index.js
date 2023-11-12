@@ -16,12 +16,12 @@ export default function Home() {
   const router = useRouter();
   return (
     <>
-      <Container maxW={'5xl'}>
+      <Container maxW={'10xl'}>
         <Stack
           textAlign={'center'}
           align={'center'}
           spacing={{ base: 8, md: 10 }}
-          py={{ base: 20, md: 28 }}>
+          py={{ base: 20, md: 59 }}>
           <Heading
             fontWeight={600}
             fontSize={{ base: '3xl', sm: '4xl', md: '6xl' }}
