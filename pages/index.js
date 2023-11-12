@@ -10,22 +10,22 @@ export default function Home() {
         Available routes for now
         <div className="flex flex-col">
           <div className="flex flex-col">
-            <a href="/auth/clubLogin">Club Login</a>
+            <a href="/auth/club/clubLogin">Club Login</a>
           </div>
           <div className="flex flex-col">
-            <a href="/auth/clubRegister">Club Register</a>
+            <a href="/auth/club/clubRegister">Club Register</a>
           </div>
           <div className="flex flex-col">
-            <a href="/clubs/bookRoom" >Book Room for Club</a>
+            <a href="/clubs/clubHomePage" >Book Room for Club</a>
           </div>
           <div className="flex flex-col">
             <a href="/clubs/clubHomePage" >Club Home Page</a>
           </div>
           <div className="flex flex-col">
-            <a href="/event/createEvent" >Create Event</a>
+            <a href="/clubs/clubHomePage" >Create Event</a>
           </div>
           <div className="flex flex-col">
-            <a href="/event/updateEvent" >Update Event</a>
+            <a href="/clubs/clubHomePage" >Update Event</a>
           </div>
         </div>
       </div>
