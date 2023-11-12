@@ -94,5 +94,21 @@ export async function removeRoom(data) {
     })
 }
 
+export async function updateEvent(data) {
+    return await fetch(
+        "/api/admin/updateEvent", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data),
+        credentials: "include"
+    }).then((res) => {
+        return res.json()
+    }).catch((err) => {
+        console.log(err)
+    })
+}
+
 
 

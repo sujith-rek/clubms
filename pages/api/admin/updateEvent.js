@@ -5,10 +5,9 @@ export default async function updateEvent(req, res) {
     const { eventId, adminStatus, adminId } = req.body
     try {
         const event = await eventUpdateAdmin(eventId, { adminStatus, adminId })
-        res.json({ message: 'Event updated successfully', event })
+        res.json({ status: 200, message: 'Event updated successfully' })
     } catch (e) {
-        res.status(400)
-        res.json({ message: e.message })
+        res.json({ status: 400, message: e.message })
     }
 
 }
