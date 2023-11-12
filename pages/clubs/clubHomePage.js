@@ -21,6 +21,7 @@ import {
 import { useEffect, useState } from 'react'
 import ClubRoomBooking from '@/components/ClubRoomBooking/ClubRoomBooking'
 import { logout } from '@/operations/users.fetch'
+import ClubEvent from '@/components/ClubEvent/ClubEvent'
 
 
 export async function getServerSideProps(context) {
@@ -120,16 +121,7 @@ export default function ClubHomePage({ user, bookedRooms, events }) {
 
             <br />
 
-            <Modal isOpen={updateModal} onClose={() => showUpdateModal(!updateModal)} size='xl'>
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader>Update Event</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
-                        <EventUpdate event={events.find(event => event.id === updateEventId)} />
-                    </ModalBody>
-                </ModalContent>
-            </Modal>
+            
 
 
             <Tabs>
@@ -141,55 +133,7 @@ export default function ClubHomePage({ user, bookedRooms, events }) {
 
                 <TabPanels>
                     <TabPanel>
-                        <Button colorScheme='yellow' marginRight={"10px"} color={"black"} onClick={() => showEvent(!event)}>{event ? 'Close Create Event' : 'Create Event'}</Button>
-                        <Button colorScheme='yellow' marginRight={"10px"} color={"black"} onClick={() => showApprovedEvents(!approvedEvents)}>{approvedEvents ? 'Close Approved Events' : 'Show Approved Events'}</Button>
-                        <Button colorScheme='yellow' marginRight={"10px"} color={"black"} onClick={() => showPendingEvents(!pendingEvents)}>{pendingEvents ? 'Close Pending Events' : 'Show Pending Events'}</Button>
-
-                        {event ? <EventCreate clubIdFromProps={user.id} /> : null}
-                        {approvedEvents ?
-                            <div>
-                                {events.map((event, index) => {
-                                    if (event.Eventapproval.adminStatus === 'APPROVED' && event.Eventapproval.ccStatus === 'APPROVED') {
-                                        return (
-                                            <div key={index}>
-                                                <p>Name : {event.name}</p>
-                                                <p>Description : {event.description}</p>
-                                                <p>Date : {event.date}</p>
-                                                <p>Venue : {event.venue}</p>
-                                                <Button colorScheme='yellow' marginRight={"10px"} color={"black"} onClick={() => {
-                                                    setUpdateEventId(event.id);
-                                                    showUpdateModal(!updateModal)
-                                                }}>Update Event</Button>
-                                                <hr />
-                                            </div>
-                                        )
-                                    }
-                                })}
-                            </div> : null
-                        }
-                        {pendingEvents ?
-                            <div>
-                                {events.map((event, index) => {
-                                    if (event.Eventapproval.adminStatus === 'PENDING' || event.Eventapproval.ccStatus === 'PENDING') {
-                                        return (
-                                            <div key={index}>
-                                                <p>Name : {event.name}</p>
-                                                <p>Description : {event.description}</p>
-                                                <p>Date : {event.date}</p>
-                                                <p>Venue : {event.venue}</p>
-                                                <Button colorScheme='yellow' marginRight={"10px"} color={"black"} onClick={() => {
-                                                    setUpdateEventId(event.id);
-                                                    showUpdateModal(!updateModal)
-                                                }}>Update Event</Button>
-                                                <hr />
-                                            </div>
-                                        )
-                                    }
-                                })}
-                            </div> : null
-                        }
-
-
+                        <ClubEvent events={events} user={user} />
                     </TabPanel>
                     <TabPanel>
                         <ClubRoomBooking user={user} bookedRooms={bookedRooms} />

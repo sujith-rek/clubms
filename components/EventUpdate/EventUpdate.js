@@ -44,7 +44,7 @@ function EventUpdate({event}) {
     return (
         <>
             <div>Event Update</div>
-            <Button colorScheme="teal" variant="solid" onClick={() => setUpdate(!update)}>
+            <Button marginTop={"10px"} marginBottom={"10px"} colorScheme="teal" variant="solid" onClick={() => setUpdate(!update)}>
                 Edit Event?
             </Button>
             <div>
@@ -72,7 +72,7 @@ function EventUpdate({event}) {
                 </FormControl>
             </div>
             <div>
-                <Button colorScheme="teal" variant="solid" onClick={handleSubmit} disabled={!update}>
+                <Button  marginTop={"10px"} marginBottom={"10px"} colorScheme="teal" variant="solid" onClick={handleSubmit} disabled={!update}>
                     Update
                 </Button>
             </div>

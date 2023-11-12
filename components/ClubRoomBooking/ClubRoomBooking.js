@@ -7,13 +7,6 @@ import {
     FormLabel,
     Input,
     Button,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
 
 } from '@chakra-ui/react'
 import AvailableRooms from "../AvailableRooms/AvailableRooms";
