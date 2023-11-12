@@ -29,3 +29,19 @@ export async function ccRegister(data) {
         console.log(err)
     });
 }
+
+export async function updateEvent(data) {
+    return await fetch(
+        "/api/cc/updateEvent", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data),
+        credentials: "include"
+    }).then((res) => {
+        return res.json()
+    }).catch((err) => {
+        console.log(err)
+    })
+}
