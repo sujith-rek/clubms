@@ -1,6 +1,12 @@
 import db from "@/lib/prisma";
 import { compareSync } from "bcrypt";
 
+export async function registerCC(data) {
+    return await db.user.create({
+        data
+    })
+}
+
 export async function registerAdmin(data) {
     return await db.user.create({
         data
