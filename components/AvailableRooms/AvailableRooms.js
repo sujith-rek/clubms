@@ -15,6 +15,7 @@ export default function AvailableRooms({room,clubId}) {
             "to" : toTime,
             clubId,
             "description" : desc,
+            "roomId" : room.id
         }
         const res = await roomBook(data)
         if(res.status === 200) {
