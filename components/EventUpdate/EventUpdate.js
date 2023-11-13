@@ -1,4 +1,4 @@
-import { useState,useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { updateEvent } from '@/operations/club.fetch'
 import "./EventUpdate.scss"
 import {
@@ -8,20 +8,23 @@ import {
     Button,
 } from '@chakra-ui/react'
 
-function EventUpdate({event}) {
+function EventUpdate({ event }) {
 
     const [name, setName] = useState(event.name)
     const [description, setDescription] = useState(event.description)
     const [date, setDate] = useState(event.date)
     const [venue, setVenue] = useState(event.venue)
     const [update, setUpdate] = useState(false)
+    const [time, setTime] = useState(event.date.slice(9, 14))
 
     useEffect(() => {
+        console.log(event.date)
         setName(event.name)
         setDescription(event.description)
-        setDate(event.date.slice(0, 10))
+        setDate(new Date(event.date).toISOString().slice(0, 10))
         setVenue(event.venue)
-    },[event])
+        setTime(new Date(event.date).toISOString().slice(11, 16))
+    }, [event])
 
 
     const handleSubmit = async (e) => {
@@ -66,13 +69,19 @@ function EventUpdate({event}) {
                 </FormControl>
             </div>
             <div>
+                <FormControl id="time" isRequired>
+                    <FormLabel>Time</FormLabel>
+                    <Input type="time" placeholder="Time" onChange={(e) => setTime(e.target.value)} value={time} disabled={!update} />
+                </FormControl>
+            </div>
+            <div>
                 <FormControl id="venue" isRequired>
                     <FormLabel>Venue</FormLabel>
                     <Input type="text" placeholder="Venue" onChange={(e) => setVenue(e.target.value)} value={venue} disabled={!update} />
                 </FormControl>
             </div>
             <div>
-                <Button  marginTop={"10px"} marginBottom={"10px"} colorScheme="teal" variant="solid" onClick={handleSubmit} disabled={!update}>
+                <Button marginTop={"10px"} marginBottom={"10px"} colorScheme="teal" variant="solid" onClick={handleSubmit} disabled={!update}>
                     Update
                 </Button>
             </div>
