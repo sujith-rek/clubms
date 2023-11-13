@@ -1,17 +1,20 @@
 import db from "@/lib/prisma";
 
+// Equivalent to: INSERT INTO event (name, description, ...) VALUES (name, description, ...);
 export async function eventCreate(data) {
     return await db.event.create({
         data
     })
 }
 
+// Equivalent to: INSERT INTO eventapproval (eventId, ccStatus, adminStatus) VALUES (eventId, ccStatus, adminStatus);
 export async function eventApprovalCreate(data) {
     return await db.eventapproval.create({
         data
     })
 }
 
+// Equivalent to: SELECT * FROM event WHERE id = eventId;
 export async function getEventApprovalByEventId(eventId) {
     return await db.event.findUnique({
         where: { id: eventId },
@@ -19,6 +22,7 @@ export async function getEventApprovalByEventId(eventId) {
     })
 }
 
+// Equivalent to: DELETE FROM eventapproval WHERE id = eventApprovalId;
 export async function eventApprovalDelete(eventId, clubId) {
     const eventApproval = await db.eventapproval.findUnique({
         where: {
@@ -33,7 +37,7 @@ export async function eventApprovalDelete(eventId, clubId) {
     })
 }
 
-
+// Equivalent to: UPDATE event SET name = name, description = description, ... WHERE id = id;
 export async function eventUpdate(id, data) {
     return await db.event.update({
         where: { id },
@@ -41,6 +45,7 @@ export async function eventUpdate(id, data) {
     })
 }
 
+// Equivalent to: DELETE FROM event WHERE id = id and clubId = clubId;
 export async function eventDelete(id, clubId) {
 
     return await db.event.delete({
@@ -48,18 +53,21 @@ export async function eventDelete(id, clubId) {
     })
 }
 
+// Equivalent to: SELECT unique(*) FROM event WHERE id = id;
 export async function eventFindUnique(id) {
     return await db.event.findUnique({
         where: { id }
     })
 }
 
+// Equivalent to: SELECT * FROM event;
 export async function eventFindMany() {
     return await db.event.findMany({
         include: { Eventapproval: true }
     })
 }
 
+// Equivalent to: SELECT * FROM event WHERE clubId = id;
 export async function eventFindManyByClubId(id) {
     return await db.event.findMany({
         where: { clubId: id },
@@ -67,7 +75,7 @@ export async function eventFindManyByClubId(id) {
     })
 }
 
-
+// Equivalent to: SELECT * FROM event WHERE clubId = id AND Eventapproval.adminStatus = 'APPROVED' AND Eventapproval.ccStatus = 'APPROVED';
 export async function eventsApprovedFindMany() {
     return await db.event.findMany({
         where: {
@@ -82,6 +90,7 @@ export async function eventsApprovedFindMany() {
     })
 }
 
+// Equivalent to: SELECT * FROM event WHERE clubId = id AND Eventapproval.adminStatus = 'PENDING';
 export async function eventsAdminPending() {
     return await db.event.findMany({
         where: {
@@ -93,6 +102,7 @@ export async function eventsAdminPending() {
     })
 }
 
+// Equivalent to: SELECT * FROM event WHERE clubId = id AND Eventapproval.adminStatus = 'APPROVED';
 export async function eventsAdminApproved() {
     return await db.event.findMany({
         where: {
@@ -104,6 +114,7 @@ export async function eventsAdminApproved() {
     })
 }
 
+// Equivalent to: SELECT * FROM event WHERE clubId = id AND Eventapproval.adminStatus = 'REJECTED';
 export async function eventsAdminRejected() {
     return await db.event.findMany({
         where: {
@@ -114,4 +125,3 @@ export async function eventsAdminRejected() {
         include: { Eventapproval: true }
     })
 }
-
