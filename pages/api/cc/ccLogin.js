@@ -23,6 +23,7 @@ export default withIronSessionApiRoute(async function login(req, res) {
             password: undefined
         }
         req.session.user = ccWithoutPassword;
+        await req.session.save();
         if (valid) {
             return res.json({ status: 200, message: "Club logged in successfully", cc: ccWithoutPassword })
         } else {

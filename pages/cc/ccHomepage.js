@@ -3,6 +3,9 @@ import { eventFindMany } from '@/services/events.service'
 import { fetchAllClubs } from '@/services/clubs.service';
 import { Button, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
 import { updateEvent } from '@/operations/cc.fetch';
+import { Text } from '@chakra-ui/react'
+import { Card, CardHeader, CardBody, CardFooter, Heading, Stack, StackDivider, Box } from '@chakra-ui/react'
+
 export async function getServerSideProps(context) {
     if (context.req.session.user === undefined) {
         return {
@@ -72,13 +75,13 @@ export default function ccHomepage({ user, allEvents }) {
 
     const handleApproveEvent = async (eventId) => {
         const data = {
-            "eventId" : eventId,
-            "ccStatus" : "APPROVED",
-            "ccId" : user.id,
+            "eventId": eventId,
+            "ccStatus": "APPROVED",
+            "ccId": user.id,
         }
         try {
             const response = await updateEvent(data);
-            if(response.status === 200) {
+            if (response.status === 200) {
                 alert('Event approved successfully');
                 window.location.reload();
             } else {
@@ -92,13 +95,13 @@ export default function ccHomepage({ user, allEvents }) {
 
     const handleRejectEvent = async (eventId) => {
         const data = {
-            "eventId" : eventId,
-            "ccStatus" : "REJECTED",
-            "ccId" : user.id,
+            "eventId": eventId,
+            "ccStatus": "REJECTED",
+            "ccId": user.id,
         }
         try {
             const response = await updateEvent(data);
-            if(response.status === 200) {
+            if (response.status === 200) {
                 alert('Event rejected successfully');
                 window.location.reload();
             } else {
@@ -112,33 +115,92 @@ export default function ccHomepage({ user, allEvents }) {
     return (
         <div>
             <div>
-                <div className="flex flex-col items-center justify-center">
-                    <h1 className="text-4xl font-bold">Welcome {user.name}</h1>
+                <div style={{ "paddingTop": "1rem", "display": "flex", "justifyContent": "space-between", "paddingBottom": "0rem", "paddingLeft": "2rem", "paddingRight": "2rem" }} className="flex flex-col items-center justify-center">
+                    <Text fontWeight={"500"} fontSize='4xl'>Welcome {user.name}</Text>
                     <Button onClick={() => handleLogOut()} marginTop={"10px"} colorScheme='red'>Logout</Button>
                 </div>
+                <Text fontSize={'2xl'} paddingLeft={"2rem"}>Cultural Committee Dashboard</Text>
             </div>
             <br />
-            <Tabs>
+            <Tabs paddingLeft={"2rem"} paddingRight={"2rem"}>
                 <TabList>
                     <Tab>Pending Events</Tab>
                     <Tab>Approved Events</Tab>
                     <Tab>Rejected Events</Tab>
                 </TabList>
                 <TabPanels>
-                    <TabPanel>
+                    <TabPanel display={"flex"} justifyContent={"space-evenly"} flexWrap={"wrap"}>
                         {allEvents.map((event, index) => {
                             if (event.Eventapproval.ccStatus === 'PENDING') {
                                 return (
-                                    <div key={index}>
-                                        <p>EVENT NAME = {event.name}</p>
-                                        <p>EVENT DESCRIPTION = {event.description}</p>
-                                        <p>EVENT DATE = {event.date}</p>
-                                        <p>CLUB NAME = {event.clubName}</p>
-                                        <p>VENUE = {event.venue}</p>
-                                        <p>CC STATUS = {event.Eventapproval.ccStatus}</p>
-                                        <p>ADMIN STATUS = {event.Eventapproval.adminStatus}</p>
-                                        <Button onClick={() => handleApproveEvent(event.id)} marginTop={"10px"} marginRight={"10px"} colorScheme="blue">Approve Event</Button>
-                                        <Button onClick={() => handleRejectEvent(event.id)} marginTop={"10px"} colorScheme="red">Reject Event</Button>
+                                    <div style={{ width: "35rem" }} key={index}>
+                                        <Card>
+                                            <CardHeader>
+                                                <Heading size='md'>Event Details</Heading>
+                                            </CardHeader>
+                                            <CardBody>
+                                                <Stack divider={<StackDivider />} spacing='2'>
+                                                    <Box>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            Event Name
+                                                        </Heading>
+                                                        <Text pt='2' fontSize='sm'>
+                                                            {event.name}
+                                                        </Text>
+                                                    </Box>
+                                                    <Box>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            Event Description
+                                                        </Heading>
+                                                        <Text pt='2' fontSize='sm'>
+                                                            {event.description}
+                                                        </Text>
+                                                    </Box>
+                                                    <Box>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            Event Date
+                                                        </Heading>
+                                                        <Text pt='2' fontSize='sm'>
+                                                            {event.date}
+                                                        </Text>
+                                                    </Box>
+                                                    <Box>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            Club Name
+                                                        </Heading>
+                                                        <Text pt='2' fontSize='sm'>
+                                                            {event.clubName}
+                                                        </Text>
+                                                    </Box>
+                                                    <Box>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            Venue
+                                                        </Heading>
+                                                        <Text pt='2' fontSize='sm'>
+                                                            {event.venue}
+                                                        </Text>
+                                                    </Box>
+                                                    <Box>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            CC Status
+                                                        </Heading>
+                                                        <Text pt='2' fontSize='sm'>
+                                                            {event.Eventapproval.ccStatus}
+                                                        </Text>
+                                                    </Box>
+                                                    <Box>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            Admin Status
+                                                        </Heading>
+                                                        <Text pt='2' fontSize='sm'>
+                                                            {event.Eventapproval.adminStatus}
+                                                        </Text>
+                                                    </Box>
+                                                </Stack>
+                                                <Button onClick={() => handleApproveEvent(event.id)} marginTop={"10px"} marginRight={"10px"} colorScheme="blue">Approve Event</Button>
+                                                <Button onClick={() => handleRejectEvent(event.id)} marginTop={"10px"} colorScheme="red">Reject Event</Button>
+                                            </CardBody>
+                                        </Card>
                                         <br />
                                         <br />
                                     </div>
@@ -146,18 +208,76 @@ export default function ccHomepage({ user, allEvents }) {
                             }
                         })}
                     </TabPanel>
-                    <TabPanel>
+                    <TabPanel display={"flex"} justifyContent={"space-evenly"} flexWrap={"wrap"}>
                         {allEvents.map((event, index) => {
                             if (event.Eventapproval.ccStatus === 'APPROVED') {
                                 return (
-                                    <div key={index}>
-                                        <p>EVENT NAME = {event.name}</p>
-                                        <p>EVENT DESCRIPTION = {event.description}</p>
-                                        <p>EVENT DATE = {event.date}</p>
-                                        <p>CLUB NAME = {event.clubName}</p>
-                                        <p>VENUE = {event.venue}</p>
-                                        <p>CC STATUS = {event.Eventapproval.ccStatus}</p>
-                                        <p>ADMIN STATUS = {event.Eventapproval.adminStatus}</p>
+                                    <div style={{ width: "35rem" }} key={index}>
+                                        <Card>
+                                            <CardHeader>
+                                                <Heading size='md'>Event Details</Heading>
+                                            </CardHeader>
+                                            <CardBody>
+                                                <Stack divider={<StackDivider />} spacing='2'>
+                                                    <Box>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            Event Name
+                                                        </Heading>
+                                                        <Text pt='2' fontSize='sm'>
+                                                            {event.name}
+                                                        </Text>
+                                                    </Box>
+                                                    <Box>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            Event Description
+                                                        </Heading>
+                                                        <Text pt='2' fontSize='sm'>
+                                                            {event.description}
+                                                        </Text>
+                                                    </Box>
+                                                    <Box>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            Event Date
+                                                        </Heading>
+                                                        <Text pt='2' fontSize='sm'>
+                                                            {event.date}
+                                                        </Text>
+                                                    </Box>
+                                                    <Box>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            Club Name
+                                                        </Heading>
+                                                        <Text pt='2' fontSize='sm'>
+                                                            {event.clubName}
+                                                        </Text>
+                                                    </Box>
+                                                    <Box>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            Venue
+                                                        </Heading>
+                                                        <Text pt='2' fontSize='sm'>
+                                                            {event.venue}
+                                                        </Text>
+                                                    </Box>
+                                                    <Box>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            CC Status
+                                                        </Heading>
+                                                        <Text pt='2' fontSize='sm'>
+                                                            {event.Eventapproval.ccStatus}
+                                                        </Text>
+                                                    </Box>
+                                                    <Box>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            Admin Status
+                                                        </Heading>
+                                                        <Text pt='2' fontSize='sm'>
+                                                            {event.Eventapproval.adminStatus}
+                                                        </Text>
+                                                    </Box>
+                                                </Stack>
+                                            </CardBody>
+                                        </Card>
                                         <br />
                                         <br />
                                     </div>
@@ -165,18 +285,76 @@ export default function ccHomepage({ user, allEvents }) {
                             }
                         })}
                     </TabPanel>
-                    <TabPanel>
-                    {allEvents.map((event, index) => {
+                    <TabPanel display={"flex"} justifyContent={"space-evenly"} flexWrap={"wrap"}>
+                        {allEvents.map((event, index) => {
                             if (event.Eventapproval.ccStatus === 'REJECTED') {
                                 return (
-                                    <div key={index}>
-                                        <p>EVENT NAME = {event.name}</p>
-                                        <p>EVENT DESCRIPTION = {event.description}</p>
-                                        <p>EVENT DATE = {event.date}</p>
-                                        <p>CLUB NAME = {event.clubName}</p>
-                                        <p>VENUE = {event.venue}</p>
-                                        <p>CC STATUS = {event.Eventapproval.ccStatus}</p>
-                                        <p>ADMIN STATUS = {event.Eventapproval.adminStatus}</p>
+                                    <div style={{ width: "35rem" }} key={index}>
+                                        <Card>
+                                            <CardHeader>
+                                                <Heading size='md'>Event Details</Heading>
+                                            </CardHeader>
+                                            <CardBody>
+                                                <Stack divider={<StackDivider />} spacing='2'>
+                                                    <Box>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            Event Name
+                                                        </Heading>
+                                                        <Text pt='2' fontSize='sm'>
+                                                            {event.name}
+                                                        </Text>
+                                                    </Box>
+                                                    <Box>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            Event Description
+                                                        </Heading>
+                                                        <Text pt='2' fontSize='sm'>
+                                                            {event.description}
+                                                        </Text>
+                                                    </Box>
+                                                    <Box>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            Event Date
+                                                        </Heading>
+                                                        <Text pt='2' fontSize='sm'>
+                                                            {event.date}
+                                                        </Text>
+                                                    </Box>
+                                                    <Box>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            Club Name
+                                                        </Heading>
+                                                        <Text pt='2' fontSize='sm'>
+                                                            {event.clubName}
+                                                        </Text>
+                                                    </Box>
+                                                    <Box>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            Venue
+                                                        </Heading>
+                                                        <Text pt='2' fontSize='sm'>
+                                                            {event.venue}
+                                                        </Text>
+                                                    </Box>
+                                                    <Box>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            CC Status
+                                                        </Heading>
+                                                        <Text pt='2' fontSize='sm'>
+                                                            {event.Eventapproval.ccStatus}
+                                                        </Text>
+                                                    </Box>
+                                                    <Box>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            Admin Status
+                                                        </Heading>
+                                                        <Text pt='2' fontSize='sm'>
+                                                            {event.Eventapproval.adminStatus}
+                                                        </Text>
+                                                    </Box>
+                                                </Stack>
+                                            </CardBody>
+                                        </Card>
                                         <br />
                                         <br />
                                     </div>
