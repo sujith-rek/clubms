@@ -25,7 +25,9 @@ model User {
 model ClubBudget {
   id             Int              @id @default(autoincrement())
   clubId         Int              @default(1)
-  amount         Int
+  allocated      Int
+  spent          Int              @default(0)
+  remaining      Int              @default(0)
   userId         Int?
   BudgetApproval BudgetApproval[]
   User           User?            @relation(fields: [userId], references: [id])
