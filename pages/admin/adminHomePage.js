@@ -13,6 +13,9 @@ import {
     TabPanels,
     Tabs,
     Text,
+    Card,
+    CardBody,
+    Box,
 
 } from '@chakra-ui/react'
 
@@ -94,7 +97,7 @@ export async function getServerSideProps(context) {
         approvedEvents = approvedEvents.map((event) => {
             event.date = event.date.toLocaleString('en-IN', indianOptions);
             const club = allClubs.find(c => c.id === event.clubId)
-            if(club) {
+            if (club) {
                 event.clubName = club.name;
             }
             return event;
@@ -103,7 +106,7 @@ export async function getServerSideProps(context) {
         pendingEvents = pendingEvents.map((event) => {
             event.date = event.date.toLocaleString('en-IN', indianOptions);
             const club = allClubs.find(c => c.id === event.clubId)
-            if(club) {
+            if (club) {
                 event.clubName = club.name;
             }
             return event;
@@ -112,13 +115,13 @@ export async function getServerSideProps(context) {
         rejectedEvents = rejectedEvents.map((event) => {
             event.date = event.date.toLocaleString('en-IN', indianOptions);
             const club = allClubs.find(c => c.id === event.clubId)
-            if(club) {
+            if (club) {
                 event.clubName = club.name;
             }
             return event;
         })
         return {
-            props: { user: user, pendingRooms: pendingRooms, approvedRooms: approvedRooms, rejectedRooms: rejectedRooms, allRooms: allRooms, pendingEvents: JSON.parse(JSON.stringify(pendingEvents)), approvedEvents: JSON.parse(JSON.stringify(approvedEvents)), rejectedEvents : JSON.parse(JSON.stringify(rejectedEvents))}
+            props: { user: user, pendingRooms: pendingRooms, approvedRooms: approvedRooms, rejectedRooms: rejectedRooms, allRooms: allRooms, pendingEvents: JSON.parse(JSON.stringify(pendingEvents)), approvedEvents: JSON.parse(JSON.stringify(approvedEvents)), rejectedEvents: JSON.parse(JSON.stringify(rejectedEvents)) }
         }
     }
 }
@@ -163,9 +166,25 @@ export default function AdminHomePage({ user, pendingRooms, approvedRooms, rejec
                         <AdminEvent approvedEvents={approvedEvents} rejectedEvents={rejectedEvents} pendingEvents={pendingEvents} user={user} />
                     </TabPanel>
                     <TabPanel>
-                        <p>Admin Name : {user.name}</p>
-                        <p>Admin Email : {user.email}</p>
-                        <p>Admin ID : {user.id}</p>
+                        <Card>
+                            <CardBody>
+                                <Box>
+                                    <Text size='md'>
+                                        Name - {user.name}
+                                    </Text>
+                                </Box>
+                                <Box marginTop={"0.5rem"}>
+                                    <Text size='md'>
+                                        Email - {user.email}
+                                    </Text>
+                                </Box>
+                                <Box marginTop={"0.5rem"}>
+                                    <Text size='md'>
+                                        Description - {user.description}
+                                    </Text>
+                                </Box>
+                            </CardBody>
+                        </Card>
                     </TabPanel>
                 </TabPanels>
             </Tabs>
