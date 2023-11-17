@@ -24,7 +24,7 @@ model User {
 
 model ClubBudget {
   id             Int              @id @default(autoincrement())
-  clubId         Int              @default(1) @unique
+  clubId         Int              @unique @default(1)
   allocated      Int
   spent          Int              @default(0)
   remaining      Int              @default(0)
@@ -79,7 +79,7 @@ model BudgetApproval {
   amount       Int
   description  String
   attachment   String
-  requestDate  DateTime  @default(now())
+  requestDate  DateTime   @default(now())
   approvedDate DateTime?
   adminRemarks String?
   budget       ClubBudget @relation(fields: [clubId], references: [clubId])

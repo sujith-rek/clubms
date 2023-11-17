@@ -1,7 +1,7 @@
 import db from "@/lib/prisma";
 
 export async function allocateBudget(data) {
-    return await db.clubBudget.create({
+    return await db.clubBudget.update({
         data
     })
 }

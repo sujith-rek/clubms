@@ -7,7 +7,7 @@ export default async function updateBudget(req, res) {
         adminStatus,
         adminRemarks: remarks
     }
-    console.log(data, id);
+    
     try {
         const result = await updateBudgetRequest(id, data);
         res.json({ status: 200, message: 'Budget request updated successfully', data: result })

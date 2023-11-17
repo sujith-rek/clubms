@@ -11,7 +11,7 @@ export default async function allocate(req, res) {
     }
     try {
         const result = await allocateBudget(data);
-        res.status(200).json(result);
+        res.json({ status: 200, message: 'Budget allocated successfully', data: result })
     } catch (error) {
         res.json({ status: 400, message: error.message })
     }

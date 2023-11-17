@@ -130,14 +130,14 @@ export async function getServerSideProps(context) {
         let budgetRequests = await getAllBudgetRequests();
 
         return {
-            props: { 
-                user: user, 
-                pendingRooms: pendingRooms, 
-                approvedRooms: approvedRooms, 
-                rejectedRooms: rejectedRooms, 
-                allRooms: allRooms, 
-                pendingEvents: JSON.parse(JSON.stringify(pendingEvents)), 
-                approvedEvents: JSON.parse(JSON.stringify(approvedEvents)), 
+            props: {
+                user: user,
+                pendingRooms: pendingRooms,
+                approvedRooms: approvedRooms,
+                rejectedRooms: rejectedRooms,
+                allRooms: allRooms,
+                pendingEvents: JSON.parse(JSON.stringify(pendingEvents)),
+                approvedEvents: JSON.parse(JSON.stringify(approvedEvents)),
                 rejectedEvents: JSON.parse(JSON.stringify(rejectedEvents)),
                 clubs: allClubs,
                 budgetRequests: JSON.parse(JSON.stringify(budgetRequests))
@@ -146,7 +146,7 @@ export async function getServerSideProps(context) {
     }
 }
 
-export default function AdminHomePage({ user, pendingRooms, approvedRooms, rejectedRooms, allRooms, approvedEvents, rejectedEvents, pendingEvents , clubs, budgetRequests}) {
+export default function AdminHomePage({ user, pendingRooms, approvedRooms, rejectedRooms, allRooms, approvedEvents, rejectedEvents, pendingEvents, clubs, budgetRequests }) {
 
     const handleLogOut = async () => {
         try {
@@ -185,6 +185,9 @@ export default function AdminHomePage({ user, pendingRooms, approvedRooms, rejec
                     </TabPanel>
                     <TabPanel>
                         <AdminEvent approvedEvents={approvedEvents} rejectedEvents={rejectedEvents} pendingEvents={pendingEvents} user={user} />
+                    </TabPanel>
+                    <TabPanel>
+                        <AdminBudget budgetRequests={budgetRequests} clubs={clubs} />
                     </TabPanel>
                     <TabPanel>
                         <Card>
