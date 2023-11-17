@@ -1,7 +1,9 @@
+import { ironOptions } from "@/lib/ironOptions";
 import { getStudent, getUser } from "@/services/users.services";
 import { compareSync } from "bcrypt";
+import { withIronSessionApiRoute } from "iron-session/next";
 
-export default async function login(req, res) {
+export default withIronSessionApiRoute(async function login(req, res) {
     const { email, password } = req.body
 
     if (!email || !password) {
@@ -30,4 +32,4 @@ export default async function login(req, res) {
     } catch (err) {
         return res.json({ status: 400, message: err.message })
     }
-}
+},ironOptions)

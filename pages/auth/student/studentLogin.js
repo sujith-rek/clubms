@@ -7,7 +7,7 @@ import {
     FormHelperText,
     Input,
 } from '@chakra-ui/react'
-import { Button } from '@chakra-ui/react'
+import { Button, Heading } from '@chakra-ui/react'
 
 export default function StudentLogin() {
 
@@ -15,7 +15,7 @@ export default function StudentLogin() {
     const [password, setPassword] = useState("");
     const router = useRouter();
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async () => {
         console.log(email, password)
         if (email === '' || password === '') {
             console.log(email, password)
@@ -29,10 +29,9 @@ export default function StudentLogin() {
             }
 
             const response = await loginStudent(data);
-
             if (response.status === 200) {
                 alert('Student logged in successfully')
-                router.push('/clubs/studentHomePage')
+                router.push('/student/studentHomePage')
             } else {
                 alert(response.message);
                 return;
@@ -41,13 +40,13 @@ export default function StudentLogin() {
     }
 
     return (
-        <div>
-            <h2 className="RegisterMainSection__header">
+        <div style={{"padding" : "3rem"}}>
+            <Heading className="RegisterMainSection__header">
                 Login as Student
-            </h2>
+            </Heading>
             <div className="RegisterMainSection__form">
-                <form className="space-y-6">
-                    <div>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    <div style={{"marginTop" : "1rem"}}>
                         <FormControl>
                             <FormLabel>Email Id</FormLabel>
                             <Input onChange={(e) => setEmail(e.target.value)} type='email' />
@@ -55,14 +54,14 @@ export default function StudentLogin() {
                         </FormControl>
                     </div>
 
-                    <div>
+                    <div style={{"marginTop" : "1rem"}}>
                         <FormControl>
                             <FormLabel>Password</FormLabel>
                             <Input onChange={(e) => setPassword(e.target.value)} type='password' />
                         </FormControl>
                     </div>
-                    <div>
-                        <Button ofnClick={handleSubmit} colorScheme='blue'>Login Student</Button>
+                    <div style={{"marginTop" : "1rem"}}>
+                        <Button onClick={() => handleSubmit()} colorScheme='blue'>Login Student</Button>
                     </div>
                 </form>
             </div>
