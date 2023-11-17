@@ -116,6 +116,7 @@ function AdminBudget({ clubs, budgetRequests }) {
           </ModalFooter>
         </ModalContent>
       </Modal>
+      
       <Tabs>
         <TabList>
           <Tab>Allocate Budget</Tab>

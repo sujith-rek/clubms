@@ -101,8 +101,6 @@ function ClubBudget({ requests, clubId, otherDetails }) {
                                     <Th>Amount</Th>
                                     <Th>Description</Th>
                                     <Th>Attachment</Th>
-                                    <Th>Status</Th>
-                                    <Th>Update?</Th>
                                 </Tr>
                             </Thead>
                             <Tbody>
@@ -113,12 +111,6 @@ function ClubBudget({ requests, clubId, otherDetails }) {
                                                 <Th>{request.amount}</Th>
                                                 <Th>{request.description}</Th>
                                                 <Th>{request.attachment}</Th>
-                                                <Th>{request.adminStatus}</Th>
-                                                <Th><Button onClick={() => {
-                                                    setUpdate(!update);
-                                                    setRequestId(request.id);
-                                                }
-                                                } colorScheme='blue' marginRight={"10px"} color={"white"}>Update</Button></Th>
                                             </Tr>
                                         )
                                 })}
