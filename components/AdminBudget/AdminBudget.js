@@ -215,7 +215,7 @@ function AdminBudget({ clubs, budgetRequests }) {
             </Table>
           </TabPanel>
           <TabPanel>
-            
+            Under dev
           </TabPanel>
         </TabPanels>
       </Tabs>
