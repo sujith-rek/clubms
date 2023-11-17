@@ -81,6 +81,7 @@ model BudgetApproval {
   attachment   String
   requestDate  DateTime  @default(now())
   approvedDate DateTime?
+  adminRemarks String?
   budget       ClubBudget @relation(fields: [clubId], references: [clubId])
 }
 

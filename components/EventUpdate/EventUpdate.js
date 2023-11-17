@@ -18,12 +18,12 @@ function EventUpdate({ event }) {
     const [time, setTime] = useState(event.date.slice(9, 14))
 
     useEffect(() => {
-        console.log(event.date)
+        const newDate = new Date(JSON.parse(event.date))
         setName(event.name)
         setDescription(event.description)
-        setDate(new Date(event.date).toISOString().slice(0, 10))
+        setDate(newDate.toISOString().slice(0, 10))
         setVenue(event.venue)
-        setTime(new Date(event.date).toISOString().slice(11, 16))
+        setTime(newDate.toISOString().slice(11, 16))
     }, [event])
 
 

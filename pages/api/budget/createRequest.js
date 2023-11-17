@@ -1,6 +1,6 @@
 import { createBudgetRequest } from "@/services/budget.services";
 
-export async function createRequest(req, res) {
+export default async function createRequest(req, res) {
     const { clubId, amount, description, attachment } = req.body;
     const data = {
         clubId,
@@ -10,7 +10,7 @@ export async function createRequest(req, res) {
     }
     try {
         const result = await createBudgetRequest(data);
-        res.status(200).json(result);
+        res.json({ status: 200, message: 'Budget request created successfully', data: result })
     } catch (error) {
         res.json({ status: 400, message: error.message })
     }
