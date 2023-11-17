@@ -1,20 +1,21 @@
 import { fetchAllRooms, fetchBookedRooms } from '@/services/roombook.services'
 import { eventFindManyByClubId } from '@/services/events.service'
+import { getBudgetRequestsByClubId, getClubBudgetDetails } from '@/services/budget.services'
+import { logout } from '@/operations/users.fetch'
 import {
     Button,
-    Tab,
+    Tab, Tabs,
     TabList,
     TabPanel,
     TabPanels,
-    Tabs,
     Text,
-    Card, 
-    CardBody, 
+    Card,
+    CardBody,
     Box,
 } from '@chakra-ui/react'
 import ClubRoomBooking from '@/components/ClubRoomBooking/ClubRoomBooking'
-import { logout } from '@/operations/users.fetch'
 import ClubEvent from '@/components/ClubEvent/ClubEvent'
+import ClubBudget from '@/components/ClubBudget/ClubBudget'
 
 export async function getServerSideProps(context) {
     if (context.req.session.user === undefined) {
@@ -50,7 +51,9 @@ export async function getServerSideProps(context) {
         const user = context.req.session.user;
         let bookedRooms = await fetchBookedRooms(context.req.session.user.id);
         let events = await eventFindManyByClubId(user.id);
+        let requests = await getBudgetRequestsByClubId(user.id);
         const allRooms = await fetchAllRooms();
+        let clubBudgetDetails = await getClubBudgetDetails(user.id);
         const indianOptions = {
             timeZone: 'Asia/Kolkata',
             hour12: false,
@@ -70,18 +73,22 @@ export async function getServerSideProps(context) {
         });
 
         events = events.map(event => {
-            event.date = event.date.toLocaleString('en-IN', indianOptions);
+            event.date = JSON.stringify(event.date);
             return event;
         });
 
+        requests = requests.map(request => {
+            request.requestDate = JSON.stringify(request.requestDate);
+            return request;
+        });
 
         return {
-            props: { user: user, bookedRooms, events }
+            props: { user: user, bookedRooms, events, requests, clubBudgetDetails }
         }
     }
 }
 
-export default function ClubHomePage({ user, bookedRooms, events }) {
+export default function ClubHomePage({ user, bookedRooms, events, requests, clubBudgetDetails }) {
 
     const handleLogOut = async () => {
         try {
@@ -111,6 +118,7 @@ export default function ClubHomePage({ user, bookedRooms, events }) {
                 <TabList>
                     <Tab>Event</Tab>
                     <Tab>Room</Tab>
+                    <Tab>Budget</Tab>
                     <Tab>Club Details</Tab>
                 </TabList>
 
@@ -120,6 +128,9 @@ export default function ClubHomePage({ user, bookedRooms, events }) {
                     </TabPanel>
                     <TabPanel>
                         <ClubRoomBooking user={user} bookedRooms={bookedRooms} />
+                    </TabPanel>
+                    <TabPanel>
+                        <ClubBudget clubId={user.id} requests={requests} otherDetails={clubBudgetDetails} />
                     </TabPanel>
                     <TabPanel>
                         <Card>
