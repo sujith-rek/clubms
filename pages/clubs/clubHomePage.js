@@ -9,6 +9,10 @@ import {
     TabPanel,
     TabPanels,
     Tabs,
+    Text,
+    Card, 
+    CardBody, 
+    Box,
 } from '@chakra-ui/react'
 import ClubRoomBooking from '@/components/ClubRoomBooking/ClubRoomBooking'
 import ClubEvent from '@/components/ClubEvent/ClubEvent'
@@ -19,7 +23,7 @@ export async function getServerSideProps(context) {
         return {
             redirect: {
                 permanent: false,
-                destination: '/auth/club/clubLogin'
+                destination: '/'
             }
         }
     }
@@ -27,21 +31,21 @@ export async function getServerSideProps(context) {
         return {
             redirect: {
                 permanent: false,
-                destination: '/auth/admin/adminLogin'
+                destination: '/admin/adminHomePage'
             }
         }
     } else if (context.req.session.user.role === 'CC') {
         return {
             redirect: {
                 permanent: false,
-                destination: '/auth/club/clubLogin'
+                destination: '/cc/ccHomepage'
             }
         }
     } else if (context.req.session.user.role === 'STUDENT') {
         return {
             redirect: {
                 permanent: false,
-                destination: '/auth/student/studentLogin'
+                destination: '/student/studentHomePage'
             }
         }
     } else {
@@ -103,16 +107,16 @@ export default function ClubHomePage({ user, bookedRooms, events, requests, club
 
     return (
         <div>
-            <div className="flex flex-row justify-between">
-                <span>
-                    <h1 className="text-4xl font-bold">Welcome {user.name}</h1>
-                    <Button onClick={() => handleLogOut()} colorScheme='red' marginTop={"10px"}>Logout</Button>
-                </span>
+            <div>
+                <div style={{ "paddingTop": "1rem", "display": "flex", "justifyContent": "space-between", "paddingBottom": "0rem", "paddingLeft": "2rem", "paddingRight": "2rem" }} className="flex flex-col items-center justify-center">
+                    <Text fontWeight={"500"} fontSize='4xl'>Welcome {user.name}</Text>
+                    <Button onClick={() => handleLogOut()} marginTop={"10px"} colorScheme='red'>Logout</Button>
+                </div>
+                <Text fontSize={'2xl'} paddingLeft={"2rem"}>Club Dashboard</Text>
+
             </div>
-
             <br />
-
-            <Tabs>
+            <Tabs paddingLeft={"2rem"} paddingRight={"2rem"}>
                 <TabList>
                     <Tab>Event</Tab>
                     <Tab>Room</Tab>
@@ -128,12 +132,26 @@ export default function ClubHomePage({ user, bookedRooms, events, requests, club
                         <ClubRoomBooking user={user} bookedRooms={bookedRooms} />
                     </TabPanel>
                     <TabPanel>
-                        <ClubBudget requests={requests} clubId={user.id} otherDetails={clubBudgetDetails} />
-                    </TabPanel>
-                    <TabPanel>
-                        <p>Club Name : {user.name}</p>
-                        <p>Club Email : {user.email}</p>
-                        <p>Club ID : {user.id}</p>
+
+                        <Card>
+                            <CardBody>
+                                <Box>
+                                    <Text size='md'>
+                                        Name - {user.name}
+                                    </Text>
+                                </Box>
+                                <Box marginTop={"0.5rem"}>
+                                    <Text size='md'>
+                                        Email - {user.email}
+                                    </Text>
+                                </Box>
+                                <Box marginTop={"0.5rem"}>
+                                    <Text size='md'>
+                                        Description - {user.description}
+                                    </Text>
+                                </Box>
+                            </CardBody>
+                        </Card>
                     </TabPanel>
                 </TabPanels>
 
