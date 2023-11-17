@@ -14,6 +14,9 @@ import {
     TabPanels,
     Tabs,
     Text,
+    Card,
+    CardBody,
+    Box,
 } from '@chakra-ui/react'
 
 export async function getServerSideProps(context) {
@@ -184,12 +187,25 @@ export default function AdminHomePage({ user, pendingRooms, approvedRooms, rejec
                         <AdminEvent approvedEvents={approvedEvents} rejectedEvents={rejectedEvents} pendingEvents={pendingEvents} user={user} />
                     </TabPanel>
                     <TabPanel>
-                        <AdminBudget clubs={clubs} budgetRequests={budgetRequests}/>
-                    </TabPanel>
-                    <TabPanel>
-                        <p>Admin Name : {user.name}</p>
-                        <p>Admin Email : {user.email}</p>
-                        <p>Admin ID : {user.id}</p>
+                        <Card>
+                            <CardBody>
+                                <Box>
+                                    <Text size='md'>
+                                        Name - {user.name}
+                                    </Text>
+                                </Box>
+                                <Box marginTop={"0.5rem"}>
+                                    <Text size='md'>
+                                        Email - {user.email}
+                                    </Text>
+                                </Box>
+                                <Box marginTop={"0.5rem"}>
+                                    <Text size='md'>
+                                        Description - {user.description}
+                                    </Text>
+                                </Box>
+                            </CardBody>
+                        </Card>
                     </TabPanel>
                 </TabPanels>
             </Tabs>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { registerStudent } from "@/operations/student.fetch";
-import { Button } from '@chakra-ui/react'
+import { Button, Heading } from '@chakra-ui/react'
 import {
     FormControl,
     FormLabel,
@@ -43,34 +43,33 @@ export default function ClubRegister() {
 
     return (
         <>
-            <div className="RegisterMainSection">
-                <h2 className="RegisterMainSection__header">
+            <div style={{"padding" : "3rem"}} className="RegisterMainSection">
+                <Heading className="RegisterMainSection__header">
                     Register as a Student
-                </h2>
+                </Heading>
                 <div className="RegisterMainSection__form">
                     <form className="space-y-6">
-                        <div>
+                        <div style={{"marginTop" : "1rem"}}>
                             <FormControl>
                                 <FormLabel>Your Name</FormLabel>
                                 <Input onChange={(e) => setName(e.target.value)} type='text' />
                             </FormControl>
                         </div>
-                        <div>
+                        <div style={{"marginTop" : "1rem"}}>
                             <FormControl>
                                 <FormLabel>Your Email</FormLabel>
                                 <Input onChange={(e) => setEmail(e.target.value)} type='email' />
-                                <FormHelperText>We'll never share your email.</FormHelperText>
                             </FormControl>
                         </div>
 
-                        <div>
+                        <div style={{"marginTop" : "1rem"}}>
                             <FormControl>
                                 <FormLabel>Roll No</FormLabel>
                                 <Input onChange={(e) => setRollno(e.target.value)} type='number' />
                             </FormControl>
                         </div>
 
-                        <div>
+                        <div style={{"marginTop" : "1rem"}}>
                             <FormControl>
                                 <FormLabel>Set Password</FormLabel>
                                 <Input onChange={(e) => setPassword(e.target.value)} type='password' />
@@ -78,7 +77,7 @@ export default function ClubRegister() {
                         </div>
 
 
-                        <div>
+                        <div style={{"marginTop" : "1rem"}}>
                             <Button onClick={handleSubmit} colorScheme='blue'>Register</Button>
                         </div>
                     </form>
