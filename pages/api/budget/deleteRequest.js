@@ -1,14 +1,15 @@
-import { eventApprovalDelete } from "@/services/events.service";
+import { deleteBudgetRequest } from "@/services/budget.services";
 
 
-export default async function deleteEventApproval(req, res) {
+export default async function budgetDelete(req, res) {
     const { id, clubId } = req.body;
-
     try {
-        const result = await eventApprovalDelete(id, clubId);
-        res.json({ status: 200, message: 'Event Approval deleted successfully', data: result })
-    } catch (error) {
-        res.json({ status: 400, message: error.message })
+        const result = await deleteBudgetRequest(id, clubId);
+
+        res.json({ message: "Budget request deleted successfully", result });
+    }
+    catch (e) {
+        res.json({ message: e.message });
     }
 }
 

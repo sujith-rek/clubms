@@ -1,17 +1,16 @@
 import { fetchAllRooms, fetchBookedRooms } from '@/services/roombook.services'
 import { eventFindManyByClubId } from '@/services/events.service'
-import { getBudgetRequestsByClubId,getClubBudgetDetails } from '@/services/budget.services'
+import { getBudgetRequestsByClubId, getClubBudgetDetails } from '@/services/budget.services'
 import { logout } from '@/operations/users.fetch'
 import {
     Button,
-    Tab,
+    Tab, Tabs,
     TabList,
     TabPanel,
     TabPanels,
-    Tabs,
     Text,
-    Card, 
-    CardBody, 
+    Card,
+    CardBody,
     Box,
 } from '@chakra-ui/react'
 import ClubRoomBooking from '@/components/ClubRoomBooking/ClubRoomBooking'
@@ -113,7 +112,6 @@ export default function ClubHomePage({ user, bookedRooms, events, requests, club
                     <Button onClick={() => handleLogOut()} marginTop={"10px"} colorScheme='red'>Logout</Button>
                 </div>
                 <Text fontSize={'2xl'} paddingLeft={"2rem"}>Club Dashboard</Text>
-
             </div>
             <br />
             <Tabs paddingLeft={"2rem"} paddingRight={"2rem"}>
@@ -132,7 +130,9 @@ export default function ClubHomePage({ user, bookedRooms, events, requests, club
                         <ClubRoomBooking user={user} bookedRooms={bookedRooms} />
                     </TabPanel>
                     <TabPanel>
-
+                        <ClubBudget clubId={user.id} requests={requests} otherDetails={clubBudgetDetails} />
+                    </TabPanel>
+                    <TabPanel>
                         <Card>
                             <CardBody>
                                 <Box>

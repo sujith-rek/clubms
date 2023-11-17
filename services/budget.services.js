@@ -29,9 +29,9 @@ export async function createBudgetRequest(data) {
     })
 }
 
-export async function deleteBudgetRequest(id) {
+export async function deleteBudgetRequest(id, clubId) {
     return await db.budgetApproval.delete({
-        where: { id }
+        where: { id, clubId }
     })
 }
 
