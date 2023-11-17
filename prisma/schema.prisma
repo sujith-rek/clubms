@@ -24,7 +24,7 @@ model User {
 
 model ClubBudget {
   id             Int              @id @default(autoincrement())
-  clubId         Int              @default(1)
+  clubId         Int              @default(1) @unique
   allocated      Int
   spent          Int              @default(0)
   remaining      Int              @default(0)
@@ -72,14 +72,16 @@ model RoomBookApproval {
 }
 
 model BudgetApproval {
-  id          Int        @id @default(autoincrement())
-  adminId     Int        @default(1)
-  adminStatus Status     @default(PENDING)
-  clubId      Int        @default(1)
-  amount      Int
-  description String
-  attachment  String
-  budget      ClubBudget @relation(fields: [clubId], references: [id])
+  id           Int        @id @default(autoincrement())
+  adminId      Int        @default(1)
+  adminStatus  Status     @default(PENDING)
+  clubId       Int        @default(1)
+  amount       Int
+  description  String
+  attachment   String
+  requestDate  DateTime  @default(now())
+  approvedDate DateTime?
+  budget       ClubBudget @relation(fields: [clubId], references: [clubId])
 }
 
 model Room {

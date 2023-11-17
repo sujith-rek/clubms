@@ -1,8 +1,6 @@
 import { fetchAllRooms, fetchBookedRooms } from '@/services/roombook.services'
 import { eventFindManyByClubId } from '@/services/events.service'
-import EventCreate from '@/components/EventCreate/EventCreate'
-import EventUpdate from '@/components/EventUpdate/EventUpdate'
-
+import { logout } from '@/operations/users.fetch'
 import {
     Button,
     Tab,
@@ -10,19 +8,10 @@ import {
     TabPanel,
     TabPanels,
     Tabs,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalBody,
-    ModalCloseButton,
-
 } from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
 import ClubRoomBooking from '@/components/ClubRoomBooking/ClubRoomBooking'
-import { logout } from '@/operations/users.fetch'
 import ClubEvent from '@/components/ClubEvent/ClubEvent'
-
+import ClubBudget from '@/components/ClubBudget/ClubBudget'
 
 export async function getServerSideProps(context) {
     if (context.req.session.user === undefined) {
@@ -90,11 +79,6 @@ export async function getServerSideProps(context) {
 }
 
 export default function ClubHomePage({ user, bookedRooms, events }) {
-    const [updateModal, showUpdateModal] = useState(false)
-    const [event, showEvent] = useState(false)
-    const [pendingEvents, showPendingEvents] = useState(false)
-    const [approvedEvents, showApprovedEvents] = useState(false)
-    const [updateEventId, setUpdateEventId] = useState(0);
 
     const handleLogOut = async () => {
         try {
@@ -121,13 +105,11 @@ export default function ClubHomePage({ user, bookedRooms, events }) {
 
             <br />
 
-            
-
-
             <Tabs>
                 <TabList>
                     <Tab>Event</Tab>
                     <Tab>Room</Tab>
+                    <Tab>Budget</Tab>
                     <Tab>Club Details</Tab>
                 </TabList>
 
@@ -137,6 +119,9 @@ export default function ClubHomePage({ user, bookedRooms, events }) {
                     </TabPanel>
                     <TabPanel>
                         <ClubRoomBooking user={user} bookedRooms={bookedRooms} />
+                    </TabPanel>
+                    <TabPanel>
+                        <ClubBudget />
                     </TabPanel>
                     <TabPanel>
                         <p>Club Name : {user.name}</p>

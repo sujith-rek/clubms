@@ -9,6 +9,7 @@ import {
 import { useState } from "react";
 import EventUpdate from "../EventUpdate/EventUpdate";
 import EventCreate from "../EventCreate/EventCreate";
+
 export default function ClubEvent({ events, user }) {
     const [updateModal, showUpdateModal] = useState(false)
     const [updateEventId, setUpdateEventId] = useState(0);

@@ -1,5 +1,4 @@
 import AdminEvent from '@/components/AdminEvent/AdminEvent';
-import AdminEvnet from '@/components/AdminEvent/AdminEvent';
 import AdminRoomBooking from '@/components/AdminRoomBooking/AdminRoomBooking'
 import { logout } from '@/operations/users.fetch'
 import { fetchAllClubs } from '@/services/clubs.service';
@@ -93,7 +92,7 @@ export async function getServerSideProps(context) {
         approvedEvents = approvedEvents.map((event) => {
             event.date = event.date.toLocaleString('en-IN', indianOptions);
             const club = allClubs.find(c => c.id === event.clubId)
-            if(club) {
+            if (club) {
                 event.clubName = club.name;
             }
             return event;
@@ -102,7 +101,7 @@ export async function getServerSideProps(context) {
         pendingEvents = pendingEvents.map((event) => {
             event.date = event.date.toLocaleString('en-IN', indianOptions);
             const club = allClubs.find(c => c.id === event.clubId)
-            if(club) {
+            if (club) {
                 event.clubName = club.name;
             }
             return event;
@@ -111,13 +110,13 @@ export async function getServerSideProps(context) {
         rejectedEvents = rejectedEvents.map((event) => {
             event.date = event.date.toLocaleString('en-IN', indianOptions);
             const club = allClubs.find(c => c.id === event.clubId)
-            if(club) {
+            if (club) {
                 event.clubName = club.name;
             }
             return event;
         })
         return {
-            props: { user: user, pendingRooms: pendingRooms, approvedRooms: approvedRooms, rejectedRooms: rejectedRooms, allRooms: allRooms, pendingEvents: JSON.parse(JSON.stringify(pendingEvents)), approvedEvents: JSON.parse(JSON.stringify(approvedEvents)), rejectedEvents : JSON.parse(JSON.stringify(rejectedEvents))}
+            props: { user: user, pendingRooms: pendingRooms, approvedRooms: approvedRooms, rejectedRooms: rejectedRooms, allRooms: allRooms, pendingEvents: JSON.parse(JSON.stringify(pendingEvents)), approvedEvents: JSON.parse(JSON.stringify(approvedEvents)), rejectedEvents: JSON.parse(JSON.stringify(rejectedEvents)) }
         }
     }
 }
