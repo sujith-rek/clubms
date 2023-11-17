@@ -1,8 +1,5 @@
 import { fetchAllRooms, fetchBookedRooms } from '@/services/roombook.services'
 import { eventFindManyByClubId } from '@/services/events.service'
-import EventCreate from '@/components/EventCreate/EventCreate'
-import EventUpdate from '@/components/EventUpdate/EventUpdate'
-
 import {
     Button,
     Tab,
@@ -11,20 +8,13 @@ import {
     TabPanels,
     Tabs,
     Text,
-    Card, CardHeader, CardBody, CardFooter, Heading, Stack, StackDivider, Box,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalBody,
-    ModalCloseButton,
-
+    Card, 
+    CardBody, 
+    Box,
 } from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
 import ClubRoomBooking from '@/components/ClubRoomBooking/ClubRoomBooking'
 import { logout } from '@/operations/users.fetch'
 import ClubEvent from '@/components/ClubEvent/ClubEvent'
-
 
 export async function getServerSideProps(context) {
     if (context.req.session.user === undefined) {

@@ -12,6 +12,7 @@ import {
     TabPanel,
     TabPanels,
     Tabs,
+    Text,
 
 } from '@chakra-ui/react'
 
@@ -141,13 +142,14 @@ export default function AdminHomePage({ user, pendingRooms, approvedRooms, rejec
     return (
         <div>
             <div>
-                <div className="flex flex-col items-center justify-center">
-                    <h1 className="text-4xl font-bold">Welcome {user.name}</h1>
+                <div style={{ "paddingTop": "1rem", "display": "flex", "justifyContent": "space-between", "paddingBottom": "0rem", "paddingLeft": "2rem", "paddingRight": "2rem" }} className="flex flex-col items-center justify-center">
+                    <Text fontWeight={"500"} fontSize='4xl'>Welcome {user.name}</Text>
                     <Button onClick={() => handleLogOut()} marginTop={"10px"} colorScheme='red'>Logout</Button>
                 </div>
+                <Text fontSize={'2xl'} paddingLeft={"2rem"}>Admin Dashboard</Text>
             </div>
             <br />
-            <Tabs>
+            <Tabs paddingLeft={"2rem"} paddingRight={"2rem"}>
                 <TabList>
                     <Tab>Room Booking</Tab>
                     <Tab>Event Booking</Tab>
