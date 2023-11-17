@@ -10,6 +10,8 @@ import {
     TabPanel,
     TabPanels,
     Tabs,
+    Text,
+    Card, CardHeader, CardBody, CardFooter, Heading, Stack, StackDivider, Box,
     Modal,
     ModalOverlay,
     ModalContent,
@@ -29,7 +31,7 @@ export async function getServerSideProps(context) {
         return {
             redirect: {
                 permanent: false,
-                destination: '/auth/club/clubLogin'
+                destination: '/'
             }
         }
     }
@@ -37,21 +39,21 @@ export async function getServerSideProps(context) {
         return {
             redirect: {
                 permanent: false,
-                destination: '/auth/admin/adminLogin'
+                destination: '/admin/adminHomePage'
             }
         }
     } else if (context.req.session.user.role === 'CC') {
         return {
             redirect: {
                 permanent: false,
-                destination: '/auth/club/clubLogin'
+                destination: '/cc/ccHomepage'
             }
         }
     } else if (context.req.session.user.role === 'STUDENT') {
         return {
             redirect: {
                 permanent: false,
-                destination: '/auth/student/studentLogin'
+                destination: '/student/studentHomePage'
             }
         }
     } else {
@@ -90,11 +92,6 @@ export async function getServerSideProps(context) {
 }
 
 export default function ClubHomePage({ user, bookedRooms, events }) {
-    const [updateModal, showUpdateModal] = useState(false)
-    const [event, showEvent] = useState(false)
-    const [pendingEvents, showPendingEvents] = useState(false)
-    const [approvedEvents, showApprovedEvents] = useState(false)
-    const [updateEventId, setUpdateEventId] = useState(0);
 
     const handleLogOut = async () => {
         try {
@@ -113,18 +110,14 @@ export default function ClubHomePage({ user, bookedRooms, events }) {
     return (
         <div>
             <div>
-                <div className="flex flex-col items-center justify-center">
-                    <h1 className="text-4xl font-bold">Welcome {user.name}</h1>
+                <div style={{ "paddingTop": "1rem", "display": "flex", "justifyContent": "space-between", "paddingBottom": "0rem", "paddingLeft": "2rem", "paddingRight": "2rem" }} className="flex flex-col items-center justify-center">
+                    <Text fontWeight={"500"} fontSize='4xl'>Welcome {user.name}</Text>
+                    <Button onClick={() => handleLogOut()} marginTop={"10px"} colorScheme='red'>Logout</Button>
                 </div>
-                <Button onClick={() => handleLogOut()} colorScheme='red' marginTop={"10px"}>Logout</Button>
+                <Text fontSize={'2xl'} paddingLeft={"2rem"}>Club Dashboard</Text>
             </div>
-
             <br />
-
-            
-
-
-            <Tabs>
+            <Tabs paddingLeft={"2rem"} paddingRight={"2rem"}>
                 <TabList>
                     <Tab>Event</Tab>
                     <Tab>Room</Tab>
@@ -139,9 +132,25 @@ export default function ClubHomePage({ user, bookedRooms, events }) {
                         <ClubRoomBooking user={user} bookedRooms={bookedRooms} />
                     </TabPanel>
                     <TabPanel>
-                        <p>Club Name : {user.name}</p>
-                        <p>Club Email : {user.email}</p>
-                        <p>Club ID : {user.id}</p>
+                        <Card>
+                            <CardBody>
+                                <Box>
+                                    <Text size='md'>
+                                        Name - {user.name}
+                                    </Text>
+                                </Box>
+                                <Box marginTop={"0.5rem"}>
+                                    <Text size='md'>
+                                        Email - {user.email}
+                                    </Text>
+                                </Box>
+                                <Box marginTop={"0.5rem"}>
+                                    <Text size='md'>
+                                        Description - {user.description}
+                                    </Text>
+                                </Box>
+                            </CardBody>
+                        </Card>
                     </TabPanel>
                 </TabPanels>
 

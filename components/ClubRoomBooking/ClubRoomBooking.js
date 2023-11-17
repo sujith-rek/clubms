@@ -7,7 +7,7 @@ import {
     FormLabel,
     Input,
     Button,
-
+    Card, CardHeader, CardBody, CardFooter, Heading, Stack, StackDivider, Box, Text
 } from '@chakra-ui/react'
 import AvailableRooms from "../AvailableRooms/AvailableRooms";
 
@@ -27,6 +27,7 @@ export default function ClubRoomBooking({ user, bookedRooms }) {
                 startDate: new Date(from).toISOString(),
                 endDate: new Date(to).toISOString,
             });
+            console.log(response)
             if (response.status === 200) {
                 setRooms(response.rooms);
                 setToTime(to);
@@ -67,27 +68,81 @@ export default function ClubRoomBooking({ user, bookedRooms }) {
                                 <Button colorScheme='yellow' marginRight={"10px"} color={"black"} onClick={seeAvailRooms}>Fetch Rooms</Button>
                             </div>
                             <br />
+                            {isFetching ? <div>{
+                                rooms.length === 0 ? "No Rooms" : null
+                            }</div> : <div></div>}
                             {isFetching ?
-                                <div>{rooms.map((room, index) => {
-                                    return (
-                                        <AvailableRooms key={index} room={room} clubId={user.id} />
-                                    )
-                                })}</div> : null
+                                <div style={{ "display": "flex", "justifyContent": "flex-start", "flexWrap": "wrap", "alignItems": "flex-start" }}>
+                                    {rooms.map((room, index) => {
+                                        return (
+                                            <AvailableRooms key={index} room={room} clubId={user.id} />
+                                        )
+                                    })}
+                                </div> : null
                             }
                         </>
                     </TabPanel>
                     <TabPanel>
-                        <div>
+                        <div style={{"display" : "flex", "flexWrap" : "wrap"}}>
                             {bookedRooms.map((bookedRoom, index) => {
                                 if (bookedRoom.adminStatus === 'PENDING') {
                                     return (
-                                        <div key={index}>
-                                            <p>Room Number : {bookedRoom.roomNumber}</p>
-                                            <p>Room Block : {bookedRoom.roomBlock}</p>
-                                            <p>From : {bookedRoom.from}</p>
-                                            <p>To : {bookedRoom.to}</p>
-                                            <p>Status : {bookedRoom.adminStatus}</p>
-                                            <br />
+                                        <div style={{"marginRight" : "1rem"}} key={index}>
+                                            <Card width={"20rem"}>
+                                                <CardHeader>
+                                                    <Heading size='md'>Room Details</Heading>
+                                                </CardHeader>
+                                                <CardBody>
+                                                    <Box>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            Room Number
+                                                        </Heading>
+                                                        <Text pt='0' fontSize='sm'>
+                                                            {bookedRoom.roomNumber}
+                                                        </Text>
+                                                    </Box>
+                                                    <Box marginTop={'0.5rem'}>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            Block
+                                                        </Heading>
+                                                        <Text pt='0' fontSize='sm'>
+                                                            {bookedRoom.roomBlock}
+                                                        </Text>
+                                                    </Box>
+                                                    <Box marginTop={'0.5rem'}>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            From
+                                                        </Heading>
+                                                        <Text pt='0' fontSize='sm'>
+                                                            {bookedRoom.from}
+                                                        </Text>
+                                                    </Box>
+                                                    <Box marginTop={'0.5rem'}>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            To
+                                                        </Heading>
+                                                        <Text pt='0' fontSize='sm'>
+                                                            {bookedRoom.to}
+                                                        </Text>
+                                                    </Box>
+                                                    <Box marginTop={'0.5rem'}>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            Admin Status
+                                                        </Heading>
+                                                        <Text pt='0' fontSize='sm'>
+                                                            {bookedRoom.adminStatus}
+                                                        </Text>
+                                                    </Box>
+                                                    <Box marginTop={'0.5rem'}>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            Reason For booking
+                                                        </Heading>
+                                                        <Text pt='0' fontSize='sm'>
+                                                            {bookedRoom.description}
+                                                        </Text>
+                                                    </Box>
+                                                </CardBody>
+                                            </Card>
                                         </div>
                                     )
                                 }
@@ -95,17 +150,66 @@ export default function ClubRoomBooking({ user, bookedRooms }) {
                         </div>
                     </TabPanel>
                     <TabPanel>
-                        <div>
+                        <div style={{"display" : "flex", "flexWrap" : "wrap"}}>
                             {bookedRooms.map((bookedRoom, index) => {
                                 if (bookedRoom.adminStatus === 'APPROVED') {
                                     return (
-                                        <div key={index}>
-                                            <p>Room Number : {bookedRoom.roomNumber}</p>
-                                            <p>Room Block : {bookedRoom.roomBlock}</p>
-                                            <p>From : {bookedRoom.from}</p>
-                                            <p>To : {bookedRoom.to}</p>
-                                            <p>Status : {bookedRoom.adminStatus}</p>
-                                            <br />
+                                        <div style={{"marginRight" : "1rem"}} key={index}>
+                                            <Card width={"20rem"}>
+                                                <CardHeader>
+                                                    <Heading size='md'>Room Details</Heading>
+                                                </CardHeader>
+                                                <CardBody>
+                                                    <Box>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            Room Number
+                                                        </Heading>
+                                                        <Text pt='0' fontSize='sm'>
+                                                            {bookedRoom.roomNumber}
+                                                        </Text>
+                                                    </Box>
+                                                    <Box marginTop={'0.5rem'}>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            Block
+                                                        </Heading>
+                                                        <Text pt='0' fontSize='sm'>
+                                                            {bookedRoom.roomBlock}
+                                                        </Text>
+                                                    </Box>
+                                                    <Box marginTop={'0.5rem'}>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            From
+                                                        </Heading>
+                                                        <Text pt='0' fontSize='sm'>
+                                                            {bookedRoom.from}
+                                                        </Text>
+                                                    </Box>
+                                                    <Box marginTop={'0.5rem'}>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            To
+                                                        </Heading>
+                                                        <Text pt='0' fontSize='sm'>
+                                                            {bookedRoom.to}
+                                                        </Text>
+                                                    </Box>
+                                                    <Box marginTop={'0.5rem'}>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            Admin Status
+                                                        </Heading>
+                                                        <Text pt='0' fontSize='sm'>
+                                                            {bookedRoom.adminStatus}
+                                                        </Text>
+                                                    </Box>
+                                                    <Box marginTop={'0.5rem'}>
+                                                        <Heading size='xs' textTransform='uppercase'>
+                                                            Reason For booking
+                                                        </Heading>
+                                                        <Text pt='0' fontSize='sm'>
+                                                            {bookedRoom.description}
+                                                        </Text>
+                                                    </Box>
+                                                </CardBody>
+                                            </Card>
                                         </div>
                                     )
                                 }

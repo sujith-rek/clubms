@@ -54,6 +54,7 @@ export default function ClubLoginPage() {
             </div>
             <br />
             <Button marginBottom={"10px"} colorScheme='yellow' marginRight={"10px"} color={"black"} onClick={() => handleLogin()}>Login</Button>
+            <p>Don't have an accout? <span style={{"cursor" : "pointer"}} onClick={() => {router.push('/auth/club/clubRegister')}}>Signup as a Club</span></p>
         </div>
     )
 }
