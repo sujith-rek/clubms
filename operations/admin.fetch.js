@@ -111,4 +111,34 @@ export async function updateEvent(data) {
 }
 
 
+export async function updateBudget(data){
+    return await fetch(
+        "/api/admin/budget/update", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data),
+        credentials: "include"
+    }).then((res) => {
+        return res.json()
+    }).catch((err) => {
+        console.log(err)
+    })
+}
+
+export async function allocateBudgetToClub(data){
+    return await fetch(
+        "/api/admin/budget/allocate", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data),
+    }).then((res) => {
+        return res.json()
+    }).catch((err) => {
+        console.log(err)
+    })
+}
 

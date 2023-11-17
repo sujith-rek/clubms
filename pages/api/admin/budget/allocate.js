@@ -1,12 +1,12 @@
 import { allocateBudget } from "@/services/budget.services";
 
 export default async function allocate(req, res) {
-    const { clubId, allocate } = req.body;
+    const { clubId, amount } = req.body;
     const data = {
         clubId,
-        allocated: allocate,
+        allocated: amount,
         spent: 0,
-        remaining: allocate,
+        remaining: amount,
         userId: clubId
     }
     try {

@@ -6,7 +6,7 @@ export default async function deleteEventApproval(req, res) {
 
     try {
         const result = await eventApprovalDelete(id, clubId);
-        res.status(200).json(result);
+        res.json({ status: 200, message: 'Event Approval deleted successfully', data: result })
     } catch (error) {
         res.json({ status: 400, message: error.message })
     }

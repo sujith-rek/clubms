@@ -1,17 +1,18 @@
 import AdminEvent from '@/components/AdminEvent/AdminEvent';
 import AdminRoomBooking from '@/components/AdminRoomBooking/AdminRoomBooking'
+import AdminBudget from '@/components/AdminBudget/AdminBudget';
 import { logout } from '@/operations/users.fetch'
 import { fetchAllClubs } from '@/services/clubs.service';
 import { eventsAdminApproved, eventsAdminPending, eventsAdminRejected } from '@/services/events.service';
 import { fetchAllRooms, fetchApprovedRooms, fetchPendingRooms, fetchRejectedRooms } from '@/services/roombook.services'
+import { getAllBudgetRequests } from '@/services/budget.services';
 import {
     Button,
     Tab,
     TabList,
     TabPanel,
     TabPanels,
-    Tabs,
-
+    Tabs,   
 } from '@chakra-ui/react'
 
 export async function getServerSideProps(context) {
@@ -115,13 +116,33 @@ export async function getServerSideProps(context) {
             }
             return event;
         })
+
+
+        let clubs = allClubs.map(club => {
+            club.password = null;
+            return club;
+        });
+
+        let budgetRequests = await getAllBudgetRequests();
+
         return {
-            props: { user: user, pendingRooms: pendingRooms, approvedRooms: approvedRooms, rejectedRooms: rejectedRooms, allRooms: allRooms, pendingEvents: JSON.parse(JSON.stringify(pendingEvents)), approvedEvents: JSON.parse(JSON.stringify(approvedEvents)), rejectedEvents: JSON.parse(JSON.stringify(rejectedEvents)) }
+            props: { 
+                user: user, 
+                pendingRooms: pendingRooms, 
+                approvedRooms: approvedRooms, 
+                rejectedRooms: rejectedRooms, 
+                allRooms: allRooms, 
+                pendingEvents: JSON.parse(JSON.stringify(pendingEvents)), 
+                approvedEvents: JSON.parse(JSON.stringify(approvedEvents)), 
+                rejectedEvents: JSON.parse(JSON.stringify(rejectedEvents)),
+                clubs: allClubs,
+                budgetRequests: JSON.parse(JSON.stringify(budgetRequests))
+            }
         }
     }
 }
 
-export default function AdminHomePage({ user, pendingRooms, approvedRooms, rejectedRooms, allRooms, approvedEvents, rejectedEvents, pendingEvents }) {
+export default function AdminHomePage({ user, pendingRooms, approvedRooms, rejectedRooms, allRooms, approvedEvents, rejectedEvents, pendingEvents , clubs, budgetRequests}) {
 
     const handleLogOut = async () => {
         try {
@@ -150,6 +171,7 @@ export default function AdminHomePage({ user, pendingRooms, approvedRooms, rejec
                 <TabList>
                     <Tab>Room Booking</Tab>
                     <Tab>Event Booking</Tab>
+                    <Tab>Budget</Tab>
                     <Tab>Admin Details</Tab>
                 </TabList>
                 <TabPanels>
@@ -158,6 +180,9 @@ export default function AdminHomePage({ user, pendingRooms, approvedRooms, rejec
                     </TabPanel>
                     <TabPanel>
                         <AdminEvent approvedEvents={approvedEvents} rejectedEvents={rejectedEvents} pendingEvents={pendingEvents} user={user} />
+                    </TabPanel>
+                    <TabPanel>
+                        <AdminBudget clubs={clubs} budgetRequests={budgetRequests}/>
                     </TabPanel>
                     <TabPanel>
                         <p>Admin Name : {user.name}</p>
