@@ -30,7 +30,7 @@ function BudgetUpdate({ request }) {
 
     return (
         <>
-            <Button marginTop={"10px"} marginBottom={"10px"} colorScheme="teal" variant="solid" onClick={() => setUpdate(!update)}>
+            <Button marginTop={"10px"} marginBottom={"10px"} colorScheme="black" variant="solid" onClick={() => setUpdate(!update)}>
                 Edit Request?
             </Button>
             <div>

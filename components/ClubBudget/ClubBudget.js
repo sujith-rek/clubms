@@ -65,7 +65,7 @@ function ClubBudget({ requests, clubId, otherDetails }) {
             </Modal>
             <Tabs>
                 <TabList>
-                    <Tab>Create Budget Approval Request</Tab>
+                    <Tab>Budget Approval Request</Tab>
                     <Tab>Approved Requests</Tab>
                     <Tab>Pending Requests</Tab>
                     <Tab>Rejected Requests</Tab>
@@ -95,7 +95,7 @@ function ClubBudget({ requests, clubId, otherDetails }) {
                         <Button colorScheme='blue' marginRight={"10px"} color={"white"} onClick={() => handleSubmit()}>Create Budget Request</Button>
                     </TabPanel>
                     <TabPanel>
-                        <Table variant="striped" colorScheme="teal">
+                        <Table variant="striped" colorScheme="black">
                             <Thead>
                                 <Tr>
                                     <Th>Amount</Th>
@@ -118,7 +118,7 @@ function ClubBudget({ requests, clubId, otherDetails }) {
                         </Table>
                     </TabPanel>
                     <TabPanel>
-                        <Table variant="striped" colorScheme="teal">
+                        <Table variant="striped" colorScheme="black">
                             <Thead>
                                 <Tr>
                                     <Th>Amount</Th>
@@ -149,7 +149,7 @@ function ClubBudget({ requests, clubId, otherDetails }) {
                         </Table>
                     </TabPanel>
                     <TabPanel>
-                        <Table variant="striped" colorScheme="teal">
+                        <Table variant="striped" colorScheme="black">
                             <Thead>
                                 <Tr>
                                     <Th>Amount</Th>
@@ -176,7 +176,7 @@ function ClubBudget({ requests, clubId, otherDetails }) {
                         </Table>
                     </TabPanel>
                     <TabPanel>
-                        <h1 style={{ fontSize: "30px", fontWeight: "bold", textAlign: "center", color: "teal" }}>Club Budget Details</h1>
+                        <h1 style={{ fontSize: "30px", fontWeight: "bold", textAlign: "center", color: "black" }}>Club Budget Details</h1>
                         <br />
                         <div>
                             <h2>Allocated Budget</h2>
@@ -186,7 +186,7 @@ function ClubBudget({ requests, clubId, otherDetails }) {
                             <h3>{otherDetails.spent}</h3>
                             <br />
                             <h2>Remaining</h2>
-                            <h3>{otherDetails.remaining}</h3>
+                            <h3>{otherDetails.remaining < 0 ? `Spent ${otherDetails.remaining * -1} extra` : otherDetails.remaining}</h3>
                         </div>
                     </TabPanel>
                 </TabPanels>

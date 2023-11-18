@@ -54,6 +54,7 @@ export default function adminLogin() {
             </div>
             <br />
             <Button marginBottom={"10px"} colorScheme='yellow' marginRight={"10px"} color={"black"} onClick={() => handleLogin()}>Login</Button>
+            <p>Don't have an accout? <span style={{"cursor" : "pointer"}} onClick={() => {router.push('/auth/admin/adminRegister')}}>Signup as an Admin</span></p>
         </div>
     )
 }

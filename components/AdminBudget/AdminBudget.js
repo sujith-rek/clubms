@@ -23,7 +23,7 @@ import {
 import { allocateBudgetToClub, updateBudget } from "@/operations/admin.fetch"
 import { useState } from "react"
 
-function AdminBudget({ clubs, budgetRequests }) {
+function AdminBudget({ clubs, budgetRequests, allBudgets }) {
 
   const [selectedClub, setSelectedClub] = useState(0)
   const [amount, setAmount] = useState(0)
@@ -33,7 +33,9 @@ function AdminBudget({ clubs, budgetRequests }) {
   const [remarks, setRemarks] = useState("")
 
   const handleAllocateBudget = async () => {
+    const budget = allBudgets.find(b => b.clubId === parseInt(selectedClub));
     const data = {
+      id: budget.id,
       clubId: selectedClub,
       amount
     }
@@ -43,6 +45,7 @@ function AdminBudget({ clubs, budgetRequests }) {
       window.location.reload()
     }
     else {
+      console.log(result)
       alert("Error in allocating budget")
     }
   }
@@ -116,14 +119,13 @@ function AdminBudget({ clubs, budgetRequests }) {
           </ModalFooter>
         </ModalContent>
       </Modal>
-      
+
       <Tabs>
         <TabList>
           <Tab>Allocate Budget</Tab>
           <Tab>To be Approved/Pending</Tab>
           <Tab>Approved</Tab>
           <Tab>Rejected</Tab>
-          <Tab>Update Budget</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
@@ -214,9 +216,6 @@ function AdminBudget({ clubs, budgetRequests }) {
                 })}
               </Tbody>
             </Table>
-          </TabPanel>
-          <TabPanel>
-            Under dev
           </TabPanel>
         </TabPanels>
       </Tabs>

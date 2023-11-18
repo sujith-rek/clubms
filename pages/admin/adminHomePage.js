@@ -5,7 +5,7 @@ import { logout } from '@/operations/users.fetch'
 import { fetchAllClubs } from '@/services/clubs.service';
 import { eventsAdminApproved, eventsAdminPending, eventsAdminRejected } from '@/services/events.service';
 import { fetchAllRooms, fetchApprovedRooms, fetchPendingRooms, fetchRejectedRooms } from '@/services/roombook.services'
-import { getAllBudgetRequests } from '@/services/budget.services';
+import { getAllBudgetRequests, getClubBudgets } from '@/services/budget.services';
 import {
     Button,
     Tab,
@@ -32,7 +32,7 @@ export async function getServerSideProps(context) {
         return {
             redirect: {
                 permanent: false,
-                destination: '/club/clubHomepage'
+                destination: '/club/clubHomePage'
             }
         }
     } else if (context.req.session.user.role === 'CC') {
@@ -52,6 +52,7 @@ export async function getServerSideProps(context) {
     } else {
         const user = context.req.session.user;
         const allRooms = await fetchAllRooms();
+        const allBudgets = await getClubBudgets();
         let pendingRooms = await fetchPendingRooms();
         let approvedRooms = await fetchApprovedRooms();
         let rejectedRooms = await fetchRejectedRooms();
@@ -140,13 +141,14 @@ export async function getServerSideProps(context) {
                 approvedEvents: JSON.parse(JSON.stringify(approvedEvents)),
                 rejectedEvents: JSON.parse(JSON.stringify(rejectedEvents)),
                 clubs: allClubs,
-                budgetRequests: JSON.parse(JSON.stringify(budgetRequests))
+                budgetRequests: JSON.parse(JSON.stringify(budgetRequests)),
+                allBudgets: allBudgets,
             }
         }
     }
 }
 
-export default function AdminHomePage({ user, pendingRooms, approvedRooms, rejectedRooms, allRooms, approvedEvents, rejectedEvents, pendingEvents, clubs, budgetRequests }) {
+export default function AdminHomePage({ user, pendingRooms, approvedRooms, rejectedRooms, allRooms, approvedEvents, rejectedEvents, pendingEvents, clubs, budgetRequests, allBudgets }) {
 
     const handleLogOut = async () => {
         try {
@@ -187,7 +189,7 @@ export default function AdminHomePage({ user, pendingRooms, approvedRooms, rejec
                         <AdminEvent approvedEvents={approvedEvents} rejectedEvents={rejectedEvents} pendingEvents={pendingEvents} user={user} />
                     </TabPanel>
                     <TabPanel>
-                        <AdminBudget budgetRequests={budgetRequests} clubs={clubs} />
+                        <AdminBudget budgetRequests={budgetRequests} clubs={clubs} allBudgets={allBudgets} />
                     </TabPanel>
                     <TabPanel>
                         <Card>

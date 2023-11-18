@@ -54,7 +54,7 @@ export default function ClubRegister() {
                         />
                     </FormControl>
                 </div>
-                <div style={{"marginTop" : "1rem"}}>
+                <div style={{ "marginTop": "1rem" }}>
                     <FormControl>
                         <FormLabel>Email</FormLabel>
                         <Input
@@ -68,7 +68,7 @@ export default function ClubRegister() {
                         />
                     </FormControl>
                 </div>
-                <div style={{"marginTop" : "1rem"}}>
+                <div style={{ "marginTop": "1rem" }}>
                     <FormControl>
                         <FormLabel>Description</FormLabel>
                         <Input
@@ -82,7 +82,7 @@ export default function ClubRegister() {
                         />
                     </FormControl>
                 </div>
-                <div style={{"marginTop" : "1rem"}}>
+                <div style={{ "marginTop": "1rem" }}>
                     <FormControl>
                         <FormLabel>Password</FormLabel>
                         <Input
@@ -96,6 +96,7 @@ export default function ClubRegister() {
                     </FormControl>
                 </div>
                 <Button marginTop={"1rem"} colorScheme='yellow' marginRight={"10px"} color={"black"} onClick={() => handleSubmit()}>SignUp</Button>
+                <p style={{"marginTop" : "0.5rem"}}>Have an accout? <span style={{ "cursor": "pointer" }} onClick={() => { router.push('/auth/club/clubLogin') }}>Login as a Club</span></p>
             </div>
         </>
     );

@@ -1,7 +1,8 @@
 import db from "@/lib/prisma";
 
-export async function allocateBudget(data) {
+export async function allocateBudget(id, data) {
     return await db.clubBudget.update({
+        where: { id: id },
         data
     })
 }
@@ -51,6 +52,10 @@ export async function getClubBudgetDetails(clubId) {
     return await db.clubBudget.findUnique({
         where: { clubId }
     })
+}
+
+export async function getClubBudgets() {
+    return await db.clubBudget.findMany();
 }
 
 
