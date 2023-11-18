@@ -40,7 +40,7 @@ export default function ClubEvent({ events, user }) {
                     <TabPanel>
                         <EventCreate clubIdFromProps={user.id} />
                     </TabPanel>
-                    <TabPanel display={"flex"} justifyContent={"space-evenly"} flexWrap={"wrap"}>
+                    <TabPanel display={"flex"} justifycontent={"space-evenly"} flexwrap={"wrap"}>
                         {events.map((event, index) => {
                             if (event.Eventapproval.adminStatus === 'PENDING') {
                                 return (
@@ -121,7 +121,7 @@ export default function ClubEvent({ events, user }) {
                             }
                         })}
                     </TabPanel>
-                    <TabPanel display={"flex"} justifyContent={"space-evenly"} flexWrap={"wrap"}>
+                    <TabPanel display={"flex"} justifycontent={"space-evenly"} flexwrap={"wrap"}>
                         {events.map((event, index) => {
                             if (event.Eventapproval.adminStatus === 'APPROVED') {
                                 return (
@@ -202,7 +202,7 @@ export default function ClubEvent({ events, user }) {
                             }
                         })}
                     </TabPanel>
-                    <TabPanel display={"flex"} justifyContent={"space-evenly"} flexWrap={"wrap"}>
+                    <TabPanel display={"flex"} justifycontent={"space-evenly"} flexwrap={"wrap"}>
                         {events.map((event, index) => {
                             if (event.Eventapproval.adminStatus === 'REJECTED') {
                                 return (
@@ -283,7 +283,7 @@ export default function ClubEvent({ events, user }) {
                             }
                         })}
                     </TabPanel>
-                    <TabPanel display={"flex"} justifyContent={"space-evenly"} flexWrap={"wrap"}>
+                    <TabPanel display={"flex"} justifycontent={"space-evenly"} flexwrap={"wrap"}>
                         {events.map((event, index) => {
                             if (event.Eventapproval.ccStatus === 'PENDING') {
                                 return (
@@ -364,7 +364,7 @@ export default function ClubEvent({ events, user }) {
                             }
                         })}
                     </TabPanel>
-                    <TabPanel display={"flex"} justifyContent={"space-evenly"} flexWrap={"wrap"}>
+                    <TabPanel display={"flex"} justifycontent={"space-evenly"} flexwrap={"wrap"}>
                         {events.map((event, index) => {
                             if (event.Eventapproval.ccStatus === 'APPROVED') {
                                 return (
@@ -445,7 +445,7 @@ export default function ClubEvent({ events, user }) {
                             }
                         })}
                     </TabPanel>
-                    <TabPanel display={"flex"} justifyContent={"space-evenly"} flexWrap={"wrap"}>
+                    <TabPanel display={"flex"} justifycontent={"space-evenly"} flexwrap={"wrap"}>
                         {events.map((event, index) => {
                             if (event.Eventapproval.ccStatus === 'REJECTED') {
                                 return (

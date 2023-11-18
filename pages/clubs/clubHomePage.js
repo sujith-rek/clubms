@@ -107,7 +107,7 @@ export default function ClubHomePage({ user, bookedRooms, events, requests, club
     return (
         <div>
             <div>
-                <div style={{ "paddingTop": "1rem", "display": "flex", "justifyContent": "space-between", "paddingBottom": "0rem", "paddingLeft": "2rem", "paddingRight": "2rem" }} className="flex flex-col items-center justify-center">
+                <div style={{ "paddingTop": "1rem", "display": "flex", "justifycontent": "space-between", "paddingBottom": "0rem", "paddingLeft": "2rem", "paddingRight": "2rem" }} className="flex flex-col items-center justify-center">
                     <Text fontWeight={"500"} fontSize='4xl'>Welcome {user.name}</Text>
                     <Button onClick={() => handleLogOut()} marginTop={"10px"} colorScheme='red'>Logout</Button>
                 </div>

@@ -25,7 +25,7 @@ import {
   Text
 } from "@chakra-ui/react"
 import { allocateBudgetToClub, updateBudget } from "@/operations/admin.fetch"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 function AdminBudget({ clubs, budgetRequests, allBudgets, userBudget }) {
 
@@ -35,11 +35,6 @@ function AdminBudget({ clubs, budgetRequests, allBudgets, userBudget }) {
   const [adminStatus, setAdminStatus] = useState("PENDING")
   const [isOpen, setIsOpen] = useState(false)
   const [remarks, setRemarks] = useState("")
-
-  const [allocated, setAllocated] = useState(0)
-  const [spent, setSpent] = useState(0)
-  const [remaining, setRemaining] = useState(0)
-
 
   const handleAllocateBudget = async () => {
     const budget = allBudgets.find(b => b.clubId === parseInt(selectedClub));
@@ -141,7 +136,7 @@ function AdminBudget({ clubs, budgetRequests, allBudgets, userBudget }) {
           <TabPanel>
             <Select placeholder="Select Club" onChange={(e) => setSelectedClub(e.target.value)}>
               {clubs.map((club) => {
-                return <option value={club.id}>{club.name}</option>
+                return <option value={club.id} key={club.id}>{club.name}</option>
               })}
             </Select>
             <div>
@@ -167,7 +162,7 @@ function AdminBudget({ clubs, budgetRequests, allBudgets, userBudget }) {
                 {budgetRequests.map((request) => {
                   if (request.adminStatus === "PENDING") {
                     return (
-                      <Tr>
+                      <Tr key={request.id}>
                         <Td>{request.amount}</Td>
                         <Td>{request.description}</Td>
                         <Td>{request.attachment}</Td>
@@ -192,7 +187,7 @@ function AdminBudget({ clubs, budgetRequests, allBudgets, userBudget }) {
                 {budgetRequests.map((request) => {
                   if (request.adminStatus === "APPROVED") {
                     return (
-                      <Tr>
+                      <Tr key={request.id}>
                         <Td>{request.amount}</Td>
                         <Td>{request.description}</Td>
                         <Td>{request.attachment}</Td>
@@ -216,7 +211,7 @@ function AdminBudget({ clubs, budgetRequests, allBudgets, userBudget }) {
                 {budgetRequests.map((request) => {
                   if (request.adminStatus === "REJECTED") {
                     return (
-                      <Tr>
+                      <Tr key={request.id}>
                         <Td>{request.amount}</Td>
                         <Td>{request.description}</Td>
                         <Td>{request.attachment}</Td>
@@ -228,11 +223,11 @@ function AdminBudget({ clubs, budgetRequests, allBudgets, userBudget }) {
             </Table>
           </TabPanel>
           <TabPanel>
-            <div display={"flex"} justifyContent={"space-evenly"} flexWrap={"wrap"} >
+            <div display={"flex"} justifycontent={"space-evenly"} flexwrap={"wrap"} >
               {
                 userBudget.map((budget) => {
                   return (
-                    <Card margin={"1rem"} width={"20rem"} bg={budget.Budget[0].remaining < 0 ? "red.400" : budget.Budget[0].spent > budget.Budget[0].remaining ? "orange.300" : "green.300"}>
+                    <Card margin={"1rem"} width={"20rem"} bg={budget.Budget[0].remaining < 0 ? "red.400" : budget.Budget[0].spent > budget.Budget[0].remaining ? "orange.300" : "green.300"} key={budget.id}>
                       <CardBody>
                         <Box>
                           <Text size='md'>

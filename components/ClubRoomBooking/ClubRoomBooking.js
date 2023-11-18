@@ -72,7 +72,7 @@ export default function ClubRoomBooking({ user, bookedRooms }) {
                                 rooms.length === 0 ? "No Rooms" : null
                             }</div> : <div></div>}
                             {isFetching ?
-                                <div style={{ "display": "flex", "justifyContent": "flex-start", "flexWrap": "wrap", "alignItems": "flex-start" }}>
+                                <div style={{ "display": "flex", "justifycontent": "flex-start", "flexwrap": "wrap", "alignItems": "flex-start" }}>
                                     {rooms.map((room, index) => {
                                         return (
                                             <AvailableRooms key={index} room={room} clubId={user.id} />
@@ -83,7 +83,7 @@ export default function ClubRoomBooking({ user, bookedRooms }) {
                         </>
                     </TabPanel>
                     <TabPanel>
-                        <div style={{"display" : "flex", "flexWrap" : "wrap"}}>
+                        <div style={{"display" : "flex", "flexwrap" : "wrap"}}>
                             {bookedRooms.map((bookedRoom, index) => {
                                 if (bookedRoom.adminStatus === 'PENDING') {
                                     return (
@@ -150,7 +150,7 @@ export default function ClubRoomBooking({ user, bookedRooms }) {
                         </div>
                     </TabPanel>
                     <TabPanel>
-                        <div style={{"display" : "flex", "flexWrap" : "wrap"}}>
+                        <div style={{"display" : "flex", "flexwrap" : "wrap"}}>
                             {bookedRooms.map((bookedRoom, index) => {
                                 if (bookedRoom.adminStatus === 'APPROVED') {
                                     return (

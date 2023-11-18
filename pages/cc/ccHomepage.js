@@ -115,7 +115,7 @@ export default function ccHomepage({ user, allEvents }) {
     return (
         <div>
             <div>
-                <div style={{ "paddingTop": "1rem", "display": "flex", "justifyContent": "space-between", "paddingBottom": "0rem", "paddingLeft": "2rem", "paddingRight": "2rem" }} className="flex flex-col items-center justify-center">
+                <div style={{ "paddingTop": "1rem", "display": "flex", "justifycontent": "space-between", "paddingBottom": "0rem", "paddingLeft": "2rem", "paddingRight": "2rem" }} className="flex flex-col items-center justify-center">
                     <Text fontWeight={"500"} fontSize='4xl'>Welcome {user.name}</Text>
                     <Button onClick={() => handleLogOut()} marginTop={"10px"} colorScheme='red'>Logout</Button>
                 </div>
@@ -129,7 +129,7 @@ export default function ccHomepage({ user, allEvents }) {
                     <Tab>Rejected Events</Tab>
                 </TabList>
                 <TabPanels>
-                    <TabPanel display={"flex"} justifyContent={"space-evenly"} flexWrap={"wrap"}>
+                    <TabPanel display={"flex"} justifycontent={"space-evenly"} flexwrap={"wrap"}>
                         {allEvents.map((event, index) => {
                             if (event.Eventapproval.ccStatus === 'PENDING') {
                                 return (
@@ -208,7 +208,7 @@ export default function ccHomepage({ user, allEvents }) {
                             }
                         })}
                     </TabPanel>
-                    <TabPanel display={"flex"} justifyContent={"space-evenly"} flexWrap={"wrap"}>
+                    <TabPanel display={"flex"} justifycontent={"space-evenly"} flexwrap={"wrap"}>
                         {allEvents.map((event, index) => {
                             if (event.Eventapproval.ccStatus === 'APPROVED') {
                                 return (
@@ -285,7 +285,7 @@ export default function ccHomepage({ user, allEvents }) {
                             }
                         })}
                     </TabPanel>
-                    <TabPanel display={"flex"} justifyContent={"space-evenly"} flexWrap={"wrap"}>
+                    <TabPanel display={"flex"} justifycontent={"space-evenly"} flexwrap={"wrap"}>
                         {allEvents.map((event, index) => {
                             if (event.Eventapproval.ccStatus === 'REJECTED') {
                                 return (

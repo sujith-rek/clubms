@@ -49,7 +49,7 @@ export default function AdminEvent({ approvedEvents, pendingEvents, rejectedEven
                 <Tab>Rejected Events</Tab>
             </TabList>
             <TabPanels>
-                <TabPanel display={"flex"} justifyContent={"space-evenly"} flexWrap={"wrap"}>
+                <TabPanel display={"flex"} justifycontent={"space-evenly"} flexwrap={"wrap"}>
                     {pendingEvents.map((event, index) => {
                         return (
                             <div key={index}>
@@ -94,7 +94,7 @@ export default function AdminEvent({ approvedEvents, pendingEvents, rejectedEven
                         )
                     })}
                 </TabPanel>
-                <TabPanel display={"flex"} justifyContent={"space-evenly"} flexWrap={"wrap"}>
+                <TabPanel display={"flex"} justifycontent={"space-evenly"} flexwrap={"wrap"}>
                     {approvedEvents.map((event, index) => {
                         return (
                             <div key={index}>
@@ -137,7 +137,7 @@ export default function AdminEvent({ approvedEvents, pendingEvents, rejectedEven
                         )
                     })}
                 </TabPanel>
-                <TabPanel display={"flex"} justifyContent={"space-evenly"} flexWrap={"wrap"}>
+                <TabPanel display={"flex"} justifycontent={"space-evenly"} flexwrap={"wrap"}>
                     {rejectedEvents.map((event, index) => {
                         return (
                             <div key={index}>

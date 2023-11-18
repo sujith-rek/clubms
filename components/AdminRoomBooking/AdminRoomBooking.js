@@ -106,7 +106,7 @@ export default function AdminRoomBooking({ pendingRooms, approvedRooms, rejected
                         <Button onClick={handleAddRoom} marginTop={"20px"} colorScheme="blue">Add Room</Button>
                     </div>
                 </TabPanel>
-                <TabPanel display={"flex"} justifyContent={"space-evenly"} flexWrap={"wrap"}>
+                <TabPanel display={"flex"} justifycontent={"space-evenly"} flexwrap={"wrap"}>
                     {allRooms.map((room, index) => {
                         return (
                             <div key={index}>
@@ -146,7 +146,7 @@ export default function AdminRoomBooking({ pendingRooms, approvedRooms, rejected
                         )
                     })}
                 </TabPanel>
-                <TabPanel display={"flex"} justifyContent={"space-evenly"} flexWrap={"wrap"}>
+                <TabPanel display={"flex"} justifycontent={"space-evenly"} flexwrap={"wrap"}>
                     {pendingRooms.map((room, index) => {
                         return (
                             <div key={index}>
@@ -211,7 +211,7 @@ export default function AdminRoomBooking({ pendingRooms, approvedRooms, rejected
                         )
                     })}
                 </TabPanel>
-                <TabPanel display={"flex"} justifyContent={"space-evenly"} flexWrap={"wrap"}>
+                <TabPanel display={"flex"} justifycontent={"space-evenly"} flexwrap={"wrap"}>
                     {approvedRooms.map((room, index) => {
                         return (
                             <div key={index}>
@@ -274,7 +274,7 @@ export default function AdminRoomBooking({ pendingRooms, approvedRooms, rejected
                         )
                     })}
                 </TabPanel>
-                <TabPanel display={"flex"} justifyContent={"space-evenly"} flexWrap={"wrap"}>
+                <TabPanel display={"flex"} justifycontent={"space-evenly"} flexwrap={"wrap"}>
                     {rejectedRooms.map((room, index) => {
                         return (
                             <div key={index}>
