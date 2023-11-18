@@ -1,38 +1,67 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Club Management
 
-## Getting Started
+## Description
 
-First, run the development server:
-
-```bash
+## Installation and Usage
+Install node_modules
+```
+npm install
+```
+add .env file which contains `secret` and `database` variables then
+Run the server
+```
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
+### `  Admin  `
+#### Events
+- View all events
+- Approve/Reject events
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+#### Room Booking
+- Add rooms 
+- Allocate rooms to clubs
+- View all rooms
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+#### Budget Allocation
+- Allocate budget to clubs
+- View all budget allocations
+- Approve/Reject budget approvals
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### `  Club  `
+#### Events
+- Create events
+- View all events
+- Edit/Delete events
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+#### Room Booking
+- Book rooms
+- View all bookings
+- Edit/Delete bookings
 
-## Learn More
+#### Budget Allocation
+- Add budget requests
 
-To learn more about Next.js, take a look at the following resources:
+### `  CC  `
+#### Events
+- Approve/Reject events
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### `  Student  `
+#### Events
+- View all approved events
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Technologies Used
+### Frontend
+- React
+- Next.js
+- Chakra UI
+- SCSS
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Backend
+- Node.js
+- Prisma
+- PostgreSQL
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
