@@ -19,11 +19,15 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
+  Card,
+  Box,
+  CardBody,
+  Text
 } from "@chakra-ui/react"
 import { allocateBudgetToClub, updateBudget } from "@/operations/admin.fetch"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
-function AdminBudget({ clubs, budgetRequests, allBudgets }) {
+function AdminBudget({ clubs, budgetRequests, allBudgets, userBudget }) {
 
   const [selectedClub, setSelectedClub] = useState(0)
   const [amount, setAmount] = useState(0)
@@ -31,6 +35,11 @@ function AdminBudget({ clubs, budgetRequests, allBudgets }) {
   const [adminStatus, setAdminStatus] = useState("PENDING")
   const [isOpen, setIsOpen] = useState(false)
   const [remarks, setRemarks] = useState("")
+
+  const [allocated, setAllocated] = useState(0)
+  const [spent, setSpent] = useState(0)
+  const [remaining, setRemaining] = useState(0)
+
 
   const handleAllocateBudget = async () => {
     const budget = allBudgets.find(b => b.clubId === parseInt(selectedClub));
@@ -51,7 +60,6 @@ function AdminBudget({ clubs, budgetRequests, allBudgets }) {
   }
 
   const handleUpdateBudget = async (clubId) => {
-    console.log(clubId)
     setIsOpen(true)
     setSelectedClub(clubId)
     setAmount(budgetRequests.find((request) => request.id === clubId).amount)
@@ -75,6 +83,7 @@ function AdminBudget({ clubs, budgetRequests, allBudgets }) {
       alert("Error in updating budget")
     }
   }
+
 
 
   return (
@@ -126,6 +135,7 @@ function AdminBudget({ clubs, budgetRequests, allBudgets }) {
           <Tab>To be Approved/Pending</Tab>
           <Tab>Approved</Tab>
           <Tab>Rejected</Tab>
+          <Tab>Club budget details</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
@@ -216,6 +226,42 @@ function AdminBudget({ clubs, budgetRequests, allBudgets }) {
                 })}
               </Tbody>
             </Table>
+          </TabPanel>
+          <TabPanel>
+            <div display={"flex"} justifyContent={"space-evenly"} flexWrap={"wrap"} >
+              {
+                userBudget.map((budget) => {
+                  return (
+                    <Card margin={"1rem"} width={"20rem"} bg={budget.Budget[0].remaining < 0 ? "red.400" : budget.Budget[0].spent > budget.Budget[0].remaining ? "orange.300" : "green.300"}>
+                      <CardBody>
+                        <Box>
+                          <Text size='md'>
+                            Name - {budget.name}
+                          </Text>
+                        </Box>
+                        <Box marginTop={"0.5rem"}>
+                          <Text size='md'>
+                            Allocated - {budget.Budget[0].allocated}
+                          </Text>
+                        </Box>
+                        <Box marginTop={"0.5rem"}>
+                          <Text size='md'>
+                            Spent - {budget.Budget[0].spent}
+                          </Text>
+                        </Box>
+                        <Box marginTop={"0.5rem"}>
+                          <Text size='md'>
+                            Remaining - {budget.Budget[0].remaining}
+                          </Text>
+                        </Box>
+                      </CardBody>
+                    </Card>
+                  )
+                }
+                )
+              }
+            </div>
+
           </TabPanel>
         </TabPanels>
       </Tabs>

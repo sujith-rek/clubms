@@ -6,6 +6,7 @@ import { fetchAllClubs } from '@/services/clubs.service';
 import { eventsAdminApproved, eventsAdminPending, eventsAdminRejected } from '@/services/events.service';
 import { fetchAllRooms, fetchApprovedRooms, fetchPendingRooms, fetchRejectedRooms } from '@/services/roombook.services'
 import { getAllBudgetRequests, getClubBudgets } from '@/services/budget.services';
+import { getUserBudgets } from '@/services/users.services';
 import {
     Button,
     Tab,
@@ -95,6 +96,7 @@ export async function getServerSideProps(context) {
 
         const allClubs = await fetchAllClubs();
         let approvedEvents = await eventsAdminApproved();
+        let userBudget = await getUserBudgets();
         approvedEvents = approvedEvents.map((event) => {
             event.date = event.date.toLocaleString('en-IN', indianOptions);
             const club = allClubs.find(c => c.id === event.clubId)
@@ -143,12 +145,13 @@ export async function getServerSideProps(context) {
                 clubs: allClubs,
                 budgetRequests: JSON.parse(JSON.stringify(budgetRequests)),
                 allBudgets: allBudgets,
+                userBudget: userBudget
             }
         }
     }
 }
 
-export default function AdminHomePage({ user, pendingRooms, approvedRooms, rejectedRooms, allRooms, approvedEvents, rejectedEvents, pendingEvents, clubs, budgetRequests, allBudgets }) {
+export default function AdminHomePage({ user, pendingRooms, approvedRooms, rejectedRooms, allRooms, approvedEvents, rejectedEvents, pendingEvents, clubs, budgetRequests, allBudgets, userBudget }) {
 
     const handleLogOut = async () => {
         try {
@@ -189,7 +192,7 @@ export default function AdminHomePage({ user, pendingRooms, approvedRooms, rejec
                         <AdminEvent approvedEvents={approvedEvents} rejectedEvents={rejectedEvents} pendingEvents={pendingEvents} user={user} />
                     </TabPanel>
                     <TabPanel>
-                        <AdminBudget budgetRequests={budgetRequests} clubs={clubs} allBudgets={allBudgets} />
+                        <AdminBudget budgetRequests={budgetRequests} clubs={clubs} allBudgets={allBudgets} userBudget={userBudget} />
                     </TabPanel>
                     <TabPanel>
                         <Card>

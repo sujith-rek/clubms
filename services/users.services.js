@@ -54,3 +54,15 @@ export async function getUser(mail) {
         }
     });
 }
+
+
+export async function getUserBudgets(){
+    return db.user.findMany({
+        where:{
+            role:"CLUB"
+        },
+        include:{
+            Budget: true
+        }
+    })
+}
