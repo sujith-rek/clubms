@@ -46,6 +46,7 @@ npm run dev
 ### `  CC  `
 #### Events
 - Approve/Reject events
+- View all update to Events
 
 ### `  Student  `
 #### Events

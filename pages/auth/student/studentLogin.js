@@ -40,13 +40,13 @@ export default function StudentLogin() {
     }
 
     return (
-        <div style={{"padding" : "3rem"}}>
+        <div style={{ "padding": "3rem" }}>
             <Heading className="RegisterMainSection__header">
                 Login as Student
             </Heading>
             <div className="RegisterMainSection__form">
                 <form onSubmit={handleSubmit} className="space-y-6">
-                    <div style={{"marginTop" : "1rem"}}>
+                    <div style={{ "marginTop": "1rem" }}>
                         <FormControl>
                             <FormLabel>Email Id</FormLabel>
                             <Input onChange={(e) => setEmail(e.target.value)} type='email' />
@@ -54,15 +54,17 @@ export default function StudentLogin() {
                         </FormControl>
                     </div>
 
-                    <div style={{"marginTop" : "1rem"}}>
+                    <div style={{ "marginTop": "1rem" }}>
                         <FormControl>
                             <FormLabel>Password</FormLabel>
                             <Input onChange={(e) => setPassword(e.target.value)} type='password' />
                         </FormControl>
                     </div>
-                    <div style={{"marginTop" : "1rem"}}>
+                    <div style={{ "marginTop": "1rem" }}>
                         <Button onClick={() => handleSubmit()} colorScheme='blue'>Login Student</Button>
                     </div>
+                    <p>Don't have an accout? <span style={{ "cursor": "pointer" }} onClick={() => { router.push('/auth/student/studentRegister') }}>Signup as a Student</span></p>
+
                 </form>
             </div>
         </div>

@@ -37,7 +37,7 @@ export default function Home() {
               px={6}
               colorScheme={'orange'}
               bg={'orange.400'}
-              onClick={() => {router.push('/auth/club/clubLogin')}}
+              onClick={() => { router.push('/auth/club/clubLogin') }}
               _hover={{ bg: 'orange.500' }}>
               Club
             </Button>
@@ -46,7 +46,7 @@ export default function Home() {
               px={6}
               colorScheme={'orange'}
               bg={'orange.400'}
-              onClick={() => {router.push('/auth/admin/adminLogin')}}
+              onClick={() => { router.push('/auth/admin/adminLogin') }}
               _hover={{ bg: 'orange.500' }}>
               Admin
             </Button>
@@ -54,7 +54,16 @@ export default function Home() {
               rounded={'full'}
               px={6}
               colorScheme={'orange'}
-              onClick={() => {router.push('/auth/cc/ccLogin')}}
+              bg={'orange.400'}
+              onClick={() => { router.push('/auth/student/studentLogin') }}
+              _hover={{ bg: 'orange.500' }}>
+              Student
+            </Button>
+            <Button
+              rounded={'full'}
+              px={6}
+              colorScheme={'orange'}
+              onClick={() => { router.push('/auth/cc/ccLogin') }}
               bg={'orange.400'}
               _hover={{ bg: 'orange.500' }}>
               Cultural Committee
