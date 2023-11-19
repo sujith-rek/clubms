@@ -57,6 +57,11 @@ npm run dev
 
 ### `  Admin  `
 
+#### Page Routes
+1. `/auth/admin/adminRegister` - Admin Registration (Route is developed only for development purposes)
+2. `/auth/admin/adminLogin` - Admin Login
+3. `/admin/adminHomePage` - Admin Dashboard
+
 #### Events
 
 - View all events
@@ -82,6 +87,11 @@ npm run dev
 - Club budget details
 
 ### `  Club  `
+
+### Page Routes
+1. `/auth/club/clubRegister` - Club Registration (Route is developed only for development purposes)
+2. `/auth/club/clubLogin` - Club Login
+3. `/club/clubHomePage` - Club Dashboard
 
 #### Events
 
@@ -112,12 +122,21 @@ npm run dev
 - Club budget details
 
 ### `  CC  `
+#### Page Routes
+1. `/auth/cc/ccRegister` - CC Registration (Route is developed only for development purposes)
+2. `/auth/cc/ccLogin` - CC Login
+3. `/cc/ccHomePage` - CC Dashboard
 
 - Pending Events (To be approved/rejected)
 - Approved Events
 - Rejected Events
 
 ### `  Student  `
+#### Page Routes
+1. `/auth/student/studentRegister` - Student Registration (Route is developed only for development purposes)
+2. `/auth/student/studentLogin` - Student Login
+3. `/student/studentHomePage` - Student Dashboard
+
 
 - View all approved events
 
@@ -125,7 +144,7 @@ npm run dev
 | Name | Roll Number | SNU ID|
 |------|-------------|-------|
 |Aryan Sethia| 2110110754| as188|
-|Tejansh Sachdeva| 2110110|ts|
-|Chaitanya Tandon| 2110110181|ct765|
+|Tejansh Sachdeva| 2110110555|ts879|
+|Chaitanya Tandon| 2110110171|ct765|
 |Sujith|2110110400|ps335|
 
