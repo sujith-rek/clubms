@@ -72,7 +72,7 @@ export default function ClubEvent({ events, user }) {
                                                             Event Date
                                                         </Heading>
                                                         <Text pt='2' fontSize='sm'>
-                                                            {event.date}
+                                                            {event.date.split("T")[0].split("\"")[1]}
                                                         </Text>
                                                     </Box>
                                                     <Box>
@@ -153,7 +153,7 @@ export default function ClubEvent({ events, user }) {
                                                             Event Date
                                                         </Heading>
                                                         <Text pt='2' fontSize='sm'>
-                                                            {event.date}
+                                                            {event.date.split("T")[0].split("\"")[1]}
                                                         </Text>
                                                     </Box>
                                                     <Box>
@@ -234,7 +234,7 @@ export default function ClubEvent({ events, user }) {
                                                             Event Date
                                                         </Heading>
                                                         <Text pt='2' fontSize='sm'>
-                                                            {event.date}
+                                                            {event.date.split("T")[0].split("\"")[1]}
                                                         </Text>
                                                     </Box>
                                                     <Box>
@@ -315,7 +315,7 @@ export default function ClubEvent({ events, user }) {
                                                             Event Date
                                                         </Heading>
                                                         <Text pt='2' fontSize='sm'>
-                                                            {event.date}
+                                                            {event.date.split("T")[0].split("\"")[1]}
                                                         </Text>
                                                     </Box>
                                                     <Box>
@@ -396,7 +396,7 @@ export default function ClubEvent({ events, user }) {
                                                             Event Date
                                                         </Heading>
                                                         <Text pt='2' fontSize='sm'>
-                                                            {event.date}
+                                                            {event.date.split("T")[0].split("\"")[1]}
                                                         </Text>
                                                     </Box>
                                                     <Box>
@@ -477,7 +477,7 @@ export default function ClubEvent({ events, user }) {
                                                             Event Date
                                                         </Heading>
                                                         <Text pt='2' fontSize='sm'>
-                                                            {event.date}
+                                                            {event.date.split("T")[0].split("\"")[1]}
                                                         </Text>
                                                     </Box>
                                                     <Box>
