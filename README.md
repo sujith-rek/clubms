@@ -144,7 +144,6 @@ npm run dev
 | Name | Roll Number | SNU ID|
 |------|-------------|-------|
 |Aryan Sethia| 2110110754| as188|
-|Tejansh Sachdeva| 2110110555|ts879|
 |Chaitanya Tandon| 2110110171|ct765|
 |Sujith|2110110400|ps335|
 
